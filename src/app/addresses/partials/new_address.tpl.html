@@ -1,0 +1,18 @@
+<div ng-hide="adding_address">
+  <button class="btn-theme"ng-click="addAddress()"><i class="fa fa-plus"> Add</i></button>
+</div>
+<div ng-show="adding_address">
+  <div>
+    <h1>{{new_address.name}}</h1>
+  </div>
+  <address-fields address="new_address"></address-fields>
+  <button class="btn-theme" ng-click="save()" ng-disabled="http_request" ng-hide="new_address.id">
+    <div ng-show="http_request">
+      Saving...
+    </div>
+    <div ng-hide="http_request">
+      Save
+    </div>
+  </button>
+  <button class="btn-theme" ng-click="cancel()">Cancel</button>
+</div>

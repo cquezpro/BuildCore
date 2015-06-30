@@ -1,0 +1,139 @@
+<ion-view title="Bills" hide-back-button="true">
+  <ion-nav-buttons side="left">
+     <button class="button button-icon icon ion-ios-arrow-back" style="z-index:100;" ng-click="$ionicGoBack();">
+    </button>    
+  </ion-nav-buttons>
+  <ion-nav-buttons side="right">
+     <button class="right-buttons button button-icon icon ion-help" style="z-index:100;" ng-click="openIntercom();">
+    </button>    
+  </ion-nav-buttons>
+	<ion-content>
+	  <ion-list class="billsync-list">
+	  	<ion-item class="item-divider" ng-if="vendor.vendor_invoices.less_than_30.length > 0">
+        <div class="row">
+          <div class="col">Less Than 30 Days</div>
+        </div>
+      </ion-item>
+	    <ion-item ng-repeat="invoice in vendor.vendor_invoices.less_than_30">
+	    	<div class="row">
+	    		<div class="col col-20 text-center">
+	    			<small class="text-green">bill</small>
+	    			<br>
+	    			<strong>{{invoice.due_date | date : 'dd'}}</strong>
+	    			<br>
+	    			<small>{{invoice.due_date | date : 'MMM'}}</small>
+	    		</div>
+		    	<div class="col element-clickable" ui-sref="app.tabs.invoice({id: invoice.id})">
+	    			<strong>{{invoice.vendor.name | maxLength: 10}} &mdash; ${{invoice.amount_due | number: 0}}</strong>
+			      <br>
+			      <small>{{invoice.humanized_status}}</small>
+		    	</div>
+		    	<div class="col col-20">
+		    		<button class="button button-icon icon ion-edit"
+					    ng-show="isEditableInvoice(invoice.status)"
+					    ng-click="editInvoice(invoice)">
+					  </button>
+					  <button class="button button-icon icon ion-cash"
+					    ng-show="isPayableInvoice(invoice.status)"
+					    ng-click="changeInvoiceStatus('READY_TO_PAY_TO_PAYMENT_QUEUE', invoice)">
+					  </button>
+					  <br>
+		    		<button class="button button-icon icon ion-more" ng-click="showActions(invoice)"></button>	
+		    	</div>
+	    	</div>
+	    </ion-item>
+
+	    <ion-item class="item-divider" ng-if="vendor.vendor_invoices.more_than_30_length > 0">
+        <div class="row">
+          <div class="col">More Than 30 Days</div>
+        </div>
+      </ion-item>
+
+	    <ion-item ng-repeat="invoice in vendor.vendor_invoices.more_than_30">
+	    	<div class="row">
+	    		<div class="col ">
+	    			<small class="text-green">invoice</small>
+	    			<strong>{{invoice.due_date | date : 'dd'}}</strong>
+	    			<small>{{invoice.due_date | date : 'MMM'}}</small>
+	    			<strong>{{invoice.vendor.name | maxLength: 10}} &mdash; ${{invoice.amount_due | number: 0}}</strong>			      
+			        <small>{{invoice.humanized_status}}</small>
+			        
+					 <button class="button button-icon icon ion-more" style="float:right;" ng-click="showActions(invoice)"></button>
+					 <button class="button button-icon icon ion-cash" style="float:right;" 
+					    ng-show="isPayableInvoice(invoice.status)"
+					    ng-click="changeInvoiceStatus('READY_TO_PAY_TO_PAYMENT_QUEUE', invoice)">
+					  </button>
+					  <button class="button button-icon icon ion-edit" style="float:right;" 
+					    ng-show="isEditableInvoice(invoice.status)"
+					    ng-click="editInvoice(invoice)">
+					 </button>
+		    			
+	    		</div>
+		    	<!--<div class="col element-clickable" ui-sref="app.tabs.invoice({id: invoice.id})">
+	    			<strong>{{invoice.vendor.name | maxLength: 10}} &mdash; ${{invoice.amount_due | number: 0}}</strong>
+			      <br>
+			      <small>{{invoice.humanized_status}}</small>
+		    	</div>
+		    	<div class="col col-20">
+		    		<button class="button button-icon icon ion-edit"
+					    ng-show="isEditableInvoice(invoice.status)"
+					    ng-click="editInvoice(invoice)">
+					  </button>
+					  <button class="button button-icon icon ion-cash"
+					    ng-show="isPayableInvoice(invoice.status)"
+					    ng-click="changeInvoiceStatus('READY_TO_PAY_TO_PAYMENT_QUEUE', invoice)">
+					  </button>
+					  <br>
+		    		<button class="button button-icon icon ion-more" ng-click="showActions(invoice)"></button>	
+		    	</div>-->
+	    	</div>
+	    </ion-item>
+
+	    <ion-item class="item-divider" ng-if="vendor.archived_invoices">
+        <div class="row">
+          <div class="col">Archived</div>
+        </div>
+      </ion-item>
+
+	    <ion-item ng-repeat="invoice in vendor.archived_invoices">
+	    	<div class="row">
+	    		<div class="col">
+	    			<small class="text-green">bill</small>
+	    			<br>
+	    			<strong>{{invoice.due_date | date : 'dd'}}</strong>
+	    			<br>
+	    			<small>{{invoice.due_date | date : 'MMM'}}</small>
+	    			<strong>{{invoice.vendor.name | maxLength: 10}} &mdash; ${{invoice.amount_due | number: 0}}</strong>
+	    			 <small>{{invoice.humanized_status}}</small>
+	    			 <button class="button button-icon icon ion-more"  style="float:right;" ng-click="showActions(invoice)"></button>	
+	    			  <button class="button button-icon icon ion-cash" style="float:right;"
+					    ng-show="isPayableInvoice(invoice.status)"
+					    ng-click="changeInvoiceStatus('READY_TO_PAY_TO_PAYMENT_QUEUE', invoice)">
+					  </button>
+					  <button class="button button-icon icon ion-edit" style="float:right;"
+					    ng-show="isEditableInvoice(invoice.status)"
+					    ng-click="editInvoice(invoice)">
+					  </button>
+	    		</div>
+		    	<!--<div class="col element-clickable" ui-sref="app.tabs.invoice({id: invoice.id})">
+	    			<strong>{{invoice.vendor.name | maxLength: 10}} &mdash; ${{invoice.amount_due | number: 0}}</strong>
+			      <br>
+			      <small>{{invoice.humanized_status}}</small>
+		    	</div>
+		    	<div class="col col-20">
+		    		<button class="button button-icon icon ion-edit"
+					    ng-show="isEditableInvoice(invoice.status)"
+					    ng-click="editInvoice(invoice)">
+					  </button>
+					  <button class="button button-icon icon ion-cash"
+					    ng-show="isPayableInvoice(invoice.status)"
+					    ng-click="changeInvoiceStatus('READY_TO_PAY_TO_PAYMENT_QUEUE', invoice)">
+					  </button>
+					  <br>
+		    		<button class="button button-icon icon ion-more" ng-click="showActions(invoice)"></button>	
+		    	</div>-->
+	    	</div>
+	    </ion-item>
+	  </ion-list>
+	</ion-content>  
+</ion-view>

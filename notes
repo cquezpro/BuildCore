@@ -1,0 +1,77 @@
+Have meetings this afternoon.
+Here is what I have for the list of things to do:
+1. Finish reports and get it ready to merge,
+2. fix errbit on turk,
+3. pay now,  # done
+4. quickbooks web edition (same tests as desktop), also we dont need intuit signin anymore we just have to provide the user a way to register in a iframe I think lets check the docs here
+5. Check Mario's work when he starts (make sure it doesn't break turk or quickbooks on staging), that login and everything still works.
+
+
+a = Individual.find_by(email: "danielfromarg@gmail.com").user
+ch@frankspm.com
+cafepeddler
+
+ray@thecafegrind.com
+bill477
+
+a = Individual.find_by(email: "ch@frankspm.com").user
+a.invoices.where("created_at > ?", 2.days.ago).each do |i|
+  i.reset_mt_turk!
+end
+
+a = Individual.find_by(email: "ray@thecafegrind.com").user
+
+anika.agarwal@gmail.com
+ishwar
+
+
+heroku pg:backups capture -a billsync8
+curl -o latest.dump `heroku pgbackups:url b015 -a billsync8`
+curl -o latest.dump `heroku pg:backups public-url a144 -a billsync8`
+pg_restore --verbose --clean --no-acl --no-owner -h localhost -d billsync_prod_b015 latest.dump
+
+c = InvoiceModerations::SecondReviewComparator.build_from(a)
+
+c = Mturk::TurkTransactions::Comparator.build_with(a, a.hits.for_line_item.first)
+
+a.hits.for_line_item.where(page_number:  1).present?
+
+a = Individual.find_by(email: "fr").user
+
+b = a.invoices.collect {|e| e.hits.for_line_item }
+
+
+a = Invoice.find 6303
+a.hits.for_line_item.where(page_number:  1).present?
+
+
+c = InvoiceModerations::FirstReviewComparator.build_from(a)
+
+a.invoices.ready_for_payment.collect do |i|
+  puts [i.id, "item count and page_number: #{i.invoice_pages.pluck(:line_items_count, :page_number)}", "item hit present?: #{i.hits.for_line_item.present?}"].inspect
+end
+
+
+6355
+
+Mturk::Surveys::Hits::Creator.try_to_create_hit
+
+Mturk::TurkTransactions::Comparator.build_with()
+
+a = Individual.find_by(email: "ray@thecafegrind.com").user.invoices.where.not(check_number: nil).count
+
+PaymentsCSV.create_and_send!
+Invoice.order('user_id asc, vendor_id asc').where(payment_send_date: Date.today).where(status: 5).count
+
+[5992, 6189, 6213, 6219, 6188, 6186, 6199, 6132, 4811, 6304]
+
+failed = []
+Alerts::AlertCreator.all.each do |a|
+  begin
+    a.save
+    puts a.errors.full_messages.inspect if a.errors.any?
+    failed << a.id if a.errors.any?
+  rescue
+    failed << a.id
+  end
+end

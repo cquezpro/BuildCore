@@ -1,0 +1,49 @@
+<form name="loginForm"
+    ng-submit="submit()"
+    ng-class="{submitted: submitted}">
+
+  <div class="modal-header" style="border-bottom: 0px solid #e5e5e5;">
+    <h4 class="modal-title">Sign In</h4>
+  </div>
+  <div class="modal-body">
+    <div class="alert alert-danger"
+      ng-show="errors && isFormSubmitted" style="border-radius:5px !important;">
+      <p>{{errors}}</p>
+    </div>
+
+        <div class="text-wrapper">
+          <input class="input" type="email" name="individualEmail" ng-model="individual.email" placeholder="Email Address" id="individualEmail" ng-class="{full: individual.email.length}"/>
+          <label for="individualEmail">Email Address</label>
+        </div>
+
+        <div class="text-wrapper " ng-hide="showPassword">
+          <input class="input" type="password" name="individualPassword" ng-model="individual.password" placeholder="Password" id="individualPassword" ng-class="{full: individual.password.length}"/>
+          <label for="individualPassword">Password</label>
+        </div>
+
+        <div class="text-wrapper" ng-show="showPassword">
+          <input class="input" type="text" name="individualPassword2" ng-model="individual.password" placeholder="Password" id="individualPassword2" ng-class="{full: individual.password.length}"/>
+          <label for="individualPassword2">Password</label>
+        </div>
+        <span>
+          <label for="showpassword">
+            <input type="checkbox" ng-model="showPassword" name="showpassword" id="showpassword"/>
+            <span> show password</span>
+          </label>
+        </span>
+  </div>
+    <!-- <a class="create-account" href="#/sign-up" ui-route="#/sign-up">create an account</a> |  -->
+    <!-- <ipp:login href="http://localhost:3000/users/auth/intuit"></ipp:login> -->
+    <!-- <ipp:login href="http://www.bill-sync.com/users/auth/intuit"></ipp:login> -->
+    <!-- <login-with-quickbooks></login-with-quickbooks> -->
+  <div class="modal-footer" style="border-top: 0px solid #e5e5e5;">
+    <a class="btn btn-link" ng-click="showForgotPasswordModal()">forgot password?</a>|
+
+    <!--a class="btn btn-link" href="https://http://bill-sync.com/contact/">contact us</a-->
+    <a class="btn btn-link" href="http://bill-sync.com/">home</a>|
+    <a class="btn btn-link"
+      ng-click="showSignUpModal()">signup!</a>|
+    <ipp:login class="btn btn-link" href="http://billsync-staging.herokuapp.com/users/auth/intuit"></ipp:login>
+    <button type="submit" class="btn-theme login-get-running-btn">Get Running</button>
+  </div>
+</form>

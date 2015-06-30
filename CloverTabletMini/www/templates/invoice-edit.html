@@ -1,0 +1,119 @@
+<ion-view title="Edit Bill">
+  <ion-content class="has-header">
+    <ion-list class="billsync-list">
+      <!--div class="row">
+        <div class="col">
+          <button class="button button-outline button-positive" ng-click="viewPdf(invoice.pdf_url)">View PDF</button>
+        </div>
+      </div-->
+      <div class="row">
+        <div class="col">
+
+              <div class="row">
+              <div class="col text-center">
+                <button class="button button-outline button-positive icon-left ion-refresh" ng-click="rotatePdf()">rotate</button>
+              </div>
+              <div class="col text-center">
+                <button class="button button-outline button-positive icon-left ion-plus-circled" ng-click="zoomIn()">zoom in</button>
+              </div>
+              <div class="col text-center">
+                <button class="button button-outline button-positive icon-left ion-minus-circled" ng-click="zoomOut()">zoom out</button>
+              </div>
+              <div class="col text-center">
+                <button class="button button-outline button-positive icon-left ion-arrow-left-c" ng-click="prev()">prev</button>
+              </div>
+              <div class="col text-center">
+                <button class="button button-outline button-positive icon-left ion-arrow-right-c" ng-click="next()">next</button>
+              </div>
+            </div> 
+            <div class="row" ng-if="invoice.pdf_url">
+            loaded
+              <div id="pdfContainer" class="col text-center" style="display:none;">
+                <!--canvas id="the-canvas" style="border:1px solid black"></canvas-->
+
+                <pdf-viewer
+                    delegate-handle="my-pdf-container"
+                    url="invoice.pdf_url"
+                    scale="1"
+                    show-toolbar="false"
+                    headers="{ 'x-you-know-whats-awesome': 'EVERYTHING' }"></pdf-viewer>
+
+              </div>
+            </div>    
+
+
+
+
+
+
+
+        </div>
+        <div class="col">
+          <form name="form.invoiceForm">
+            <label class="item item-input">
+              <span class="input-label text-right">Vendor Name</span>
+              <input type="text" placeholder="..." ng-model="invoice.vendor.name" name="vendor_name">
+            </label>
+            <label class="item item-input">
+              <span class="input-label text-right">Address Line 1</span>
+              <input type="text" placeholder="..." ng-model="invoice.vendor.address1" name="address1">
+            </label>
+            <label class="item item-input">
+              <span class="input-label text-right">Address Line 2</span>
+              <input type="text" placeholder="..." ng-model="invoice.vendor.address2" name="address2">
+            </label>
+            <label class="item item-input">
+              <span class="input-label text-right">City</span>
+              <input type="text" placeholder="..." ng-model="invoice.vendor.city" name="vendor_city">
+            </label>
+            <label class="item item-input">
+              <span class="input-label text-right">State</span>
+              <input type="text" placeholder="..." ng-model="invoice.vendor.state" name="vendor_state">
+            </label>
+            <label class="item item-input">
+              <span class="input-label text-right">ZIP</span>
+              <input type="text" placeholder="..." ng-model="invoice.vendor.zip" name="vendor_zip">
+            </label>
+            <label class="item item-input">
+              <span class="input-label text-right">Bill Number</span>
+              <input type="text" placeholder="..." ng-model="invoice.number" name="invoice_number">
+            </label>
+            <label class="item item-input">
+              <span class="input-label text-right">Bill Due Date</span>
+              <input type="date" placeholder="..." ng-model="invoice.due_date" name="due_date">
+            </label>
+            <label class="item item-input">
+              <span class="input-label text-right">Account Number</span>
+              <input type="text" placeholder="..." ng-model="invoice.account_number" name="account_number">
+            </label>
+            <label class="item item-input">
+              <span class="input-label text-right">Date of Delivery</span>
+              <input type="text" placeholder="..." ng-model="invoice.date" name="date">
+            </label>
+            <label class="item item-input">
+              <span class="input-label text-right">Amount due</span>
+              <input type="text" placeholder="..." ng-model="invoice.amount_due" name="amount_due">
+            </label>
+            <label class="item item-input">
+              <span class="input-label text-right">Tax</span>
+              <input type="text" placeholder="..." ng-model="invoice.tax" name="tax">
+            </label>
+            <label class="item item-input text-right">
+              <span class="input-label">Other Fee</span>
+              <input type="text" placeholder="..." ng-model="invoice.other_fee" name="other_fee">
+            </label>
+            
+            <ion-item>
+              <div class="row">
+                <div class="col text-center">
+                  <button class="button button-outline button-positive" ng-click="save()">Save</button>
+                </div>
+              </div>    
+            </ion-item>
+          </form>
+        </div>
+      </div>
+
+    </ion-list>
+  </ion-content>
+</ion-view>

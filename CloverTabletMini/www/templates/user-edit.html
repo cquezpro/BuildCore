@@ -1,0 +1,63 @@
+<ion-view title="User">
+  <ion-nav-buttons>
+    <button class="button" ui-sref="app.users">Close</button>
+  </ion-nav-buttons>
+  <ion-content class="has-header">
+
+          <form name="form.invoiceForm">
+            <label class="item item-input">
+              <span class="input-label col text-right">User Name</span>
+              <input type="text" class="col col-95" placeholder="..." ng-model="ind.name" name="name">
+            </label>
+            <label class="item item-input">
+              <span class="input-label col text-right">Email</span>
+              <input type="text" class="col col-95" placeholder="..." ng-model="ind.email" name="email">
+            </label>
+            <label class="item item-input">
+              <span class="input-label col text-right">Phone</span>
+              <input type="text" class="col col-95" placeholder="..." ng-model="ind.mobile_phone" name="mobile_phone">
+            </label>
+            <label class="item item-input">
+              <div class="input-label col text-right">
+                Role
+              </div>
+              <select ng-model="ind.role_id" class="col col-70" ng-options="role.id as role.name for role in roles" >
+              </select>
+            </label>
+
+            <label class="item item-input">
+              <span class="input-label col text-right">Scope</span>
+              <input type="text" class="col col-95" placeholder="..." ng-model="scopesText" name="scopesText" disabled>
+            </label>
+
+            <!--label class="item item-input">
+              <button class="button button-outline button-positive" ng-click="showScopes()">show scopes</button>
+            </label-->
+
+            <div class="row">
+              <div class="col">
+                <button class="button button-outline button-positive" ng-click="showScopes()">show scopes</button>
+              </div>
+            </div>
+
+            <label class="item item-input">
+              <span class="input-label col text-right">Min $ Limits</span>
+              <input type="text" class="col col-95" placeholder="..." ng-model="ind.limit_min" name="limit_min">
+            </label>
+            <label class="item item-input">
+              <span class="input-label col text-right">Max $ Limits</span>
+              <input type="text" class="col col-95" placeholder="..." ng-model="ind.limit_max" name="limit_max">
+            </label>          
+            <ion-item>
+              <div class="row">
+                <div class="col">
+                  <button class="button button-outline button-positive" ng-click="saveUser()">Save</button>
+                </div>
+              </div>    
+            </ion-item>
+
+          </form>
+
+
+  </ion-content>
+</ion-view>

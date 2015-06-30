@@ -1,0 +1,108 @@
+<nav class='navbar navbar-billsync navbar-fixed-top'>
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle btn-theme pull-left menu-btn"
+        ng-click="changeClass()">
+        <span class="sr-only">Toggle navigation</span>
+        <i class='fa fa-reorder'> menu</i>
+      </button>
+      <a style="margin-top:-3px;" class="navbar-brand"
+        ui-route="/home">
+        billSync
+      </a>
+    </div>
+    <a style="margin-top:10px;"  ui-sref="profile" ui-route="#/profiles/profile" ng-show="currentIndividual && !currentIndividual.user.valid_user" class="msg" ng-if="authorizeState('profile')">
+      <i class="fa fa-bell-o text-danger"></i>
+      <span class="text-danger">Missing Bank Account Information, MUST Be Added Before Processing Payments Click Here.</span>
+    </a>
+    <div style="margin-top:1px;" class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+          <button id="intercom" class="btn btn-link" style="color:#0D2231" ng-if="class === 'nottoggled'">
+            <i class="fa fa-question" style = "font-size:20px;"></i>
+          </button>
+        </li>
+        <!-- <li class="dropdown user-menu">
+          
+        </li> -->
+        <li class="dropdown dark user-menu">
+          <a class="dropdown-toggle" data-toggle="dropdown" href="" ng-show="currentIndividual" style="padding:0 5px">
+            <span class='user-name' ng-bind="currentIndividual.email"></span>
+            <i class='fa fa-cog'></i>
+          </a>
+          <ul class='dropdown-menu'>
+            <li ui-route="#/profiles/profile" ng-class="{active:$uiRoute}" ng-if="authorizeState('profile')">
+              <a ui-sref="profile">
+                <div class="row">
+                  <div class="col-md-1">
+                    <i class='fa fa-user'></i>
+                  </div>
+                  <div class="col-md-8">
+                  Profile
+                  </div>
+                </div>
+                
+                
+              </a>
+            </li>
+            <li ng-if="authorizeState('accounting')">
+              <a ui-sref="accounting">
+                <div class="row">
+                  <div class="col-md-1">
+                    <i class='fa fa-briefcase'></i>
+                  </div>
+                  <div class="col-md-8">
+                  Accounting
+                  </div>
+                </div>
+              </a>
+            </li>
+            <li ng-if="authorizeView('profile/partials/form/individuals.tpl.html')">
+              <a ui-sref="individuals">
+                  <div class="row">
+                  <div class="col-md-1">
+                    <i class='fa fa-users'></i>
+                  </div>
+                  <div class="col-md-8">
+                  Manage users
+                  </div>
+                </div>
+                
+                
+              </a>
+            </li>
+            <li ng-if="authorizeState('settings')">
+              <a ui-sref="settings">
+                  <div class="row">
+                  <div class="col-md-1">
+                    <i class='fa fa-cog'></i>
+                  </div>
+                  <div class="col-md-8">
+                  Settings
+                  </div>
+                </div>
+                
+                
+              </a>
+            </li>
+            <li>
+              <a ng-click="logout()">
+                  <div class="row">
+                  <div class="col-md-1">
+                    <i class='fa fa-sign-out'></i>
+                  </div>
+                  <div class="col-md-8">
+                  Sign out
+                  </div>
+                </div>
+                
+                
+              </a>
+            </li>
+          </ul>
+        </li>
+      </ul>
+
+      <checklist></checklist>
+    </div>
+</nav>

@@ -1,0 +1,25 @@
+
+<table class="table responsive-table bstable table-responsive">
+  <thead>
+    <th>item</th>
+    <th class="center">Price</th>
+    <th>vs. 12 wks</th>
+    <th>Qty</th>
+    <th class="center">vs. 12 wks</th>
+  </thead>
+  <tbody>
+    <tr
+      ng-repeat="transaction in currentInvoice.invoice_transactions" style="{{transaction.alerts.length > 0 ? 'background: rgba(251, 185, 25, 0.5);border: 2px solid #fbb919;' : ''}}">
+      <td title="{{transaction.description}}" tooltip="{{transaction.alerts_text_to_sentence}}" tooltip-append-to-body="true">{{transaction.description }}</td>
+      <td class="center">${{transaction.price | number:2 }}</td>
+      <td>{{transaction.average_price | number: 2}}<span>%</span></td>
+      <td>{{transaction.quantity }}</td>
+      <td class="center">{{transaction.average_volume | number: 2}}<span>%</span></td>
+    </tr>
+  </tbody>
+</table>
+
+<a class="btn-theme"
+  ng-click="editLineItems(currentInvoice)">Add line items</a>
+
+<br><br><br>

@@ -1,0 +1,15 @@
+<div>
+  <h1>{{currentAddress.name}}</h1>
+</div>
+<address-fields address="currentAddress"></address-fields>
+<button ng-click="save()" class="btn-theme"></button>
+<hr>
+<div class="box-header">
+  <div class='title'>Merged Locations/Classes</div>
+</div>
+<div class="box-content">
+  <addresses-table addresses="currentAddress.childrens" qbclasses="currentIndividual.user.qb_classes"></addresses-table>
+  <new-address></new-address>
+</div>
+<button class="btn-theme" ng-click="back()"> Back</button>
+<button class="btn-theme" ng-click="saveAddress()"> Save</button>

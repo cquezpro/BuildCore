@@ -1,0 +1,70 @@
+<script type="text/ng-template" id="customTemplate.html">
+   <a>{{ match.model.name }}<br><small>{{match.model.address1}}, {{match.model.city}} {{match.model.state}}</small></a>
+</script>
+
+<form class="text-wrapper" name="missingFields">
+
+<div
+  ng-hide="currentInvoice.amount_due &&
+           ! missingFields.amount.$dirty">
+  <p class="tab-title">Missing Invoice Fields</p>
+
+  <div class="text-wrapper">
+    <input class="input" type="text" placeholder="Amount due" name="amount" id="amount"
+      ng-model="currentInvoice.amount_due">
+    <label for="amount">Amount due</label>
+  </div>
+</div>
+
+<p class="tab-title"
+  ng-hide="isValidVendor(currentInvoice)">Missing Vendor Fields</p> <br>
+
+<input class="input" type="text" name="typeahead" placeholder="Vendor Name"
+  ng-model="currentInvoice.vendor.name"
+  typeahead="vendor as vendor.name for vendors in getVendors($viewValue) | filter:{name:$viewValue}"
+    typeahead-template-url="customTemplate.html"
+    typeahead-on-select="setVendor($item)"
+  ng-class="{full: selected.length}"
+  ng-hide="currentInvoice.vendor.name && ! missingFields.typeahead.$dirty">
+
+<div
+  ng-show="hasMissingAddresInfo(currentInvoice)">
+
+
+
+<div
+  ng-hide="currentInvoice.vendor.routing_number &&
+           currentInvoice.vendor.bank_account_number">
+  <div class="text-wrapper">
+    <input class="input" type="text" placeholder="Address" id="address"
+      ng-model="vendor.address1"
+      ng-hide="currentInvoice.vendor.address1">
+      <label for="address">Address</label>
+  </div>
+  <div class="text-wrapper">
+    <input class="input" type="text" placeholder="City" id="city"
+      ng-model="vendor.city"
+      ng-hide="currentInvoice.vendor.city">
+      <label for="city">City</label>
+  </div>
+  <div class="text-wrapper">
+    <input class="input" type="text" placeholder="State" id="state"
+      ng-model="vendor.state"
+      ng-hide="currentInvoice.vendor.state">
+      <label for="state">State</label>
+  </div>
+  <div class="text-wrapper">
+    <input class="input" type="text" placeholder="Zip" id="zip"
+      ng-model="vendor.zip"
+      ng-hide="currentInvoice.vendor.zip">
+      <label for="zip">Zip</label>
+  </div>
+</div>
+
+<br>
+
+<button type="submit" class="btn-theme"
+  ng-click="updateInvoice(currentInvoice)">Add fields</button>
+</form>
+
+<br><br>

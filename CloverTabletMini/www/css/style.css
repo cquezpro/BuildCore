@@ -1,0 +1,292 @@
+/* Empty. Add your own CSS if you like */
+
+.billsync-table {
+  text-align: center;
+  width: 70%;
+  color: #333;
+  margin-left: auto;
+  margin-right: auto;
+  font-family: 'OpenSans'
+}
+
+.billsync-table thead tr {
+  border-bottom: solid 2px #333; 
+  height: 40px;
+  color: #333333;
+}
+
+.billsync-table thead th {
+  text-align: center;
+  vertical-align: middle;
+}
+
+.billsync-table th:first-child {
+  text-align: left;
+  font-weight:700;
+}
+
+.billsync-table tbody tr {
+  line-height: 20px;
+  border-bottom: solid 1px #D3D3D3;
+}
+
+.billsync-table tbody tr td{
+  vertical-align: middle;
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+.billsync-table td:first-child {
+  text-align: left;
+  font-weight:700;
+}
+
+
+.bar .title {
+  width: 80% !important;
+  left: 10% !important;
+  right: 0px !important;
+  text-align: center !important;
+  margin: 0px !important;
+}
+
+#default, #login, #signup {
+  width: 50%;
+  right: 25%;
+  left: 25%;
+}
+
+.pay-icon-position {
+	margin-top:-8px
+}
+
+#actionPopup {
+  top: 25% !important;
+  bottom: 50px !important;
+  width: 34% !important;
+  left: 33% !important;
+  height: 50% !important;
+  margin-left: 0px;
+}
+
+#actionPopup .scroll {
+  margin-top: 15px !important;
+}
+#actionPopup .popover-arrow {
+    display: none !important;
+}
+
+#actionPopup .row, #actionPopup .col{
+    padding: 2px !important;
+}
+
+.cancelClose {
+  position: absolute !important;
+  top: -20px !important;
+  right: -30px !important;
+  font-size: 13px !important;
+  font-weight: bold;
+}
+
+.card {
+    border: 1px solid #dce1e5;
+}
+.card label {
+    border: none;
+}
+
+#intercom-modal  {
+  right: 25%;
+  left: 25%;
+  top: 20%;
+  bottom: 20%;
+  width: 50%;
+}
+
+#intercom-modal .notice {
+  width: 90%;
+  margin: 0 auto;
+  color: #336699;
+  padding-top: 40px;
+  padding-bottom: 40px;
+  text-align: center;
+}
+
+
+@font-face {
+    font-family: 'Baumans';
+    src: url('../fonts/Baumans-Regular.ttf') format('truetype');
+    font-weight: 300;
+}
+
+@font-face {
+    font-family: 'OpenSans';
+    src: url('../fonts/OpenSans-Regular.ttf') format('truetype');
+    font-weight: 300;
+}
+
+
+#logostyle {
+  font-family: 'Baumans';
+  color: #336699;
+  font-size: 30px;
+  font-weight: 700;
+  padding-top: 10px;
+  padding-left: 10px;
+}
+
+.bsgenfont {
+  font-family: 'OpenSans';
+  color: #333333;
+}
+
+
+/*
+#intercom-modal .scroll {
+  height: 100%;
+}
+
+#intercom-modal .list {
+  position: fixed;
+  width: 100%;
+  bottom: 0px;
+}
+#intercom-modal .list .row{
+  padding: 0px !important;
+  width: 80% !important;
+  margin: 0 auto !important;
+}
+*/
+
+
+.tabs .tab-item .badge {
+  background-color: #f94926 !important;
+  color: #fff;
+}
+
+#tabbar .badge {
+  position: absolute !important;
+  right: 33% !important;
+}
+
+#profile .card label{
+  border: none;
+}
+
+.text-danger {
+  color: #a94442;
+}
+
+#checklist {
+  position: fixed !important;
+  width:400px !important;
+  top:70px !important;
+}
+
+#checklist .checklist-progress {
+  margin-top: initial;  
+}
+
+.alert-success {
+  color: #3c763d;
+  background-color: #dff0d8;
+  border-color: #d6e9c6;
+}
+
+.minimized {
+    bottom: -181px !important;
+  }
+
+  .checklist-box {
+    background-color: #fff;
+
+    /*position: fixed;*/
+    z-index: 99000;
+    left: 10px;
+    bottom: 0;
+    /*border: solid 1px #aaa;*/
+    border-style: none;
+  }  
+
+    .logo {
+      font-family: 'Baumans',sans-serif;
+      color: #336699;
+      font-size: 25px;
+      margin-top: 5px;
+    }
+
+    .header {
+      background-color: #c0c0c0;
+      color: #fff;
+      padding: 0px 10px 0px 10px;
+      border-top-right-radius: 5px;
+      border-top-left-radius: 5px;
+      height: 29px;
+    }
+
+    .checklist-progress {
+      margin-left: 15px;
+      margin-top: -3px;
+      font-size:18px;
+      vertical-align: top;
+      display: inline-block;
+    }
+
+    .checklist {
+      padding: 10px 30px;
+      margin: 0;
+      list-style: none;
+      font-size: 18px;
+    }
+
+    .toggle-button {
+      color: #fff;
+      margin-top: 7px;
+    }
+
+    .text-green {
+      color: #008000;
+    }
+
+    .message-done {
+      color: #008000;
+      text-decoration: none !important;
+    }
+
+
+.platform-android .popover {
+  box-shadow: 0 0 40px rgba(0, 0, 0, 0.08);
+  border-radius: 10px; }
+.platform-android .popover .bar-header {
+  -webkit-border-top-right-radius: 10px;
+  border-top-right-radius: 10px;
+  -webkit-border-top-left-radius: 10px;
+  border-top-left-radius: 10px; }
+.platform-android .popover .scroll-content {
+  margin: 8px 0;
+  border-radius: 10px; }
+.platform-android .popover .scroll-content.has-header {
+  margin-top: 0; }
+.platform-android .popover-arrow {
+  position: absolute;
+  display: block;
+  top: -17px;
+  width: 30px;
+  height: 19px;
+  overflow: hidden; }
+  .platform-android .popover-arrow:after {
+    position: absolute;
+    top: 12px;
+    left: 5px;
+    width: 20px;
+    height: 20px;
+    background-color: #fdfdfc;
+    border-radius: 3px;
+    content: '';
+    -webkit-transform: rotate(-45deg);
+    transform: rotate(-45deg); }
+.platform-android .popover-bottom .popover-arrow {
+  top: auto;
+  bottom: -10px; }
+  .platform-android .popover-bottom .popover-arrow:after {
+    top: -6px; }

@@ -1,0 +1,143 @@
+<ion-view title="Bill Details">
+  <ion-content class="has-header">
+  	<div class="row">
+  		<div class="col col-80">
+  			<h4>{{invoice.vendor.name}} &mdash; ${{invoice.amount_due | number: 2}}</h4>
+  			<small class="text-muted">{{invoice.vendor.address1}}, {{invoice.vendor.city}},
+          {{invoice.vendor.state}}, {{invoice.vendor.zip}}</small>
+  		</div>
+  		<div class="col text-center">
+  			<small class="text-green">bill</small>
+  			<br>
+  			<strong>{{invoice.due_date | date : 'dd'}}</strong>
+  			<br>
+  			<small>{{invoice.due_date | date : 'MMM'}}</small>
+  		</div>
+  	</div>
+    <div class="row">
+      <div class="col">
+        <button class="button button-outline button-positive" ng-click="viewPdf(invoice.pdf_url)">View PDF</button>
+      </div>
+    </div>
+    <ion-list class="billsync-list">
+      <form ng-if="invoice.status === 'need_information'" name="form.missingFields">
+        <ion-item class="item-divider">
+          <div class="row">
+            <div class="col">Missing Information</div>
+          </div>
+        </ion-item>
+        <label class="item item-input" ng-if="!invoice.amount_due || form.missingFields.amount_due.$dirty">
+          <span class="input-label">Amount due</span>
+          <input type="text" placeholder="..." ng-model="invoice.amount_due" name="amount_due">
+        </label>
+        <label class="item item-input" ng-if="!invoice.vendor.name || form.missingFields.vendor_name.$dirty">
+          <span class="input-label">Vendor Name</span>
+          <input type="text" placeholder="..." ng-model="invoice.vendor.name" name="vendor_name">
+        </label>
+        <label class="item item-input" ng-if="!invoice.vendor.routing_number || form.missingFields.routing_number.$dirty">
+          <span class="input-label">Routing Number</span>
+          <input type="text" placeholder="..." ng-model="invoice.vendor.routing_number" name="routing_number">
+        </label>
+        <label class="item item-input" ng-if="!invoice.vendor.bank_account_number || form.missingFields.bank_account_number.$dirty">
+          <span class="input-label">Bank Number</span>
+          <input type="text" placeholder="..." ng-model="invoice.vendor.bank_account_number" name="bank_account_number">
+        </label>
+        <label class="item item-input" ng-if="!invoice.vendor.address1 || form.missingFields.address1.$dirty">
+          <span class="input-label">Address</span>
+          <input type="text" placeholder="..." ng-model="invoice.vendor.address1" name="address1">
+        </label>
+        <label class="item item-input" ng-if="!invoice.vendor.city || form.missingFields.vendor_city.$dirty">
+          <span class="input-label">City</span>
+          <input type="text" placeholder="..." ng-model="invoice.vendor.city" name="vendor_city">
+        </label>
+        <label class="item item-input" ng-if="!invoice.vendor.state || form.missingFields.vendor_state.$dirty">
+          <span class="input-label">State</span>
+          <input type="text" placeholder="..." ng-model="invoice.vendor.state" name="vendor_state">
+        </label>
+        <label class="item item-input" ng-if="!invoice.vendor.zip || form.missingFields.vendor_zip.$dirty">
+          <span class="input-label">ZIP</span>
+          <input type="text" placeholder="..." ng-model="invoice.vendor.zip" name="vendor_zip">
+        </label>
+        <ion-item>
+          <div class="row">
+            <div class="col">
+              <button class="button button-outline button-positive" ng-click="updateInvoice()">Add fields</button>
+            </div>
+          </div>    
+        </ion-item>
+      </form>
+      <ion-item class="item-divider">
+        <div class="row">
+          <div class="col">Line Items</div>
+        </div>
+      </ion-item>
+      <ion-item>
+        <div class="row">
+          <div class="col col-50">
+            <strong>Item</strong>
+          </div>
+          <div class="col col-20">
+            <strong>Price</strong>
+          </div>
+          <div class="col col-30">
+            <strong>vs 12 wks</strong>
+          </div>
+        </div>
+      </ion-item>
+      <ion-item ng-repeat="line in invoice.line_items_scoped">
+        <div class="row">
+          <div class="col col-50">
+            {{line.description.substring(0, 11)}}...    
+          </div>
+          <div class="col col-20">
+            {{line.price}}    
+          </div>
+          <div class="col col-30">
+            {{line.percent_difference}}    
+          </div>
+        </div>
+      </ion-item>
+      <ion-item>
+        <div class="row">
+          <div class="col">
+            <button class="button button-outline button-positive">Add line items</button>
+          </div>
+        </div>    
+      </ion-item>
+      <ion-item class="item-divider">
+        <div class="row">
+          <div class="col">Actions</div>
+        </div>
+      </ion-item>
+      <ion-item>
+        <div class="row">
+          <div class="col" ng-if="invoice.status === 'ready_for_payment' && authorizeAction('pay-bill') && currentIndividual.user.verified">
+            <button class="button button-icon icon ion-cash" ng-click="changeInvoiceStatus('PAY_INVOICE', invoice)"></button>
+          </div>
+          <div class="col" ng-if="authorizeAction('mark-as-paid-bill') && currentIndividual.user.verified">
+            <button class="button button-icon icon ion-folder" ng-click="changeInvoiceStatus('PAID', invoice)"></button>
+          </div>
+          <div class="col" ng-if="invoice.status === 'ready_for_payment' && authorizeAction('auto-pay-bill')">
+            <button class="button button-icon icon ion-loop" ng-click="autoPay(invoice)"></button>
+          </div>
+          <div class="col" ng-if="authorizeAction('approve-bill-as-accountant') && !invoice.accountant_approved">
+            <button class="button button-icon icon ion-calculator" ng-click="approveInvoice(invoice, 'accountant')"></button>
+          </div>
+          <div class="col" ng-if="authorizeAction('approve-bill') && !invoice.regular_approved">
+            <button class="button button-icon icon ion-checkmark-round" ng-click="approveInvoice(invoice, 'regular')"></button>
+          </div>
+          <div class="col" ng-if="authorizeAction('update-edit-bill')">
+            <button class="button button-icon icon ion-edit" ng-click="editInvoice(invoice)"></button>
+          </div>
+          <div class="col" ng-if="authorizeAction('delete-bill')">
+            <button class="button button-icon icon ion-trash-a" ng-click="changeInvoiceStatus('MARK_AS_DELETED', invoice)"></button>
+          </div>
+          <div class="col" ng-if="authorizeAction('delay-bill')">
+            <button class="button button-icon icon ion-clock" ng-click="showDeferActions(invoice)"></button>
+          </div>
+        </div>    
+      </ion-item>
+    </ion-list>
+    
+  </ion-content>
+</ion-view>

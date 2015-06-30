@@ -1,0 +1,29 @@
+<div>
+  <div class="text-wrapper">
+  	<input class="input" type="text" name="name" ng-class="{full: address.name.length}" ng-model="address.name" placeholder="Name/Description">
+  	<label for="name">Name/Description</label>
+  </div>
+  <div class="text-wrapper">
+  	<input class="input" type="text" name="add1" ng-class="{full: address.address1.length}" ng-model="address.address1" placeholder="Address Line 1">
+  	<label for="add1">Address Line 1</label>
+  </div>
+  <div class="text-wrapper">
+  	<input class="input" type="text" name="add2" ng-class="{full: address.address2.length}" ng-model="address.address2" placeholder="Address Line 2">
+  	<label for="add2">Address Line 2</label>
+  </div>
+  <div class="text-wrapper">
+  	<input class="input" type="text" name="add3" ng-class="{full: address.address3.length}" ng-model="address.address3" placeholder="Address Line 3">
+  	<label for="add3">Address Line 3</label>
+  </div>
+  <div class="text-wrapper">
+  	
+  	<input class="input" type="text" name="city" ng-class="{full: address.city.length}" style="width:47%" ng-model="address.city" placeholder="City">
+  	<label for="city">City</label>
+
+  	<input class="input" type="text" name="state" ng-class="{full: address.state.length}" style="width:12%" ng-model="address.state" placeholder="State">
+  	<label for="state" style="left:48%">State</label>
+
+  	<input class="input" type="text" name="zip" ng-class="{full: address.zip.length}" style="width:18%" ng-model="address.zip" placeholder="Zipcode">
+  	<label for="zip" style="left:62%">Zip</label>
+  </div>
+</div>

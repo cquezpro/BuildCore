@@ -1,0 +1,23 @@
+<div class="modal fade" id="help-modal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header" style="border-bottom:0">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h3 class="modal-title worker">Help</h3>
+      </div>
+      <div class="modal-body">
+        <ul ng-if="defaultForm">
+          <li>Vendor name - Make sure it is the vendor who sent the bill and not the person who is receiving the bill.  We tried to write a HINT to help you out there right above the blank. This is an auto-complete blank so if we have seen the vendor before you can just pick it, if not you have to type it.</li>
+
+          <li>Vendor address - This is also an auto complete blank so if we have seen it before it should have been populated when you picked the vendor.  If that is the case just verify the information is correct.  If not you will have to fill in the information for all the the address fields.</li>
+
+          <li>Invoice/Bill# - Dont confuse this with the customer number.  This should be a number that is unique to the bill.</li>
+
+          <li>Invoice/Bill Date - This is the date the bill was created</li>
+
+          <li>Amount Due - This should be the total for just this particular bill, it should not include pervious bills.  Meaning just for the line items that are present on the bill.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>

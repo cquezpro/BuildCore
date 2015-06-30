@@ -1,0 +1,129 @@
+<instruction-modal></instruction-modal>
+<help-modal></help-modal>
+<feedback-modal></feedback-modal>
+<do-survey-faster-modal></do-survey-faster-modal>
+<workers-table-modal></workers-table-modal>
+
+<div class="pagetitle container" id="scroll-top">
+  <h3 class="worker">Based on the image on the left please answer the following questions</h3>
+  <hr>
+</div>
+
+<div class="alert alert-hit" role="alert" ng-show="formErrors">
+  <button type="button" class="close" aria-label="Close" ng-click="formErrors = ''"><span aria-hidden="true">&times;</span></button>
+  {{formErrors}}
+</div>
+
+<div class="alert alert-hit" role="alert" ng-if="!can_submit">
+  You need to accept this hit before submit
+</div>
+
+<div class="container">
+  <form name="survey_form" onsubmit="return false;">
+    <div class="col-xs-12 col-sm-9 col-md-8">
+      <div id="bill-affix">
+        <a ng-click="setSelected(current_survey.index - 1)" ng-disabled="current_survey.index - 1 < 0" class="btn btn-theme-worker" ng-if="can_submit"> « Previous Bill</a>
+        <a ng-click="setSelected(current_survey.index + 1)" ng-disabled="current_survey.index + 1 > surveys.length - 1" class="btn btn-theme-worker" ng-if="can_submit">Next Bill »</a>
+        <br>
+        <br>
+        <div class="fixedPdf">
+          <mozilla-pdf-viewer
+            data-file="pdf_url" ng-if="pdf_url"></mozilla-pdf-viewer>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="animate-if col-xs-12 col-sm-3 col-md-4">
+
+      <div>
+        <strong>Is this an bill or invoice?</strong>
+        <label class="textradio" for="is_invoice-no">
+          <input type="radio" ng-model="current_survey.is_invoice" value="false" id="is_invoice-no" name="is_invoice-no" class="radio-text"/><span> No</span>
+        </label>
+
+        <label class="textradio" for="is_invoice-yes">
+          <input type="radio" ng-model="current_survey.is_invoice" value="true" id="is_invoice-yes" name="is_invoice-yes" class="radio-text"/><span>Yes</span>
+        </label>
+      </div>
+
+      <div>
+        <strong>Is the vendor/seller name present?</strong>
+        <label class="textradio" for="vendor-no">
+          <input type="radio" ng-model="current_survey.vendor_present" value="false" id="vendor-no" name="vendor-no" class="radio-text"/><span>No</span>
+        </label>
+
+        <label class="textradio" for="vendor-yes">
+          <input type="radio" ng-model="current_survey.vendor_present" value="true" id="vendor-yes" name="vendor-yes" class="radio-text"/><span>Yes</span>
+        </label>
+      </div>
+
+      <div>
+        <strong>Is the vendor address present?</strong>
+        <label class="textradio" for="address-no">
+          <input type="radio" ng-model="current_survey.address_present" value="false" id="address-no" name="address-no" class="radio-text"/><span>No</span>
+        </label>
+
+        <label class="textradio" for="address-yes">
+          <input type="radio" ng-model="current_survey.address_present" value="true" id="address-yes" name="address-yes" class="radio-text"/><span>Yes</span>
+        </label>
+      </div>
+
+      <div>
+        <strong>Is the Amount due/balance due present?</strong>
+        <label class="textradio" for="amount_due-no">
+          <input type="radio" ng-model="current_survey.amount_due_present" value="false" id="amount_due-no" name="amount_due-no" class="radio-text"/><span>No</span>
+        </label>
+
+        <label class="textradio" for="amount_due-yes">
+          <input type="radio" ng-model="current_survey.amount_due_present" value="true" id="amount_due-yes" name="amount_due-yes" class="radio-text"/><span>Yes</span>
+        </label>
+      </div>
+
+      <div ng-if="current_survey.locations_feature">
+        <strong>What is the "Ship to" location on this bill? (If "Ship to" does not exist use "Bill to")</strong>
+        <select ng-model="current_survey.address_reference" ng-options="s.id as s.string for s in current_survey.user_addresses" data-placeholder="" ng-class="{full: current_survey.user_addresses.length}" class="input" type="text" id="address_reference" name="address_reference" >
+        </select>
+      </div>
+
+      <div>
+        <strong>"How many line items are there on (do not include items where the quantity is 0):</strong> <i class='fa fa-question-circle' data-toggle="tooltip" title="count the number of line items on an invoice and put them in this field, include gas charges, freight charges and any other fees as line items, EXCLUDE TAXES" data-container="body"></i><br>
+        <div ng-repeat="page in current_survey.invoice_pages">
+          <label>Page {{page.page_number}}</label>
+          <input class="input form-control" type="text" name="line_items_count" id="number" ng-model="page.line_items_count" style="width:30%" placeholder="Page {{page.page_number}}">
+        </div>
+      </div>
+
+      <div>
+        <strong>Are there any items or prices that have been marked through?</strong> <i class='fa fa-question-circle' data-toggle="tooltip" title="Only mark yes if a quantity or price has been marked through by pen or pencil, make sure you adjust the total amount due on the invoice before filling in the next field, if you are unclear see the sample invoices above" data-container="body"></i><br>
+
+        <label class="textradio" for="marked_through-no">
+          <input type="radio" ng-model="current_survey.is_marked_through" value="false" id="marked_through-no" name="marked_through-no" class="radio-text"/><span>No</span>
+        </label>
+
+        <label class="textradio" for="marked_through-yes">
+          <input type="radio" ng-model="current_survey.is_marked_through" value="true" id="marked_through-yes" name="marked_through-yes" class="radio-text"/><span>Yes</span>
+        </label>
+      </div>
+
+      <div class="text-wrapper-worker" style="margin-bottom:100px">
+        <div ng-show="current_survey.index == surveys.length - 1" ng-if="can_submit">
+          <a ng-click="save()" class="btn btn-theme-worker" ng-disable="submiting">
+            Submit
+            <span ng-show="submiting">Submiting...</span>
+          </a>
+        </div>
+        <div ng-show="current_survey.index < surveys.length - 1" ng-if="can_submit">
+          <a ng-click="setSelected(current_survey.index + 1)" class="btn btn-theme-worker">Next Bill ({{current_survey.index + 1}}/{{surveys.length}})</a>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+
+<form action="https://www.mturk.com/mturk/externalSubmit" method="post" name="submitForm">
+<!-- <form action="https://workersandbox.mturk.com/mturk/externalSubmit" method="post" name="submitForm"> -->
+  <input class="input hide" type="date"  name="date">
+  <input class="input hide" type="text"  name="aws_form" value="aws_form_test">
+  <input type="hidden" name="assignmentId" value="{{assignmentId}}">
+</form>

@@ -1,0 +1,207 @@
+<div>
+  <div class="pagetitle">
+    <h1>
+      <span>{{line_item.description}}</span>
+    </h1>
+  </div>
+  <div>
+  <a ui-sref="reports" ng-class="{active:$uiRoute}"><i class='fa fa-arrow-left'></i> back to reports</a>
+  </div>
+
+  <div class="col-md-12">
+    <form>
+
+      <div class="text-wrapper col-md-4">
+      	<span class="selectionlabel">Vendor:</span><br>
+        <select class="input" ng-options="vendor.id as vendor.name for vendor in vendors" ng-model="selected_vendor_id" ng-change="vendorDropDownChanged()"></select>
+      </div>
+
+      <div class="text-wrapper col-md-8">
+      <span class="selectionlabel">Item:</span><br>
+        <select class="input" ng-options="line_item.id as line_item.description for line_item in line_items" ng-model="selected_line_item_id" ng-change="lineItemChanged()"></select>
+      </div>
+
+      <div class="text-wrapper col-md-4">
+      	<span class="selectionlabel">Bill Start Date:</span><br>
+        <input class="form-control" type="text" datepicker-popup="MM/dd/yy" ng-model="start_date" is-open="date_start" datepicker-options="dateOptions" close-text="Close" show-weeks="false" id="date" name="date" style="width:80%;display:inline-block" ng-change="refreshItem()">
+        <button type="button" class="btn btn-default" ng-click="openDatePicker($event, 'date_start')"><i class="glyphicon glyphicon-calendar"></i></button>
+      </div>
+
+      <div class="text-wrapper col-md-4">
+      	<span class="selectionlabel">Bill End Date:</span><br>
+        <input class="form-control" type="text" datepicker-popup="MM/dd/yy" ng-model="dates.end_date" is-open="date_end" datepicker-options="endDateOptions" close-text="Close" show-weeks="false" id="date" name="date" style="width:80%;display:inline-block" ng-change="refreshItem()">
+        <button type="button" class="btn btn-default" ng-click="openDatePicker($event, 'date_end')"><i class="glyphicon glyphicon-calendar"></i></button>
+      </div>
+
+      <div class="text-wrapper col-md-4">
+      	<span class="selectionlabel" ng-if="currentIndividual.user.locations_feature">Class/Location:</span><br>
+        <select ng-options="class.id as class.name for class in qb_classes" ng-model="selected_class" ng-change="classChanged()" ng-if="currentIndividual.user.locations_feature"></select>
+      </div>
+
+
+
+    </form>
+  </div>
+
+	<div class="col-md-11">
+	 <span class="report-header">Price Trends<span class="pull-right"><i class='fa fa-info'></i></span></span>
+	</div>
+	<div class="col-md-9">
+	<!-- [sparkline chart goes here] -->
+		<nvd3-line-chart
+        data="exampleData"
+        width="610"
+      	height="325"
+      	margin="{left:30, top:30, bottom:30, right:30}"
+        showXAxis="true"
+        showYAxis="true"
+        xAxisTickFormat="xAxisTickFormat()"
+        tooltips="true"
+      	color="colorFunction()"
+        noData="No date for the time period"
+        ng-if="line_item.bills.length >= 10">
+    </nvd3-line-chart>
+    <h3 ng-if="line_item.bills.length < 10" class="col-md-9">At the moment we have less than 10 bills with this item, once we get a few more we will be able to generate a report.</h3>
+	</div>
+	<div class="col-md-2 report-metric-box">
+		<span class="report-metric-title">Average Price</span>
+		<span class="report-metric">${{line_item.average_price | number: 2}}</span>
+		<span class="report-metric-title">High Price</span>
+		<span class="report-metric">${{line_item.maximum_price | number: 2}}</span>
+		<span class="report-metric-title">Low Price</span>
+		<span class="report-metric">${{line_item.minimum_price | number: 2}}</span>
+		<span class="report-metric-title">Annualized Impact</span>
+	</div>
+	<div class="col-md-7">
+		<div class="col-md-12">
+			<span class="report-header">Item Metrics<span class="pull-right"><i class='fa fa-info'></i></span></span>
+			<!-- [Bar chart with the following 4 metrics -Average Weekly Spend, -Average Montly Spend, -Average volume per order, # of orders] -->
+
+			<br>
+			<style type="text/css">
+				.background {
+			    fill: #FFFFFF;
+			    fill-opacity: 0.01;
+				}
+				.component {
+				    fill: #e1e1e1;
+				}
+				.component .label {
+				    font-family: Myriad, "Helvetic Neue", Helvetica, Arial;
+				    text-anchor: middle;
+				    fill: #000000;
+				}
+				.arc {
+				    stroke-weight:0.1;
+				    fill: #336699;
+				}
+				.arc2 {
+				    stroke-weight:0.1;
+				    fill: #336699;
+				}
+				.label {
+				    font-family:  Myriad, "Helvetic Neue", Helvetica, Arial;
+				    text-anchor: middle;
+				}
+				.radial-svg {
+				    display: block;
+				    margin: 0 auto;
+				}
+				#div1, #div2, #div3 {
+	        height: 100px;
+	        box-sizing: border-box;
+	        float: left;
+	      }
+	      #div2 .arc {
+	        stroke-weight: 0.1;
+	        fill: #336699;
+	      }
+	      #div2 .arc2 {
+	        stroke-weight: 0.1;
+	        fill: #336699;
+	      }
+	      #div3 .arc {
+	        stroke-weight: 0.1;
+	        fill: #336699;
+	      }
+			</style>
+	    <div id="div1" class="col-md-4" style="margin-bottom: 35px; font-weight: bold;">% of Vendor Spend</div>
+	    <div id="div2" class="col-md-4" style="margin-bottom: 35px; font-weight: bold;">% of total Spend</div>
+	    <div id="div3" class="col-md-4" style="margin-bottom: 35px; font-weight: bold;">% of orders</div>
+
+   </div>
+   <div class="col-md-12">
+			<span class="report-header">Bill History<span class="pull-right"><i class='fa fa-info'></i></span></span>
+			<table class="billsync-table table-hover col-md-12">
+				<thead>
+					<th>Date</th>
+					<th>Price</th>
+					<th>Volume</th>
+					<th>Total</th>
+					<th>PDF</th>
+				</thead>
+				<tbody>
+					<tr ng-repeat="bill in line_item.bills">
+						<td>{{bill.date | date: "shortDate"}}</td>
+						<td>{{bill.price | number: 2}}</td>
+						<td>{{bill.volume | number: 2}}</td>
+						<td>${{bill.total | number: 2}}</td>
+						<td><a ui-sref="editInvoice({invoiceId: bill.id})" target="_blank"><i class='fa fa-file-pdf-o'></i></a></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+	<div class="col-md-4">
+		<div class="col-md-12">
+			<span class="report-header">What if price ...?<span class="pull-right"><i class='fa fa-info'></i></span></span>
+			<select ng-options="item.id as item.label for item in item_filters" ng-model="item_filter" ng-change="setItemFilter(item.id)">
+			</select>
+			<table class="billsync-table table-hover col-md-12">
+				<tbody>
+					<tr>
+						<td>Weekly Savings</td>
+						<td>
+              <span ng-if="selected_item_filter.weekly_savings">${{selected_item_filter.weekly_savings | number: 2}}</span>
+              <span ng-if="!selected_item_filter.weekly_savings">-</span>
+            </td>
+					</tr>
+					<tr>
+            <td>Monthy Savings</td>
+            <td>
+              <span ng-if="selected_item_filter.monthy_savings">${{selected_item_filter.monthy_savings | number: 2}}</span>
+              <span ng-if="!selected_item_filter.monthy_savings">-</span>
+            </td>
+					</tr>
+					<tr>
+            <td>Yearly Savings</td>
+            <td>
+              <span ng-if="selected_item_filter.yearly_savings">${{selected_item_filter.yearly_savings | number: 2}}</span>
+              <span ng-if="!selected_item_filter.yearly_savings">-</span>
+            </td>
+					</tr>
+				</tbody>
+			</table>
+			<br>
+		</div>
+		<div class="col-md-12">
+			<span class="report-header">Vendor Metrics<span class="pull-right"><i class='fa fa-info'></i></span></span>
+			<table class="billsync-table table-hover col-md-12">
+				<tbody>
+					<tr>
+						<td>Weekly Spend</td>
+						<td> $500.21 </td>
+					</tr>
+					<tr>
+						<td>Monthly Spend</td>
+						<td>$1950.10</td>
+					</tr>
+					<tr>
+						<td>Order Size</td>
+						<td>$950.10</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>

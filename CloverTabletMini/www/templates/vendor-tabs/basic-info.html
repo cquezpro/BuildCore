@@ -1,0 +1,91 @@
+<ion-view title="Basic Info" hide-back-button="true">
+  <ion-nav-buttons side="left">
+    <button class="button button-clear ion-chevron-left" ng-click="$ionicGoBack($event)">
+    </button>
+  </ion-nav-buttons>
+  <ion-nav-buttons side="right">
+   <button class="right-buttons button button-icon icon ion-help" style="z-index:99;" ng-click="openIntercom();">
+    </button>    
+  </ion-nav-buttons>
+  <ion-content class="has-header">
+    <ion-list>
+      <label class="item item-input">
+        <span class="input-label">Vendor Name</span>
+        <input type="text" placeholder="..." ng-model="vendor.name" name="vendor_name">
+      </label>
+      <label class="item item-input">
+        <span class="input-label">Contact Person</span>
+        <input type="text" placeholder="..." ng-model="vendor.contact_person" name="contact_person">
+      </label>
+      <label class="item item-input">
+        <span class="input-label">E-Mail</span>
+        <input type="email" placeholder="..." ng-model="vendor.email" name="email">
+      </label>
+      <label class="item item-input">
+        <span class="input-label">Business Number</span>
+        <input type="text" placeholder="..." ng-model="vendor.business_number" name="business_number">
+      </label>
+      <label class="item item-input">
+        <span class="input-label">Fax Number</span>
+        <input type="text" placeholder="..." ng-model="vendor.fax_number" name="fax_number">
+      </label>
+      <label class="item item-input">
+        <span class="input-label">Cell Number</span>
+        <input type="text" placeholder="..." ng-model="vendor.cell_number" name="cell_number">
+      </label>
+      <label class="item item-input">
+        <span class="input-label">Tax ID #</span>
+        <input type="text" placeholder="..." ng-model="vendor.tax_id_number" name="tax_id_number">
+      </label>
+      <!--<ion-item class="item-divider">
+        <div class="row">
+          <div class="col">Pay By Bank Wire</div>
+        </div>
+      </ion-item>
+      <label class="item item-input">
+        <span class="input-label">Bank Routing Number</span>
+        <input type="text" placeholder="..." ng-model="vendor.routing_number" name="routing_number">
+      </label>
+      <label class="item item-input">
+        <span class="input-label">Bank Account Number</span>
+        <input type="text" placeholder="..." ng-model="vendor.bank_account_number" name="bank_account_number">
+      </label>-->
+      <ion-item class="item-divider">
+        <div class="row">
+          <div class="col">Pay By Mail</div>
+        </div>
+      </ion-item>
+      <label class="item item-input">
+        <span class="input-label">Address Line 1</span>
+        <input type="text" placeholder="..." ng-model="vendor.address1" name="vendor_address1">
+      </label>
+      <label class="item item-input">
+        <span class="input-label">Address Line 2</span>
+        <input type="text" placeholder="..." ng-model="vendor.address2" name="vendor_address2">
+      </label>
+      <label class="item item-input">
+        <span class="input-label">Address Line 3</span>
+        <input type="text" placeholder="..." ng-model="vendor.address3" name="vendor_address3">
+      </label>
+      <label class="item item-input">
+        <span class="input-label">City</span>
+        <input type="text" placeholder="..." ng-model="vendor.city" name="vendor_city">
+      </label>
+      <label class="item item-input">
+        <span class="input-label">State</span>
+        <input type="text" placeholder="..." ng-model="vendor.state" name="vendor_state">
+      </label>
+      <label class="item item-input">
+        <span class="input-label">ZIP</span>
+        <input type="text" placeholder="..." ng-model="vendor.zip" name="vendor_zip">
+      </label>
+      <ion-item>
+        <div class="row">
+          <div class="col">
+            <button class="button button-outline button-positive" ng-click="save()">Save</button>
+          </div>
+        </div>    
+      </ion-item>
+    </ion-list>
+  </ion-content>
+</ion-view>

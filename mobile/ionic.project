@@ -1,0 +1,12 @@
+{
+  "name": "mobile",
+  "app_id": "957bc026",
+  "gulpStartupTasks": [
+    "sass",
+    "watch"
+  ],
+  "watchPatterns": [
+    "www/**/*",
+    "!www/lib/**/*"
+  ]
+}

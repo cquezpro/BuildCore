@@ -1,0 +1,89 @@
+<div>
+  <div class="pagetitle">
+    <h1>
+      <span>Vendor</span>
+    </h1>
+  </div>
+  <a ui-sref="reports" ng-class="{active:$uiRoute}"><i class='fa fa-arrow-left'></i> back to reports</a>
+  <form>
+    <div class="text-wrapper col-md-3">
+     <span class="selectionlabel">Vendor:</span><br>
+      <ui-select ng-model="$parent.selected_vendor" on-select="vendorChanged()">
+        <ui-select-match placeholder="Select">
+          {{$select.selected.name}}
+        </ui-select-match>
+        <ui-select-choices repeat="vendor.id as vendor in vendors | filter: $select.search">
+          <div ng-bind-html="vendor.name | highlight: $select.search"></div>
+        </ui-select-choices>
+      </ui-select>
+    </div>
+    <div class="text-wrapper col-md-3">
+      <span class="selectionlabel">Bill Start Date:</span><br>
+      <input class="form-control" type="text" datepicker-popup="MM/dd/yy" ng-model="start_date" is-open="date_start" datepicker-options="dateOptions" close-text="Close" show-weeks="false" id="date" name="date" style="width:35%;display:inline-block" ng-change="setStartDate()">
+      <button type="button" class="btn btn-default" ng-click="openDatePicker($event, 'date_start')"><i class="glyphicon glyphicon-calendar"></i></button>
+    </div>
+    <div class="text-wrapper col-md-3">
+      <span class="selectionlabel">Bill End Date:</span><br>
+      <input class="form-control" type="text" datepicker-popup="MM/dd/yy" ng-model="end_date" is-open="date_end" datepicker-options="dateOptions" close-text="Close" show-weeks="false" id="date" name="date" style="width:35%;display:inline-block" ng-change="setEndDate()">
+      <button type="button" class="btn btn-default" ng-click="openDatePicker($event, 'date_end')"><i class="glyphicon glyphicon-calendar"></i></button>
+    </div>
+    <div class="text-wrapper col-md-3">
+      <span class="selectionlabel" ng-if="currentIndividual.user.locations_feature">Class/Location:</span><br>
+      <select ng-options="class.id as class.name for class in qb_classes" ng-model="selected_class" ng-change="classChanged()" ng-if="currentIndividual.user.locations_feature" style="width: 100%;"></select>
+    </div>
+  </form>
+<div class="clearfix"></div>
+<div class="fixed-header-div">
+  <div class="fixed-height-div">
+    <table class="table-hover billsync-table fixed-header-table">
+      <thead>
+        <tr>
+          <th>
+            Name
+            <a ng-click="predicate = 'name'; reverse=!reverse" style="margin-left:-40px">Name</a>
+          </th>
+          <th>
+            Outstanding
+            <a ng-click="predicate = 'outstanding'; reverse=!reverse" style="margin-left:-82px">Outstanding</a>
+          </th>
+          <th>
+            Avg. Yearly Volume
+            <a ng-click="predicate = 'average_yearly_volume'; reverse=!reverse" style="margin-left:-120px">Avg. Yearly Volume</a>
+          </th>
+          <th>
+            Time Period
+            <a ng-click="predicate = 'total_time_period'; reverse=!reverse" style="margin-left:-82px">Time Period</a>
+          </th>
+          <th>
+            % in the time Period
+            <a ng-click="predicate = 'percent_time_period'; reverse=!reverse" style="margin-left:-145px">% in the time Period</a>
+          </th>
+          <th>
+            # of bills in the time period
+            <a ng-click="predicate = 'bills_time_period'; reverse=!reverse" style="margin-left:-180px"># of bills in the time period</a>
+          </th>
+          <th>
+            # of price changes
+            <a ng-click="predicate = 'num_price_changes'; reverse=!reverse" style="margin-left:-130px"># of price changes</a>
+          </th>
+          <!-- <th>Annualized Impact</th> -->
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="vendor in collection | orderBy:predicate:reverse">
+          <td>{{vendor.name}}</td>
+          <td>${{vendor.outstanding | number: 2}}</td>
+          <td>${{vendor.average_yearly_volume | number: 2}}</td>
+          <td>${{vendor.total_spend_time_period | number: 2}}</td>
+          <td style="background: #EDEDED;">{{vendor.percent_time_period | number: 2}}%</td>
+          <td>{{vendor.bills_time_period}}</td>
+          <td>{{vendor.num_price_changes}}</td>
+          <!-- <td>$15.00</td> -->
+        </tr>
+      </tbody>
+    </table>    
+  </div>
+</div>  
+ 
+
+</div>

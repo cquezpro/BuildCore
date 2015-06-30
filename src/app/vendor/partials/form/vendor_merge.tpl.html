@@ -1,0 +1,32 @@
+<div>
+<p ng-class="{ 'text-success': saved, 'text-warning': saving }">{{message}}</p>
+
+
+  <div ng-hide="is_merging">
+    <a class="btn-theme" ng-click="startMerging()">Merge</a>
+  </div>
+  <div ng-show="is_merging">
+
+
+  <div class="row">
+    <div class="col-md-5">
+      <ui-select ng-model="selected_vendor" on-select="merge($item, $model)" >
+        <ui-select-match placeholder="Select a Vendor">{{$select.selected.formated_vendor | maxLength:40}}</ui-select-match>
+        <ui-select-choices repeat="vendor in vendors | filter: $select.search">
+          <div>{{vendor.name}}</div>
+          <small>{{vendor.address1}}</small>
+        </ui-select-choices>
+      </ui-select>
+    </div>
+    <div class="col-md-6" style="height:40px;margin-top:6px;">
+       <a class="btn-theme" ng-click="combine()">Combine</a
+    </div>
+  </div>
+
+
+
+
+
+
+  </div>
+</div>

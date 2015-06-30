@@ -1,0 +1,97 @@
+<script type="text/ng-template" id="customTemplate.html">
+  <a>{{ match.model.name }}<br><small>{{match.model.address1}}, {{match.model.city}} {{match.model.state}}</small></a>
+</script>
+
+<instruction-modal></instruction-modal>
+<help-modal></help-modal>
+<feedback-modal></feedback-modal>
+<do-line-item-faster-modal></do-line-item-faster-modal>
+<workers-table-modal></workers-table-modal>
+
+<div class="container">
+  <div class="alert alert-hit" role="alert" ng-if="!can_submit">
+    You need to accept this hit before submit
+  </div>
+
+  <div style="height:70vh;overflow:scroll">
+    <div class="pagetitle">
+      <h3 class="worker" ng-hide="invoice.failed_items">Extract line items from #1 invoice.</h3>
+      <h3 class="worker" ng-show="invoice.failed_items">Please fill in the red boxes with the missing information</h3>
+      <p class="text-muted">Note: Exclude line items where the quantity is 0.</p>
+      <p style="text-transform: none;">Bonuses are paid for all line items entered after the first 10 items.  For the first 10 items that you complete you will be paid 5 cents.  After that the payment is 1 cent for every item we match to another workers response (accuracy matters).  Depending on your worker score you can be paid up to a 50% premium if you are in the top decile of workers. The bonus payments are paid on a daily basis and processed at the end of the day.</p>
+    </div>
+
+    <div ng-if="submit_count_error" class="alert alert-danger">
+      <p>
+        Entered line items does not match the criteria, please try completing all items before submitting again.
+        {{submit_count_error}}
+      </p>
+
+      <p>If you have more than that number of items please delete the lowest total value items from the list till you fall into that range. If you have less please write "Unknown Item" with a total of 0 till you fit within the requirement.</p>
+    </div>
+    <div class="row">
+      <div class="col-md-10">
+        <div class="fixedPdf">
+          <mozilla-pdf-viewer data-file="pdf_url" ng-if="pdf_url" item-hit="itemHit" pdf-page="pdfPage"></mozilla-pdf-viewer>
+        </div>
+      </div>
+      <div class="col-md-2">
+        <div class="align-bottom">
+          <table class="calc">
+            <tr>
+              <td>Bill total</td>
+              <td class="amount">${{invoice_fields.amount_due}}</td>
+            </tr>
+            <tr>
+              <td>Taxes</td>
+              <td class="amount"><span style="float:left;">-</span>{{invoice_fields.tax}}</td>
+            </tr>
+            <tr>
+              <td>Other Fees</td>
+              <td class="amount"><span style="float:left;">-</span>{{invoice_fields.other_fees}}</td>
+            </tr>
+            <tr>
+              <td>Items Total</td>
+              <td class="amount"><span style="float:left;">-</span>{{invoice_fields.total_line_items}}</td>
+            </tr>
+            <tr class="lastrow">
+              <td ng-show="invoice.show_unaccounted">Unaccounted</td>
+              <td class="final amount" ng-class="{'notzero': getUnacounted().toFixed() !== '0'}" ng-show="invoice.show_unaccounted">
+                ${{getUnacounted() | number:2}}
+              </td>
+            </tr>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div style="height:20vh;overflow:scroll">
+    <div ng-include src="'line_items/line_items_table.tpl.html'"></div>
+
+    <div ng-if="submit_count_error" class="alert alert-danger">
+      <p>
+        Entered line items does not match the criteria, please try completing all items before submitting again.
+        {{submit_count_error}}
+      </p>
+    </div>
+
+    <div ng-if="can_submit">
+      <a class="btn-theme-worker" ng-click="save()" ng-disable="submiting" ng-if="can_submit">
+        <span ng-show="submiting">Submiting...</span>
+        <span ng-hide="submiting">Submit</span>
+      </a>
+    </div>
+
+    <form action="https://www.mturk.com/mturk/externalSubmit" method="post" name="submitForm">
+    <!-- <form action="https://workersandbox.mturk.com/mturk/externalSubmit" method="post" name="submitForm"> -->
+      <input class="input hide" type="date" name="date">
+      <input class="input hide" type="text" name="testing" value="just a test">
+      <input class="input hide" type="text" name="aws_form" value="aws_form_test">
+      <input type="hidden" name="assignmentId" value="{{assignmentId}}">
+    </form>
+  </div>
+
+
+</div>
+

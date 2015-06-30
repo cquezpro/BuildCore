@@ -1,0 +1,161 @@
+<ion-view title="" id="homepage" hide-back-button="true">
+  <ion-nav-buttons>
+      <div style="text-align:left;  position: absolute;">
+          <img src="img/logo.png" style="  height: 25px;  width: 90px;  margin-top: 6px;" />
+      </div>
+      <div ng-if="currentIndividual && !currentIndividual.user.valid_user" style="display:inline-block;white-space: nowrap;position: absolute;  text-align: center;  width: 100%;">
+          <button class="button button-icon icon" ui-sref="app.tabs.profile" style="text-decoration: none;" class="msg ng-scope" ng-if="authorizeState('profile')">
+              <div style="color:#a94442;font-size:12px;">
+              	<div style="line-height:20px">Add required bank</div>
+              	<div style="line-height:8px">information click here</div>
+          	</div>
+          </button>
+      </div>
+  </ion-nav-buttons>
+
+  <ion-nav-buttons side="right">
+      <button class="button button-icon icon ion-clipboard text-right" style="margin-left:54px;left:14px;" ng-click="showChecklist($event);">
+      	<span class="badge badge-assertive" style="z-index: 2 !important;height: 23px; width: 23px; margin-left: 25px;top: -45px;">
+          	{{getCompletationPersent2()}}
+	    	</span>
+      </button>        
+ 		<button class="right-buttons button button-icon icon ion-help" style="" ng-click="openIntercom();">
+  	</button>    
+  </ion-nav-buttons>
+
+  <div id="filterField" class="row" style="margin-top: 5px;">
+		<i class="icon ion-search placeholder-icon"  style="position: absolute; padding: 8px;"></i>
+		<input placeholder="search home..." type="text" ng-model="form.filterText" style="-webkit-appearance: none !important; border: 2px solid #d3d3d3; border-radius: 5px; padding-left: 20px; box-shadow: none; background: #FDFDFC;" />
+    
+  </div>
+  <div id="statLine">
+    <small style="color:#939393;font-size:13px">
+      paid last 7: ${{stat.paid_last_seven_days | number:0}} / pending next 7: ${{stat.pending_next_7_days | number:0}}
+      <br>
+      14: ${{stat.pending_next_14_days | number:0}} / 30: ${{stat.pending_next_month | number:0}}
+    </small>  
+  </div>
+
+    <ion-content id="home_content">
+        <div style="display:none">
+            <checklist></checklist>
+        </div>
+
+        <div class="row" ng-if="invoicesInProcess != null && invoicesInProcess != undefined" style="margin-top: -10px;">
+           <div class="col text-center" style="padding: 0px; margin:3px; margin-bottom: -5px; margin-top: -5px;">
+            	 <span ng-if="invoicesInProcess>0">
+                    <h3>
+                      <small style="color:#939393; font-size:13px; line-height: 50%;">We are currently processing {{ invoicesInProcess }} bills.<div style="margin-top: 5px;">We will be done soon!</div></small>
+                    </h3>
+                </span>
+                <span ng-if="invoicesInProcess==0">
+                    <h3>
+                      <small style="font-size:13px;color:#939393;">We've processed all your bills! Keep them coming.</small>
+                    </h3>
+                </span>                
+		 </div>
+	 </div>
+
+
+	<div class="row" style="margin-top:10px;" ng-if="invoicesFetched && (invoices==null || invoices.length==0)">
+  		<div class="col text-center" >
+  			Add more bills by tapping the <ion-document> Add bill below and we will get to work! <br> <ion-chevron-down>
+  		</div>
+  	</div>
+
+	<ion-refresher
+	    pulling-text="Previous Bills"
+	    on-refresh="addPreviousBills()">
+	  </ion-refresher>
+	  <ion-list class="billsync-list">
+	    <ion-item ng-repeat="invoice in invoices | filter: form.filterText">
+	    	<div class="row">
+	    		<div class="col col-20 text-center">
+	    			<small class="text-green">due</small>
+	    			<br>
+	    			<strong>{{invoice.due_date | date : 'dd'}}</strong>
+	    			<br>
+	    			<small>{{invoice.due_date | date : 'MMM'}}</small>
+	    			<br>
+	    			<span class="date-block-month" style="margin-top:5px;margin-left:-12px;">
+ 
+	    			   <i class="ion-calculator text-green" ng-if="invoice.accountant_approved"></i>
+
+	    			   <i class="ion-checkmark text-green" ng-if="invoice.regular_approved"></i>
+
+	    			</span>
+	    		</div>
+		    	<div class="col element-clickable" ui-sref="app.tabs.invoice({id: invoice.id})">
+	    		
+			    	<div class="row" style="margin-top:-10px;">
+				    	<div class="col">		    			  
+				    		 <strong>{{invoice.vendor.name | maxLength: 20}}</strong>
+				    		 <br>
+				    		 <strong>${{invoice.amount_due | number: 2}}</strong>
+					      <br>
+					      <small>{{invoice.category}}</small>
+					      <br>
+					      <!--br ng-show="invoice.status === 'ready_for_payment'">
+					      <small ng-hide="invoice.status === 'ready_for_payment'">{{invoice.humanized_status}}</small-->	
+				    	</div>
+				    	<div class="col text-left" style="margin-top:40px;margin-left:-100%;">
+					    	<br>
+			                <span style="font-size:15px; text-transform: lowercase;">rcvd {{invoice.date | date : 'MMM-dd'}}</span>
+			                <span ng-if="invoice.total_alerts.length > 0" style = "font-size:15px;color: #f94524">/{{invoice.humanized_alert_text}}</span>
+			               
+				    	</div>		    		
+			    	</div>
+
+		    	</div>
+		    	<div class="col col-20">
+		    		<button class="button button-icon icon ion-edit"
+					    ng-show="isEditableInvoice(invoice.category)"
+					    ng-click="editInvoice(invoice)" style="  margin-left: 10px;">
+					    <div style="margin-top:-6px;font-size:11px;"> 
+					      edit this
+					    </div>
+					     <div style="margin-top:-11px;font-size:11px;">
+					      bill
+  				         </div>
+				    </button>
+
+		    	   <div ng-hide="currentIndividual && !currentIndividual.user.verified">
+					<div class="row" style="margin-top:-10px; margin-left: -5px;">
+					  	  <div class="col">
+					  	  	  <button class="button button-icon icon ion-cash"
+							    ng-show="isPayableInvoice(invoice.category)"
+							    ng-click="changeInvoiceStatus('READY_TO_PAY_TO_PAYMENT_QUEUE', invoice)"
+							    ng-if="authorizeAction('pay-bill')">
+							     <div style="margin-top:-7px;font-size:11px;">
+							        pay
+							     </div>
+							     <div style="margin-top:-11px;font-size:11px;">
+							        due date
+							     </div>
+							  </button>
+					  	  </div>	
+					  </div>
+
+					  <div class="row" style="margin-top:-20px;margin-left: 9px;">
+						  <div class="col">
+			    			<button class="button button-icon icon ion-more" ng-click="showActions(invoice,$event)"></button>	
+						  </div>
+					  </div>
+            
+					  <div class="row" style="margin-top:-32px;margin-left:13px;margin-bottom:-10px;">
+					  	<div class="col">
+							<label style="font-size:10px;">more</label>
+					  	</div>
+					  </div>
+		    	</div>
+	    	</div>
+        </div>
+	    </ion-item>
+	  </ion-list>
+    <ion-infinite-scroll
+    ng-if="nextPage"
+    on-infinite="fetchMoreInvoices()">
+    </ion-infinite-scroll>
+	</ion-content>  
+
+</ion-view>

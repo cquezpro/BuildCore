@@ -1,0 +1,13 @@
+<div class="modal-header">
+  <h3 class="modal-title">Add Line Items</h3>
+</div>
+<div class="modal-body">
+  <mozilla-pdf-viewer
+      data-file="pdf_url"
+      ng-if="showPdf"></mozilla-pdf-viewer>
+  <div ng-include src="'line_items/line_items_table.tpl.html'" class="scrollArea modalScrollArea"></div>
+</div>
+<div class="modal-footer">
+  <button class="btn-theme" ng-click="backToInvoice()">Back to Invoice</button><br>
+  <small>*note: billSync assumes once a user enters line items that the data extraction is complete, let us take the first pass and you can come back and edit it!</small>
+</div>

@@ -1,0 +1,141 @@
+<ion-view hide-back-button="true">
+	
+  <ion-nav-buttons ng-show="mainBox">
+  	<div style="text-align:left;  position: absolute;">
+	    <span id="logostyle">billSync</span>
+		</div>
+    <!--<button class="button" ui-sref="app.tabs.home">Close</button>-->
+  </ion-nav-buttons>
+  <ion-nav-buttons side="right">
+   <button class="right-buttons button button-icon icon ion-help" style="z-index:99;" ng-click="openIntercom();">
+    </button>    
+  </ion-nav-buttons>
+   <ion-content>
+   	<div ng-show="mainBox">
+	      <h2 style="margin-left: 200px;">Recent and Pending Payments</h2>
+	      <div class="col-100">
+		      <div class="text-wrapper">
+		        <div class="list" style="width: 70%; margin-right: auto; margin-left: auto;">
+  						<label class="item item-input item-select">
+						    <div class="input-label">
+						      Vendor
+						    </div>
+						      <select class="input" ng-options="vendor.id as vendor.name for vendor in vendors" ng-model="form.selected_vendor" ng-change="resetPayments()"></select>
+  						</label>
+						</div>
+		        
+		      </div>
+		 		 </div>        
+
+		    <h2 style="margin-left: 200px;">Pending Payments</h2>	 
+			<table class="billsync-table">
+			<thead>
+				<tr>
+					<th style="text-align: center;">Due Date</th>
+					<th>Information</th>
+					<th>Action</th>
+				</tr>
+			</thead>
+				<tr ng-if="invoices && invoices.length === 0">
+        	<td colspan="3">There are no pending payments</td>
+      	</tr>
+				<tr ng-repeat="invoice in invoices">
+					<td> 
+						<div class="text-center" style="padding-left: 0px;  padding-right: 0px; text-align: middle;">
+		    			<small class="text-green" style="display:block;">due</small>
+		    			<br>
+		    			<strong style="display:block; margin-top: -24px; margin-bottom: -24px;">{{invoice.due_date | date : 'dd'}}</strong>
+		    			<br>
+	    				<small style="display:block;">{{invoice.due_date | date : 'MMM'}}</small>
+		    			<br>
+		    		</div>
+					</td>
+					<td style="padding: 4px;">
+					<strong>{{invoice.vendor.name | maxLength: 60}} </strong>
+		    	 <br>
+		    	 <span class="amount-due-block-amount">$
+              <span ng-show="invoice.amount_due.length > 0">{{invoice.amount_due | number:2}}
+              </span>
+              <span ng-hide="invoice.amount_due.length > 0">?
+              </span>
+		       </span>
+		        <br>
+	          <span class="amount-due-block-date">
+            		act by: <strong>{{ invoice.act_by | date : 'M/d' }}</strong>
+	          </span>
+	          <span class="amount-due-block-date">Send on: <strong>{{invoice.payment_send_date | date:"MM/dd"}}</strong>
+	          </span>
+					</td>
+					<td>
+						<div id="cancelpayment"  style="text-align: center;">
+				  	  	  <button style="  min-height: 14px;line-height: 14px;" class="button button-icon icon ion-close"
+						    ng-click="changeStatus('cancel_payment!', invoice)">
+						     <div style="font-size:11px;">
+						        cancel
+						     </div>
+						     <div style="font-size:11px;">
+						        payment
+						      </div>
+						  </button>
+			        </div>
+					</td>
+				</tr>
+			</table>
+	 	    <br/>
+	 	    <h2  style="margin-left: 200px;">Payments in the Past 14 Days</h2>
+
+	 	   <table class="billsync-table">
+	 	   	<thead>
+	 	   		<tr>
+	 	   			<th style="text-align: center;">
+	 	   				Sent Date
+	 	   			</th>
+	 	   			<th>
+	 	   				General Information
+	 	   			</th>
+	 	   			<th>
+	 	   				Details
+	 	   			</th>
+	 	   		</tr>
+	 	   	</thead>
+	 	   	<tbody>
+	 	   		<tr  ng-if="vendor_payments && vendor_payments.length === 0">
+       		 <td colspan="5">There are no recent payments</td>
+      		</tr>
+	 	   		<tr ng-repeat="vendor in vendor_payments">
+	 	   			<td>
+		 	   				<div class="text-center" style="padding-left: 0px;  padding-right: 0px;">
+			    			<small class="text-green" style="display:block;">sent</small>
+			    			<br>
+			    			<strong style="display:block; margin-top: -24px; margin-bottom: -24px;">{{vendor.check_date | date : 'dd'}}</strong>
+			    			<br>
+		    				<small style="display:block;">{{vendor.check_date | date : 'MMM'}}</small>
+		    			</div>
+	 	   			</td>
+	 	   			<td> 			  
+			    		 <strong>{{vendor.name | maxLength: 50}} </strong>
+				    	 <br>
+				    	 <span class="amount-due-block-amount">$
+				       	<span>{{vendor.check_total | number:2}}
+				        </span>
+				        </span>
+				        <br>
+				          <span class="amount-due-block-date">
+			            		Check #{{vendor.check_number}} 
+				          </span>					          
+	 	   			</td>
+	 	   			<td>
+	 	   				<div style="text-align: center;">
+				  	  	 <button style=" min-height: 14px;line-height: 14px;" class="button button-icon icon ion-drag" ng-click="showDetail(vendor)">
+						     <div style="font-size:11px;">					        
+						        detail
+						      </div>
+						  	</button>
+			        </div>
+	 	   			</td>
+	 	   		</tr>
+	 	   	</tbody>
+	 	   </table>
+		</div>
+	</ion-content>
+</ion-view>

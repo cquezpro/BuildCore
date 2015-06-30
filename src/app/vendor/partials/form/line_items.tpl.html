@@ -1,0 +1,73 @@
+<div ng-if="currentIndividual && currentIndividual.user.synced_qb">
+  <table class="table">
+    <tr>
+      <td>Default AP Account</td>
+      <td>Expense Account</td>
+      <td ng-if="currentIndividual.user.qb_classes && currentIndividual.user.qb_classes.length > 0">Default Item class</td>
+    </tr>
+    <tr>
+      <td style="overflow:visible">
+        <ui-select ng-model="$parent.vendor.liability_account_id">
+          <ui-select-match placeholder="Choose...">
+            {{$select.selected.name}}
+          </ui-select-match>
+          <ui-select-choices repeat="account.id as account in vendor.liability_accounts | filter: $select.search">
+            <div ng-bind-html="account.name | highlight: $select.search"></div>
+          </ui-select-choices>
+        </ui-select>
+      </td>
+      <td style="overflow:visible">
+        <ui-select ng-model="$parent.vendor.expense_account_id" on-select="changeLineItemAccounts()">
+          <ui-select-match placeholder="Choose...">
+            {{$select.selected.name}}
+          </ui-select-match>
+          <ui-select-choices repeat="account.id as account in vendor.expense_accounts | filter: $select.search">
+            <div ng-bind-html="account.name | highlight: $select.search"></div>
+          </ui-select-choices>
+        </ui-select>
+      </td>
+      <td ng-if="currentIndividual.user.qb_classes && currentIndividual.user.qb_classes.length > 0" style="overflow:visible">
+        <ui-select ng-model="$parent.vendor.default_qb_class_id" on-select="changeLineItemClasses()">
+          <ui-select-match placeholder="Choose...">
+            {{$select.selected.name}}
+          </ui-select-match>
+          <ui-select-choices repeat="klass.id as klass in qb_classes | filter: $select.search">
+            <div ng-bind-html="klass.name | highlight: $select.search"></div>
+          </ui-select-choices>
+        </ui-select>
+      </td>
+    </tr>
+  </table>
+</div>
+<table class="table responsive-table bstable table-responsive table-hover" ng-show="vendor.line_items.length > 0">
+  <thead>
+    <th>Description</th>
+    <th>Expense Account</th>
+    <th ng-if="currentIndividual.user.qb_classes && currentIndividual.user.qb_classes.length > 0">Class</th>
+  </thead>
+  <tbody>
+    <tr ng-repeat="line_item in vendor.line_items">
+      <td>{{line_item.description}}</td>
+      <td class="showover" style="overflow:visible">
+        <ui-select ng-model="$parent.line_item.expense_account_id" on-select="updateItems($parent.line_item.description,$item.id, 'expense_account_id')">
+          <ui-select-match placeholder="Choose...">
+            {{$select.selected.name}}
+          </ui-select-match>
+          <ui-select-choices repeat="account.id as account in vendor.expense_accounts | filter: $select.search">
+            <div ng-bind-html="account.name | highlight: $select.search"></div>
+          </ui-select-choices>
+        </ui-select>
+      </td>
+      <td ng-if="currentIndividual.user.qb_classes && currentIndividual.user.qb_classes.length > 0" style="overflow:visible">
+        <ui-select ng-model="$parent.line_item.qb_class_id" on-select="updateItems($parent.line_item.description,$item.id, 'qb_class_id')">
+          <ui-select-match placeholder="Choose...">
+            {{$select.selected.name}}
+          </ui-select-match>
+          <ui-select-choices repeat="klass.id as klass in qb_classes | filter: $select.search">
+            <div ng-bind-html="klass.name | highlight: $select.search"></div>
+          </ui-select-choices>
+        </ui-select>
+      </td>
+    </tr>
+  </tbody>
+</table>

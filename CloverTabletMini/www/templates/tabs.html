@@ -1,0 +1,18 @@
+<ion-tabs id="tabbar" class="tabs-icon-top">
+
+  <ion-tab title="Home" icon="ion-home" ui-sref="app.tabs.home" badge-style="badge-positive" badge="billsCount">
+    <ion-nav-view name="home-tab"></ion-nav-view>
+  </ion-tab>
+
+  <ion-tab title="Payments" icon="icon ion-cash" ui-sref="app.tabs.payments">
+    <ion-nav-view name="payments-tab"></ion-nav-view>
+  </ion-tab>
+
+  <ion-tab title="Vendors" icon="ion-person-stalker" ui-sref="app.tabs.vendors">
+    <ion-nav-view name="vendors-tab"></ion-nav-view>
+  </ion-tab>
+  <ion-tab title="Other" icon="icon ion-navicon" ng-click="toggleLeftSideMenu()">
+  </ion-tab>
+  <!-- <ion-tab title="Add Bill" icon="ion-document" ui-sref="app.capture" ng-if="authorizeAction('create-upload-bill')">
+  </ion-tab> -->
+</ion-tabs>

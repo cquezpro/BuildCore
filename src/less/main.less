@@ -1,0 +1,128 @@
+/**
+ * This is the main application stylesheet. It should include or import all
+ * stylesheets used throughout the application as this is the only stylesheet in
+ * the Grunt configuration that is automatically processed.
+ */
+
+
+/**
+ * First, we include the Twitter Bootstrap LESS files. Only the ones used in the
+ * project should be imported as the rest are just wasting space.
+ */
+
+textarea {
+	resize: none;
+}
+
+button {
+	font-family: 'Roboto', sans-serif;
+	font-weight: normal;
+}
+
+.btn-group {
+	vertical-align: top;
+}
+
+label, input, button, select, textarea {
+	font-weight: normal;
+}
+
+select, textarea, input[type="text"], input[type="password"], input[type="datetime"], input[type="datetime-local"], input[type="date"], input[type="month"], input[type="time"], input[type="week"], input[type="number"], input[type="email"], input[type="url"], input[type="search"], input[type="tel"], input[type="color"], .uneditable-input {
+	margin-bottom: 10px;
+}
+
+.form-control {
+	box-shadow: none;
+}
+
+.ui-select-bootstrap {
+	margin-bottom: 10px;
+}
+
+.ui-select-bootstrap input {
+	width: 100% !important;
+	margin-bottom: 0 !important;
+}
+
+@import '../../vendor/billsynclayouts/stylesheets/bootstrap-daterangepicker.less';
+@import '../../vendor/billsynclayouts/stylesheets/bootstrap-wysihtml5.less';
+@import '../../vendor/billsynclayouts/stylesheets/dark-blue-theme.less';
+
+.ui-select-bootstrap {
+	margin-bottom: 10px;
+}
+
+.ui-select-bootstrap input {
+	width: 100% !important;
+	margin-bottom: 0 !important;
+}
+
+.open + label {
+  opacity: 1;
+  -webkit-transform: translateY(-5px);
+  transform: translateY(-5px);
+  transition: 0.5s ease;
+  color:#000;
+}
+
+label.ui-full {
+	opacity: 1;
+  -webkit-transform: translateY(-5px);
+  transform: translateY(-5px);
+  transition: 0.5s ease;
+  color:#909090;	
+}
+
+.state-select, .state-select button, .state-select input {
+	display: inline-block;
+}
+
+.dropdown-menu {
+	box-shadow: none;
+}
+
+.billsync-green {
+	color: #00B765;
+}
+
+.box {
+	margin: 0;
+}
+
+/**
+ * This is our main variables file. It in turn imports the `variables` file from
+ * Twitter Bootstrap. We must include it last so we can overwrite any variable
+ * definitions in our imported stylesheets.
+ */
+
+@import 'variables.less';
+@import 'helpers.less';
+
+
+/**
+ * Typography
+ */
+
+
+
+/**
+ * Now that all app-wide styles have been applied, we can load the styles for
+ * all the submodules and components we are using.
+ *
+ * TODO: In a later version of this boilerplate, I'd like to automate this.
+ */
+
+@import '../app/home/home.less';
+@import '../app/common/header.less';
+@import '../app/common/checklist.less';
+@import '../app/dispute/dispute.less';
+@import '../app/login/login.less';
+@import '../app/passwords/passwords.less';
+@import '../app/duplicateinvoice/duplicateinvoice.less';
+@import '../app/invoice/invoice.less';
+@import '../app/dashboard/dashboard.less';
+@import '../app/profile/profile.less';
+@import '../app/vendor/vendor.less';
+@import '../app/surveys/surveys.less';
+@import '../app/reports/reports.less';
+@import '../app/line_items/line_items.less';

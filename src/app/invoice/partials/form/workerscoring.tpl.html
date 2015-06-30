@@ -1,0 +1,65 @@
+<div class="container">
+  <script type="text/ng-template" id="customTemplate.html">
+    <a>{{ match.model.name }}<br><small>{{match.model.address1}}, {{match.model.city}} {{match.model.state}}</small></a>
+  </script>
+
+  <div class="pagetitle">
+    <div>
+      <h1><span>Worker's Score!</h1>
+    </div>
+  </div>
+
+  <p> Workers scores are computed at the END OF EACH day on the following baisis:
+  <ul>
+    <li>For every blank that is double verfied by another worker +1</li>
+    <li>For every blank that is disagreement from at least two other workers -2</li>
+    <li>For every blank where no agreement is reached between a set of 3 workers 0</li>
+  </ul>
+  </p>
+
+  <p>Workers are then placed into tiers with the following benefits:
+    <table class="table">
+      <thead>
+        <th>Tier</th>
+        <th>Score</th>
+        <th>Benefits</th>
+      </thead>
+      <tbody>
+        <tr ng-class="{'active': workerLevel('Training camp')}">
+          <td>Training Camp</td>
+          <td>Less than 50 points</td>
+          <td>none</td>
+        </tr>
+
+        <tr ng-class="{'active': workerLevel('Rookie')}">
+          <td>Rookie</td>
+          <td>Greater than 50 points</td>
+          <td>none</td>
+        </tr>
+
+        <tr ng-class="{'active': workerLevel('Rising start')}">
+          <td>Scholar</td>
+          <td>Top 50% of workers with over 50 points</td>
+          <td>Qualify for higher wage tasks</td>
+        </tr>
+
+        <tr ng-class="{'active': workerLevel('Superstar')}">
+          <td>Rising Star</td>
+          <td>Top 25% of workers with over 50 points</td>
+          <td>10% higher wages</td>
+        </tr>
+
+        <tr ng-class="{'active': workerLevel('Superstar')}">
+          <td>Superstar Star</td>
+          <td>Top 10% by score at least 1000 points</td>
+          <td>50% higher wages!</td>
+        </tr>
+
+      </tbody>
+    </table>
+
+  </p>
+
+  <img src="assets/InvoiceTraining/Slide1.jpg">  
+</div>
+

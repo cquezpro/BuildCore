@@ -1,0 +1,107 @@
+<h1>Accounting</h1>
+<!-- <div class="box col-md-5 col-xs-6" ng-if="currentIndividual && !currentIndividual.user.synced_qb && authorizeAction('sync-with-accounting-system')">
+   <div class="box-content" style="min-height:60px">
+     <connect-to-quickbooks></connect-to-quickbooks>
+  </div>
+</div>-->
+<div class="box col-md-5 col-xs-6" ng-if="currentIndividual && !currentIndividual.user.synced_qb && authorizeAction('sync-with-accounting-system')">
+  <div class="box-content" style="min-height:60px">
+    <a ng-click="openModal()" class="btn-theme" style="position:absolute;margin-top:2px">Connect to QuickBooks Desktop</a><br>
+  </div>
+</div>
+<div class ="box col-md-10 col-xs-12" ng-if="currentIndividual && currentIndividual.user.synced_qb">
+  <div class="box-header">
+    <div class='title'>Manage Accounting Software</div>
+  </div>
+  <div class= "box-content">
+    <div>
+      <button class="btn-theme" ng-click="disconnect()" ng-if="authorizeAction('sync-with-accounting-system')">Disconnect from QuickBooks</button>
+      <span ng-if="!currentIndividual.user.intuit_authentication">
+        <a ng-click="openModal()" class="btn-theme">Download QWC File</a><br>
+        <a href="/qbwc/qwc" target="_self" class='hiden' id='download_link'></a>
+      </span>
+      <br>
+      <div ng-if="currentIndividual.user.qb_company_name">
+        <div>
+          <p>Quickbooks Company Name: <span>{{currentIndividual.user.qb_company_name}}</span><br>
+          <small style="color: #d3d3d3;">{{currentIndividual.user.last_qb_sync | date: 'medium'}}</small></p>
+        </div>
+
+        <div ng-if="currentUser.qb_wrong_company">
+          Last sync was attempted with a different company name file, if this was intentional please reset by downloading a new QBWC file
+        </div>
+      </div>
+    </div>
+    <br/>
+    <br/>
+    <table class="table" ng-if="currentIndividual && currentIndividual.user.synced_qb">
+      <tr>
+        <td>Default AP Account</td>
+        <td>Default Expense Account</td>
+      </tr>
+      <tr>
+        <td style="overflow:visible">
+          <ui-select ng-model="$parent.currentIndividual.user.liability_account_id">
+            <ui-select-match placeholder="Choose...">
+              {{$select.selected.name}}
+            </ui-select-match>
+            <ui-select-choices repeat="account.id as account in currentIndividual.user.liability_accounts | filter: $select.search">
+              <div ng-bind-html="account.name | highlight: $select.search"></div>
+            </ui-select-choices>
+          </ui-select>
+        </td>
+        <td style="overflow:visible">
+          <ui-select ng-model="$parent.currentIndividual.user.expense_account_id">
+            <ui-select-match placeholder="Choose...">
+              {{$select.selected.name}}
+            </ui-select-match>
+            <ui-select-choices repeat="account.id as account in currentIndividual.user.expense_accounts | filter: $select.search">
+              <div ng-bind-html="account.name | highlight: $select.search"></div>
+            </ui-select-choices>
+          </ui-select>
+        </td>
+      </tr>
+    </table>
+    <table class="table" ng-if="currentIndividual && currentIndividual.user.synced_qb">
+      <tr>
+        <td>Default Bank Account</td>
+        <td>Default Class</td>
+      </tr>
+      <tr>
+        <td style="overflow:visible">
+          <ui-select ng-model="$parent.currentIndividual.user.bank_account_id">
+            <ui-select-match placeholder="Choose...">
+              {{$select.selected.name}}
+            </ui-select-match>
+            <ui-select-choices repeat="account.id as account in currentIndividual.user.bank_accounts | filter: $select.search">
+              <div ng-bind-html="account.name | highlight: $select.search"></div>
+            </ui-select-choices>
+          </ui-select>
+        </td>
+        <td style="overflow:visible">
+          <ui-select ng-model="$parent.currentIndividual.user.default_class_id">
+            <ui-select-match placeholder="Choose...">
+              {{$select.selected.name}}
+            </ui-select-match>
+            <ui-select-choices repeat="class.id as class in currentIndividual.user.qb_classes | filter: $select.search">
+              <div ng-bind-html="class.name | highlight: $select.search"></div>
+            </ui-select-choices>
+          </ui-select>
+        </td>
+      </tr>
+    </table>
+  </div>
+  <div class="box-header" ng-if="currentIndividual && currentIndividual.user.synced_qb">
+    <div class='title'>Multi-Class</div>
+  </div>
+  <div class= "box-content" ng-if="currentIndividual && currentIndividual.user.synced_qb">
+    <label for="locations_feature">
+      <input type="checkbox" name="locations_feature" id="locations_feature" ng-model="currentIndividual.user.locations_feature"/>
+      <span> turn on multi-class, multi-class fees apply <a href="">Learn more</a></span>
+    </label>
+    <div class="box-content">
+      <addresses-table addresses="currentIndividual.user.all_addresses" qbclasses="currentIndividual.user.qb_classes"></addresses-table>
+      <new-address></new-address>
+    </div>
+  </div>
+</div>

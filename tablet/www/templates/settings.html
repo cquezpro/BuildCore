@@ -1,0 +1,356 @@
+<ion-view title="Settings">
+  <ion-nav-buttons>
+    <button class="button" ui-sref="app.tabs.home">Close</button>
+  </ion-nav-buttons>
+  <ion-content class="has-header">
+
+      <ion-list>
+
+
+        <div>
+          <ion-item class="item-stable"
+                    ng-click="toggleTab('email')"
+                    ng-class="{active: emailShow}">
+               <i class="icon ion-minus" ng-if="emailShow"></i>
+              <i class="icon ion-plus" ng-if="!emailShow"></i>
+            &nbsp;
+            E-mail Notifications
+          </ion-item>
+          <ion-item class="item-accordion" ng-if="emailShow">    
+
+              <ion-list>
+                  <!-- Email New Vendor -->
+                  <ion-item class="item-divider">
+                    New Vendor
+                  </ion-item>
+                  <ion-item class="item-checkbox">
+                    <label class="checkbox">
+                      <input type="checkbox" ng-model="currentIndividual.email_new_invoice_onchange">
+                    </label>
+                    For Every Change
+                  </ion-item>
+                  <ion-item class="item-checkbox">
+                    <label class="checkbox">
+                      <input type="checkbox" ng-model="currentIndividual.email_new_invoice_daily">
+                    </label>
+                    Daily Digest
+                  </ion-item>
+                  <ion-item class="item-checkbox">
+                    <label class="checkbox">
+                      <input type="checkbox" ng-model="currentIndividual.email_new_invoice_weekly">
+                    </label>
+                    Weekly Digest
+                  </ion-item>
+                  <ion-item class="item-checkbox">
+                    <label class="checkbox">
+                      <input type="checkbox" ng-model="currentIndividual.email_new_invoice_none">
+                    </label>
+                    No Email Notice
+                  </ion-item>
+
+                  <!-- Email Bill Changes -->
+                  <ion-item class="item-divider">
+                    Bill Changes
+                  </ion-item>
+                  <ion-item class="item-checkbox">
+                    <label class="checkbox">
+                      <input type="checkbox" ng-model="currentIndividual.email_change_invoice_onchange">
+                    </label>
+                    For Every Change
+                  </ion-item>
+                  <ion-item class="item-checkbox">
+                    <label class="checkbox">
+                      <input type="checkbox" ng-model="currentIndividual.email_change_invoice_daily">
+                    </label>
+                    Daily Digest
+                  </ion-item>
+                  <ion-item class="item-checkbox">
+                    <label class="checkbox">
+                      <input type="checkbox" ng-model="currentIndividual.email_change_invoice_weekly">
+                    </label>
+                    Weekly Digest
+                  </ion-item>
+                  <ion-item class="item-checkbox">
+                    <label class="checkbox">
+                      <input type="checkbox" ng-model="currentIndividual.email_change_invoice_none">
+                    </label>
+                    No Email Notice
+                  </ion-item>
+
+                  <!-- Email Payments -->
+                  <ion-item class="item-divider">
+                    Payments
+                  </ion-item>
+                  <ion-item class="item-checkbox">
+                    <label class="checkbox">
+                      <input type="checkbox" ng-model="currentIndividual.email_paid_invoice_onchange">
+                    </label>
+                    For Every Change
+                  </ion-item>
+                  <ion-item class="item-checkbox">
+                    <label class="checkbox">
+                      <input type="checkbox" ng-model="currentIndividual.email_paid_invoice_daily">
+                    </label>
+                    Daily Digest
+                  </ion-item>
+                  <ion-item class="item-checkbox">
+                    <label class="checkbox">
+                      <input type="checkbox" ng-model="currentIndividual.email_paid_invoice_weekly">
+                    </label>
+                    Weekly Digest
+                  </ion-item>
+                  <ion-item class="item-checkbox">
+                    <label class="checkbox">
+                      <input type="checkbox" ng-model="currentIndividual.email_paid_invoice_none">
+                    </label>
+                    No Email Notice
+                  </ion-item>
+
+                  <!-- Email Savings -->
+                  <ion-item class="item-divider">
+                    Savings
+                  </ion-item>
+                  <ion-item class="item-checkbox">
+                    <label class="checkbox">
+                      <input type="checkbox" ng-model="currentIndividual.email_savings_onchange">
+                    </label>
+                    For Every Change
+                  </ion-item>
+                  <ion-item class="item-checkbox">
+                    <label class="checkbox">
+                      <input type="checkbox" ng-model="currentIndividual.email_savings_daily">
+                    </label>
+                    Daily Digest
+                  </ion-item>
+                  <ion-item class="item-checkbox">
+                    <label class="checkbox">
+                      <input type="checkbox" ng-model="currentIndividual.email_savings_invoice_weekly">
+                    </label>
+                    Weekly Digest
+                  </ion-item>
+                  <ion-item class="item-checkbox">
+                    <label class="checkbox">
+                      <input type="checkbox" ng-model="currentIndividual.email_savings_invoice_none">
+                    </label>
+                    No Email Notice
+                  </ion-item>
+
+                  <!-- Email Locations -->
+                  <ion-item class="item-divider" ng-if="currentIndividual.user.locations_feature && currentIndividual.user.intuit_authentication">
+                    Locations
+                  </ion-item>
+                  <ion-item class="item-checkbox" ng-if="currentIndividual.user.locations_feature && currentIndividual.user.intuit_authentication">
+                    <label class="checkbox">
+                      <input type="checkbox" ng-model="currentIndividual.email_no_location_found_onchange">
+                    </label>
+                    For Every Change
+                  </ion-item>
+                  <ion-item class="item-checkbox" ng-if="currentIndividual.user.locations_feature && currentIndividual.user.intuit_authentication">
+                    <label class="checkbox">
+                      <input type="checkbox" ng-model="currentIndividual.email_no_location_found_daily">
+                    </label>
+                    Daily Digest
+                  </ion-item>
+                  <ion-item class="item-checkbox" ng-if="currentIndividual.user.locations_feature && currentIndividual.user.intuit_authentication">
+                    <label class="checkbox">
+                      <input type="checkbox" ng-model="currentIndividual.email_no_location_found_weekly">
+                    </label>
+                    Weekly Digest
+                  </ion-item>
+                  <ion-item class="item-checkbox" ng-if="currentIndividual.user.locations_feature && currentIndividual.user.intuit_authentication">
+                    <label class="checkbox">
+                      <input type="checkbox" ng-model="currentIndividual.email_no_location_found_none">
+                    </label>
+                    No Email Notice
+                  </ion-item>
+
+              </ion-list>
+
+          </ion-item>
+        </div>
+        <div>
+          <ion-item class="item-stable"
+                    ng-click="toggleTab('text')"
+                    ng-class="{active: textShow}">
+              <i class="icon ion-minus" ng-if="textShow"></i>
+              <i class="icon ion-plus" ng-if="!textShow"></i>
+            &nbsp;
+            Text Notifications
+          </ion-item>
+          <ion-item class="item-accordion" ng-if="textShow">
+    <ion-list>
+      <!-- Text New Vendor -->
+      <ion-item class="item-divider">
+        New Vendor
+      </ion-item>
+      <ion-item class="item-checkbox">
+        <label class="checkbox">
+          <input type="checkbox" ng-model="currentIndividual.text_new_invoice_onchange">
+        </label>
+        For Every Change
+      </ion-item>
+      <ion-item class="item-checkbox">
+        <label class="checkbox">
+          <input type="checkbox" ng-model="currentIndividual.text_new_invoice_daily">
+        </label>
+        Daily Digest
+      </ion-item>
+      <ion-item class="item-checkbox">
+        <label class="checkbox">
+          <input type="checkbox" ng-model="currentIndividual.text_new_invoice_weekly">
+        </label>
+        Weekly Digest
+      </ion-item>
+      <ion-item class="item-checkbox">
+        <label class="checkbox">
+          <input type="checkbox" ng-model="currentIndividual.text_new_invoice_none">
+        </label>
+        No Text Notice
+      </ion-item>
+
+      <!-- Text Bill Changes -->
+      <ion-item class="item-divider">
+        Bill Changes
+      </ion-item>
+      <ion-item class="item-checkbox">
+        <label class="checkbox">
+          <input type="checkbox" ng-model="currentIndividual.text_change_invoice_onchange">
+        </label>
+        For Every Change
+      </ion-item>
+      <ion-item class="item-checkbox">
+        <label class="checkbox">
+          <input type="checkbox" ng-model="currentIndividual.text_change_invoice_daily">
+        </label>
+        Daily Digest
+      </ion-item>
+      <ion-item class="item-checkbox">
+        <label class="checkbox">
+          <input type="checkbox" ng-model="currentIndividual.text_change_invoice_weekly">
+        </label>
+        Weekly Digest
+      </ion-item>
+      <ion-item class="item-checkbox">
+        <label class="checkbox">
+          <input type="checkbox" ng-model="currentIndividual.text_change_invoice_none">
+        </label>
+        No Text Notice
+      </ion-item>
+
+      <!-- Text Payments -->
+      <ion-item class="item-divider">
+        Payments
+      </ion-item>
+      <ion-item class="item-checkbox">
+        <label class="checkbox">
+          <input type="checkbox" ng-model="currentIndividual.text_paid_invoice_onchange">
+        </label>
+        For Every Change
+      </ion-item>
+      <ion-item class="item-checkbox">
+        <label class="checkbox">
+          <input type="checkbox" ng-model="currentIndividual.text_paid_invoice_daily">
+        </label>
+        Daily Digest
+      </ion-item>
+      <ion-item class="item-checkbox">
+        <label class="checkbox">
+          <input type="checkbox" ng-model="currentIndividual.text_paid_invoice_weekly">
+        </label>
+        Weekly Digest
+      </ion-item>
+      <ion-item class="item-checkbox">
+        <label class="checkbox">
+          <input type="checkbox" ng-model="currentIndividual.text_paid_invoice_none">
+        </label>
+        No Text Notice
+      </ion-item>
+
+      <!-- Text Savings -->
+      <ion-item class="item-divider">
+        Savings
+      </ion-item>
+      <ion-item class="item-checkbox">
+        <label class="checkbox">
+          <input type="checkbox" ng-model="currentIndividual.text_savings_onchange">
+        </label>
+        For Every Change
+      </ion-item>
+      <ion-item class="item-checkbox">
+        <label class="checkbox">
+          <input type="checkbox" ng-model="currentIndividual.text_savings_daily">
+        </label>
+        Daily Digest
+      </ion-item>
+      <ion-item class="item-checkbox">
+        <label class="checkbox">
+          <input type="checkbox" ng-model="currentIndividual.text_savings_invoice_weekly">
+        </label>
+        Weekly Digest
+      </ion-item>
+      <ion-item class="item-checkbox">
+        <label class="checkbox">
+          <input type="checkbox" ng-model="currentIndividual.text_savings_invoice_none">
+        </label>
+        No Text Notice
+      </ion-item>
+
+      <!-- Text Locations -->
+      <ion-item class="item-divider" ng-if="currentIndividual.user.locations_feature && currentIndividual.user.intuit_authentication">
+        Locations
+      </ion-item>
+      <ion-item class="item-checkbox" ng-if="currentIndividual.user.locations_feature && currentIndividual.user.intuit_authentication">
+        <label class="checkbox">
+          <input type="checkbox" ng-model="currentIndividual.text_no_location_found_onchange">
+        </label>
+        For Every Change
+      </ion-item>
+      <ion-item class="item-checkbox" ng-if="currentIndividual.user.locations_feature && currentIndividual.user.intuit_authentication">
+        <label class="checkbox">
+          <input type="checkbox" ng-model="currentIndividual.text_no_location_found_daily">
+        </label>
+        Daily Digest
+      </ion-item>
+      <ion-item class="item-checkbox" ng-if="currentIndividual.user.locations_feature && currentIndividual.user.intuit_authentication">
+        <label class="checkbox">
+          <input type="checkbox" ng-model="currentIndividual.text_no_location_found_weekly">
+        </label>
+        Weekly Digest
+      </ion-item>
+      <ion-item class="item-checkbox" ng-if="currentIndividual.user.locations_feature && currentIndividual.user.intuit_authentication">
+        <label class="checkbox">
+          <input type="checkbox" ng-model="currentIndividual.text_no_location_found_none">
+        </label>
+        No Text Notice
+      </ion-item>
+
+      <ion-item class="item-divider item-checkbox">
+                <label class="checkbox">
+            <input type="checkbox" ng-model="currentIndividual.user.pay_bills_through_text">
+          </label>
+        Let me pay bills through text
+      </ion-item>
+      <ion-item class="item-input item-select">
+        <div class="input-label">
+
+          Text me on due date at
+        </div>
+        <select ng-model="currentIndividual.user.sms_time" ng-options="times.id as times.label for times in select_times">
+        </select>
+      </ion-item>
+    </ion-list>
+
+          </ion-item>
+        </div>
+
+      </ion-list>
+
+      <ion-item>
+        <button class="button button-outline button-positive" ng-click="saveUser()">Save</button>
+      </ion-item>
+
+
+
+
+  </ion-content>
+</ion-view>

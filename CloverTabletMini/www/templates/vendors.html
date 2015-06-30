@@ -1,0 +1,64 @@
+<ion-view>
+  <ion-nav-buttons>
+  	<div style="text-align:left;  position: absolute;">
+	    <span id="logostyle">billSync</span>
+		</div>
+    <!--<button menu-toggle="left" class="button button-icon icon ion-navicon"></button>-->
+  </ion-nav-buttons>  
+  <ion-nav-buttons side="right">
+   <button class="right-buttons button button-icon icon ion-help" style="z-index:99;" ng-click="openIntercom();">
+    </button>    
+  </ion-nav-buttons>
+	<ion-content>
+
+	  	<div class="row" style="margin-top:50px;" ng-show="vendors.length==0 || vendors==null">
+	  		<div class="col text-center" >
+	  			<h4 style="color:#336699;">Have more bills send them to us, by using our app (iPhone and Android), text (917.746.1141), or email (bills@bill-sync.com). Let other team members send us bills by adding users by clicking "other" at the bottom.</h4>
+	  		</div>
+	  	</div>
+	  	<div id="vendorList" style="display:none;">
+
+		<ion-refresher
+	    pulling-text="Pull to refresh..."
+	    on-refresh="getVendors()">
+	  </ion-refresher>
+	  <h2  style="margin-left: 200px;">Vendors</h2>
+	  <div>
+	  <table class="billsync-table">
+	  	<thead>
+		  	<tr>
+			  	<th>
+			    		Name 
+			    </th>
+			    <th>
+			    	Total
+			    </th>
+			    <th>
+			    	< 30 days
+			    </th>
+			    <th>
+			    	> 30 days
+			    </th>
+		    </tr>
+		  </thead>
+		  <tbody>
+		    <tr ng-repeat="vendor in vendors | orderBy:'name' " ui-sref="app.tabs.vendorView({id: vendor.id})" class="element-clickable">
+			    	<td>
+			    		{{vendor.name | maxLength: 40}} <i class="icon ion-edit"></i>
+			    		<span style="display: block; color: #A9A9A9; font-size: 14px">{{vendor.address1}}, {{vendor.city}}, {{vendor.state}}, {{vendor.zip}}</span>
+			    	</td>
+			    	<td>
+			    		<small>${{ vendor.total_outstanding | number:0 }}</small>
+			    	</td>
+			    	<td>
+			    		<small>${{ vendor.less_than_30_sum | number:0 }}</small>
+			    	</td>
+			    	<td>
+			    		<small>${{ vendor.more_than_30_sum | number:0 }}</small>
+			    	</td>
+		    	</tr>
+		    </tbody>
+	  </table>
+	  </div>
+	</ion-content>  
+</ion-view>

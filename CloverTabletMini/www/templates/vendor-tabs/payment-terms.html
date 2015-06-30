@@ -1,0 +1,143 @@
+<ion-view title="Payment Terms" hide-back-button="true">
+  <ion-nav-buttons side="left">
+    <button class="button button-clear ion-chevron-left" ng-click="$ionicGoBack($event)">
+    </button>
+  </ion-nav-buttons>
+  <ion-nav-buttons side="right">
+   <button class="right-buttons button button-icon icon ion-help" style="z-index:99;" ng-click="openIntercom();">
+    </button>    
+  </ion-nav-buttons>
+  <ion-content class="has-header">
+    <ion-list>
+      <ion-item class="item-divider">
+        Determine Due Date By:
+      </ion-item>
+      <ion-item class="item-checkbox">
+        <label class="checkbox">
+          <input type="checkbox" style="width:21px;height:21px;margin-top:3px;" ng-model="vendor.keep_due_date">
+        </label>
+        Keep the due date on the bill
+      </ion-item>
+      <label class="item item-radio">
+        <input type="radio" name="paymentterm" ng-model="vendor.payment_term" value="0">
+        <div class="item-content">
+          Pay <input type="number" class="input-inline" ng-model="vendor.after_recieved" min="0" max="31"> days after bill date
+        </div>
+        <i class="radio-icon ion-checkmark"></i>
+      </label>
+      <label class="item item-radio">
+        <input type="radio" name="paymentterm" ng-model="vendor.payment_term" value="1">
+        <div class="item-content">
+          Pay <input type="number" class="input-inline" ng-model="vendor.day_of_the_month" max="31" min="1"> day of month  
+        </div>
+        <i class="radio-icon ion-checkmark"></i>
+      </label>
+      <label class="item item-radio">
+        <input type="radio" name="paymentterm" ng-model="vendor.payment_term" value="5">
+        <div class="item-content">
+          Pay every <select ng-model="vendor.auto_pay_weekly" ng-options="day.id as day.label for day in days"></select>
+        </div>
+        <i class="radio-icon ion-checkmark"></i>
+      </label>
+      <label class="item item-radio">
+        <input type="radio" name="paymentterm" ng-model="vendor.payment_term" value ="2">
+        <div class="item-content">
+          Pay <input type="number" class="input-inline" ng-model="vendor.before_due_date"> days before due date
+        </div>
+        <i class="radio-icon ion-checkmark"></i>
+      </label>
+      <label class="item item-radio">
+        <input type="radio" name="paymentterm" ng-model="vendor.payment_term" value="4">
+        <div class="item-content">
+          Pay <input type="number" class="input-inline" ng-model="vendor.after_due_date"> days after due date
+        </div>
+        <i class="radio-icon ion-checkmark"></i>
+      </label>
+
+      <ion-item class="item-divider">
+        Setup Auto-Pay
+      </ion-item>
+      <label class="item item-radio">
+        <input type="radio" name="payment_status" ng-model="vendor.payment_status" value="do_not_autopay">
+        <div class="item-content">
+          Do not Auto-Pay
+        </div>
+        <i class="radio-icon ion-checkmark"></i>
+      </label>
+      <label class="item item-radio">
+        <input type="radio" name="payment_status" ng-model="vendor.payment_status" value="autopay">
+        <div class="item-content">
+          Auto-Pay
+        </div>
+        <i class="radio-icon ion-checkmark"></i>
+      </label>
+      <label class="item item-radio">
+        <input type="radio" name="payment_status" ng-model="vendor.payment_status" value="allways_mark_as_paid">
+        <div class="item-content">
+          Always mark as paid
+        </div>
+        <i class="radio-icon ion-checkmark"></i>
+      </label>
+      <ion-item class="item-checkbox">
+        <label class="checkbox">
+          <input type="checkbox" style="width:21px;height:21px;margin-top:3px;" ng-model="vendor.payment_end_if_alert" value="true">  
+        </label>
+        Remove any bill from autopay queue
+      </ion-item>
+
+      <ion-item class="item-divider">
+        Ending Auto-Pay
+      </ion-item>
+      <label class="item item-radio">
+        <input type="radio" name="endautopayment" ng-model="vendor.payment_end" value ="0">
+        <div class="item-content">
+          Keep paying till cancelled
+        </div>
+        <i class="radio-icon ion-checkmark"></i>
+      </label>
+      <label class="item item-radio">
+        <input type="radio" name="endautopayment" ng-model="vendor.payment_end" value ="1">
+        <div class="item-content">
+          End if amount exceeds $<input type="number" class="input-inline" ng-model="vendor.payment_end_exceed" min="0">
+        </div>
+        <i class="radio-icon ion-checkmark"></i>
+      </label>
+      <label class="item item-radio">
+        <input type="radio" name="endautopayment" ng-model="vendor.payment_end" value ="2">
+        <div class="item-content">
+          End auto-pay after <input type="number" class="input-inline" ng-model="vendor.payment_end_payments" min="0"> payments
+        </div>
+        <i class="radio-icon ion-checkmark"></i>
+      </label>
+      <label class="item item-radio">
+        <input type="radio" name="endautopayment" ng-model="vendor.payment_end" value ="3">
+        <div class="item-content">
+          Pay bills due <input type="date" class="input-inline" style="width:100px" ng-model="vendor.payment_date" placeholder="mm/dd/yyyy" min={{todayDate()}}>
+        </div>
+        <i class="radio-icon ion-checkmark"></i>
+      </label>
+
+      <ion-item class="item-divider">
+        Auto-Pay Amount
+      </ion-item>
+      <label class="item item-radio">
+        <input type="radio" name="autopayamount" ng-model="vendor.payment_amount" value="0">
+        <div class="item-content">
+          Pay in full
+        </div>
+        <i class="radio-icon ion-checkmark"></i>
+      </label>
+      <label class="item item-radio">
+        <input type="radio" name="autopayamount" ng-model="vendor.payment_amount" value ="1">
+        <div class="item-content">
+          Pay a fixed amount of $<input type="number" class="input-inline" ng-model="vendor.payment_amount_fixed" min="0">
+        </div>
+        <i class="radio-icon ion-checkmark"></i>
+      </label>
+
+      <ion-item>
+        <button class="button button-outline button-positive" ng-click="save()">Save</button>
+      </ion-item>
+    </ion-list>
+  </ion-content>
+</ion-view>

@@ -1,0 +1,106 @@
+<ion-modal-view id="signup" style="margin-top:-40px">
+  <ion-header-bar class="text-center">
+    <h1 class="title">15 Second Free Signup!</h6>
+  </ion-header-bar>
+  <ion-content>
+    <ion-list>
+      <!--ion-item class="item-input">
+        <span class="input-label text-right">Full Name</span>
+        <input type="text" ng-model="newUser.name">
+      </ion-item-->
+      <label class="item item-input item-floating-label">
+        <span class="input-label">Full Name</span>
+        <input type="text" placeholder="Full Name" ng-model="newUser.name">
+      </label>
+
+      <!--ion-item class="item-input">
+        <span class="input-label text-right">Company Name</span>
+        <input type="text" ng-model="newUser.business_name">
+      </ion-item-->
+      <label class="item item-input item-floating-label">
+        <span class="input-label">Company Name</span>
+        <input type="text" placeholder="Company Name" ng-model="newUser.business_name">
+      </label>
+
+
+      <!--ion-item class="item-input">
+        <span class="input-label text-right">Cell Phone</span>
+        <input type="tel" ui-mask="(999) (999)-(9999)" ng-model="newUser.mobile_phone">
+      </ion-item-->
+      <label class="item item-input item-floating-label">
+        <span class="input-label">Cell Phone</span>
+        <input type="text" placeholder="Cell Phone" ng-model="newUser.mobile_phone">
+      </label>
+
+
+      <!--ion-item class="item-input">
+        <span class="input-label text-right">E-Mail</span>
+        <input type="email" ng-model="newUser.email">
+      </ion-item-->
+      <label class="item item-input item-floating-label">
+        <span class="input-label">E-Mail</span>
+        <input type="text" placeholder="E-Mail" ng-model="newUser.email">
+      </label>
+
+
+      <label class="item item-input item-floating-label">
+        <span class="input-label">Password</span>
+        <input placeholder="Password" type="{{chkState ? 'text' : 'password'}}" ng-model="newUser.password">
+      </label>
+
+      <!--ion-item class="item-input">
+        <span class="input-label text-right">Password</span>
+        <input type="{{chkState ? 'text' : 'password'}}" ng-model="newUser.password">
+      </ion-item-->
+
+
+
+      <ion-item class="item item-checkbox" style="border-style:none;">
+           <label class="checkbox">
+             <input type="checkbox" ng-click="showPassword()" checked>
+           </label>
+           Show password
+      </ion-item>
+      <ion-item class="item item-checkbox" style="border-style:none;">
+           <label class="checkbox">
+             <input type="checkbox" ng-model="newUser.terms_of_service" checked>
+           </label>
+           Agree to Terms of Service and Privacy Policy.&nbsp;<a href="http://bill-sync.com/terms-privacy/">Show terms</a>
+      </ion-item>
+
+      <ion-item style="border-style:none;">
+        
+        <div class="row" style="margin-top:-5px;">
+          <div class="col">
+            <!--button class="button button-block button-positive" style="border-radius: 5px;" ng-click="doSignup()">Let's get going!</button-->
+            <button class="button button-block button-light" style="border:2px solid #336699;background-color:white;border-radius: 5px;display: block;line-height: 132%;white-space:normal;font-size:15px;" ng-click="doSignup()">
+            <div style="margin-left:-7px;"><font style="color:#336699;">Let's get going!</font></div>
+            </button>
+
+          </div>
+          <div class="col">
+
+                <button class="button button-block button-light" style="border-radius: 5px;font-size: 107%;line-height: 132%;white-space:normal;" ng-click="openLogin()">
+                  <div style="margin-left:-7px;">Already have account login here </div>
+                </button>
+            <!--button class="button button-block button-light" style="border-radius: 5px;font-size: 80%;height:22px;" ng-click="openLogin()">
+            
+              <div class="row">
+              
+
+
+
+              </div>
+              <div class="row">
+              <div class="col" style="margin-left:-8px;margin-top:-37px;"> login here </div>
+              </div>
+
+
+            </button-->
+          </div>
+        </div>        
+
+      </ion-item>
+    </ion-list>
+  </ion-content>
+</ion-modal-view>

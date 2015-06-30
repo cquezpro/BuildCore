@@ -1,0 +1,35 @@
+<div class="duplicate-invoice-page">
+
+  <div class="row">
+    <h2>Duplicate Bill Alert</h2>
+  </div>
+
+  <div id="loading" class="row" ng-show="loading">
+    <h4 class="text-center">Loading <i class="fa fa-spinner fa-spin"></i></h4>
+  </div>
+
+  <div class="row" ng-show="!loading">
+    <div class="col-sm-12 text-center">
+      <button class="btn-theme" ng-click="keepOriginal()"><i class='fa fa-arrow-left'></i> Keep Bill on Left</button>
+      <button class="btn-theme" ng-click="keepDuplicate()">Keep Bill on Right <i class='fa fa-arrow-right'></i></button>
+      <button class="btn-theme" ng-click="keepBoth()"><i class="fa fa-files-o"></i> Keep Both Bills</button>
+      <button class="btn-theme" ng-click="deleteBoth()"><i class='fa fa-trash-o'></i> Delete Both Bills</button>
+    </div>
+  </div>
+
+  <div class="row" ng-show="!loading">
+    <div class="col-sm-6">
+      <h4>{{original_invoice.humanized_status}}</h4>
+      <mozilla-pdf-viewer
+        data-file="original_pdf_url"
+        ng-if="original_pdf_url"></mozilla-pdf-viewer>
+    </div>
+    <div class="col-sm-6">
+      <h4>{{duplicate_invoice.humanized_status}}</h4>
+      <mozilla-pdf-viewer
+        data-file="duplicate_pdf_url"
+        ng-if="duplicate_pdf_url"></mozilla-pdf-viewer>
+    </div>
+  </div>
+
+</div>

@@ -1,0 +1,127 @@
+<div>
+  <div class="pagetitle">
+    <h1>
+      <span>Outstanding Bills</span>
+    </h1>
+  </div>
+  <a ui-sref="reports" ng-class="{active:$uiRoute}"><i class='fa fa-arrow-left'></i> back to reports</a>
+
+  <form>
+    <div class="text-wrapper col-md-3">
+     <span class="selectionlabel">Vendor:</span><br>
+      <ui-select ng-model="$parent.selected_vendor" on-select="vendorChanged()">
+        <ui-select-match placeholder="Select">
+          {{$select.selected.name}}
+        </ui-select-match>
+        <ui-select-choices repeat="vendor.id as vendor in vendors | filter: $select.search">
+          <div ng-bind-html="vendor.name | highlight: $select.search"></div>
+        </ui-select-choices>
+      </ui-select>
+    </div>
+    <div class="text-wrapper col-md-3">
+      <span class="selectionlabel">Bill Start Date:</span><br>
+      <input class="form-control" type="text" datepicker-popup="MM/dd/yy" ng-model="start_date" is-open="date_start" datepicker-options="dateOptions" close-text="Close" show-weeks="false" id="date" name="date" style="width:35%;display:inline-block" ng-change="setStartDate()">
+      <button type="button" class="btn btn-default" ng-click="openDatePicker($event, 'date_start')"><i class="glyphicon glyphicon-calendar"></i></button>
+    </div>
+    <div class="text-wrapper col-md-3">
+      <span class="selectionlabel">Bill End Date:</span><br>
+      <input class="form-control" type="text" datepicker-popup="MM/dd/yy" ng-model="end_date" is-open="date_end" datepicker-options="dateOptions" close-text="Close" show-weeks="false" id="date" name="date" style="width:35%;display:inline-block" ng-change="setEndDate()">
+      <button type="button" class="btn btn-default" ng-click="openDatePicker($event, 'date_end')"><i class="glyphicon glyphicon-calendar"></i></button>
+    </div>
+    <div class="text-wrapper col-md-3">
+      <span class="selectionlabel" ng-if="currentIndividual.user.locations_feature">Class/Location:</span><br>
+      <select ng-options="class.id as class.name for class in qb_classes" ng-model="selected_class" ng-change="classChanged()" ng-if="currentIndividual.user.locations_feature" style="width: 100%;"></select>
+    </div>
+  </form>
+
+  <div class="clearfix"></div>
+  <div class="fixed-header-div">
+    <div class="fixed-height-div">
+      <table class="table-hover billsync-table fixed-header-table">
+        <thead>
+          <th class="center" width="30">
+            Due
+            <a ng-click="predicate = 'due_date'; reverse=!reverse" style="margin-left:-28px">Due</a>
+          </th>
+          <th>
+            Vendor
+            <a ng-click="predicate = 'vendor.name'; reverse=!reverse" style="margin-left:-40px">Vendor</a>
+          </th>
+          <th class="center">
+            Amount
+            <a ng-click="predicate = 'amount_due'; reverse=!reverse" style="margin-left:-55px">Amount</a>
+          </th>
+          <th class="center">
+            Status
+            <a ng-click="predicate = 'status'; reverse=!reverse" style="margin-left:-40px">Status</a>
+          </th>
+          <th class="center">
+            Alerts
+            <a ng-click="predicate = 'total_alerts.length'; reverse=!reverse" style="margin-left:-40px">Alerts</a>
+          </th>
+          <th class="center">
+            Action
+            <a href="" style="margin-left:-45px">Action</a>
+          </th>
+        </thead>
+        <tbody>
+          <tr ng-show="invoices.length === 0">
+            <td colspan="6" class="center">There are no items to show for the selected date/vendor range</td>
+          </tr>
+          <tr ng-repeat="invoice in invoices | orderBy:predicate:reverse" ng-show="invoices.length > 0">
+            <td ng-click="editBill(invoice.id)" class="center">
+                <span class="date-block-month">
+                  {{invoice.due_date | date : 'MMM'}}
+                </span>
+                <span class="date-block-day">
+                  {{invoice.due_date | date : 'dd'}}
+                </span>
+                <span class="date-block-year" ng-show="checkDate(invoice.due_date)">
+                  {{invoice.due_date | date : 'yyyy'}}
+                </span>
+            </td>
+
+            <td ng-click="editBill(invoice.id)">
+              <span class="vendor-block-vendor">{{invoice.vendor.name || '?'}}</span>
+              <span class="vendor-block-address">
+                <span ng-if="invoice.vendor.address1 && invoice.vendor.city && invoice.vendor.state && invoice.vendor.zip">
+                    {{invoice.vendor.address1}}, {{invoice.vendor.city}}, {{invoice.vendor.state}}, {{invoice.vendor.zip}}
+                </span>
+                <span ng-if="(!invoice.vendor.address1 || !invoice.vendor.city || !invoice.vendor.state || !invoice.vendor.zip) && invoice.vendor.routing_number && invoice.vendor.bank_account_number">
+                    ACH information on file
+                </span>
+                <span ng-if="(!invoice.vendor.address1 || !invoice.vendor.city || !invoice.vendor.state || !invoice.vendor.zip) && !invoice.vendor.routing_number && !invoice.vendor.bank_account_number">
+                    ??, ??
+                </span>
+              </span>
+            </td>
+
+            <td ng-click="editBill(invoice.id)" class="center">
+                <span class="amount-due-block-amount">$
+                  <span ng-show="invoice.amount_due.length > 0">{{invoice.amount_due | number:0}}</span>
+                  <span ng-hide="invoice.amount_due.length > 0">?</span>
+                </span>
+                <span class="amount-due-block-date">Act by: {{ invoice.act_by | date : 'M/d' }}</span>
+            </td>
+
+            <td ng-click="editBill(invoice.id)">{{invoice.humanized_status}}</td>
+            <td>{{invoice.total_alerts.length}}</td>
+
+            <td class="showover center">
+              <div class="btn-group" dropdown>
+                <button type="button" class="btn-theme" dropdown-toggle>
+                  Actions <span><i class='fa fa-angle-down'></i></span>
+                </button>
+
+                <ul class="dropdown-menu left" role="menu">
+                  <li><a ng-click="resendPayment(invoice)"><i class="fa fa-money"></i> Add appropriate actions here</a></li>
+                </ul>
+              </div>
+
+            </td> <!-- need to get the tooltips to work see UI boostrap documentation-->
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

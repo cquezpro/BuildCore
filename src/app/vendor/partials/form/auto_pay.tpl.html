@@ -1,0 +1,132 @@
+<div class= "box col-md-10 col-sm-12">
+  <div class = "box-header">
+    <div class="title">Payment Terms/Due Date</div>
+  </div>
+  <div class= "box-content">
+
+    <label class="checkboox" for="due-date-bill">
+      <input type= "checkbox" name="due-date-bill" ng-model="vendor.keep_due_date" class="checkbox-text" id="due-date-bill">
+      <span>
+        Keep the due date on the bill. If one is not found we will use the method checked below
+      </span>
+    </label>
+
+    </label><label class="textradio" for="paymentterm-afterrecieved">
+      <input type= "radio" name="paymentterm" ng-model="vendor.payment_term" value="0" class="radio-text" id="paymentterm-afterrecieved"> <span>Pay <input type="number" ng-model="vendor.after_recieved" placeholder="# of" min="0" max="31" name="after_received" class="text-radio" integer> days after the the delivery/invoice date (if the date can not be determined automatically set to the day it is submitted to billSync)</span>
+      <span ng-show="!vendorForm.after_received.$valid" class="error-input">
+        Must be a number greater than 0 and cannot be a fraction (e.g. 1.5)
+      </span>
+    </label>
+
+    <label class="textradio" for="paymentterm-dayofmonth">
+      <input type= "radio" name="paymentterm" ng-model="vendor.payment_term" value="1" class="radio-text" id="paymentterm-dayofmonth"> <span>Pay <input type="number" ng-model="vendor.day_of_the_month" class="text-radio" name="day_of_the_month" max="31" min="1" value="1" integer> day of the month</span>
+      <span ng-show="!vendorForm.day_of_the_month.$valid" class="error-input">
+        Must be a number between 1 and 31 and cannot be a fraction (e.g. 1.5)
+      </span>
+    </label>
+
+    <label class="textradio" for="paymentterm-weekly" style="display:inline-block">
+      <input type="radio" name="paymentterm-weekly" ng-model="vendor.payment_term" value="5" class="radio-text" id="paymentterm-weekly">
+      <span>Pay bills for this vendor every</span>
+    </label>
+    <ui-select ng-model="$parent.vendor.auto_pay_weekly" style="width:200px;display:inline-block">
+      <ui-select-match placeholder="Choose...">
+        {{$select.selected.label}}
+      </ui-select-match>
+      <ui-select-choices repeat="day.id as day in days | filter: $select.search">
+        <div ng-bind-html="day.label | highlight: $select.search"></div>
+      </ui-select-choices>
+    </ui-select>
+    <label class="textradio" for="paymentterm-beforeduedate">
+      <input type= "radio" name="paymentterm" ng-model="vendor.payment_term" value ="2" class="radio-text" id="paymentterm-beforeduedate"> <span>Pay <input  ng-model="vendor.before_due_date" type="number" placeholder="# of" class="text-radio" name="before_due_date" value="4" integer> business day(s) BEFORE the DUE date. Set to 0 to pay on due date. If due date is not found set to the day the bill is recieved. </span>
+      <span ng-show="!vendorForm.before_due_date.$valid" class="error-input">
+        Must be a number greater than 0 and cannot be a fraction (e.g. 1.5)
+      </span>
+    </label>
+
+    <label class="textradio" for="paymentterm-afterduedate">
+      <input type= "radio" name="paymentterm" ng-model="vendor.payment_term" value ="4" class="radio-text" id="paymentterm-afterduedate"> <span>Pay <input  ng-model="vendor.after_due_date" type="number" name="after_due_date" min="0" placeholder="# of" class="text-radio" integer value="5"> business day(s) AFTER the DUE date. If due date is not found set to the day the bill is recieved.</span>
+      <span ng-show="!vendorForm.after_due_date.$valid" class="error-input">
+        Must be a number greater than 0 and cannot be a fraction (e.g. 1.5)
+      </span>
+    </label>
+  </div>
+</div>
+
+<div class= "box col-md-10 col-sm-12">
+  <div class = "box-header">
+    <div class="title">Setup Auto-Pay</div>
+  </div>
+  <div class= "box-content">
+    <label class="textradio" for="payment_status-dont-pay">
+      <input type="radio" name="payment_status" ng-model="vendor.payment_status" value="do_not_autopay" class="radio-text" id="payment_status-dont-pay"><span>Do not Auto-Pay</span>
+    </label>
+
+    <label class="textradio" for="payment_status-auto-pay">
+      <input type= "radio" name="payment_status" ng-model="vendor.payment_status" value="autopay" class="radio-text" id="payment_status-auto-pay"><span>Auto Pay</span>
+      <br />
+      <small>Use auto-pay for this vendor billSync will automatically pay bills from this vendor and send you an alert when something looks unusual</small>
+    </label>
+
+    <label class="textradio" for="payment_status-mark-as-paid">
+      <input type= "radio" name="payment_status" ng-model="vendor.payment_status" value="allways_mark_as_paid" class="radio-text" id="payment_status-mark-as-paid"><span>Always mark as paid</span>
+    </label>
+
+    <label class="textradio" for="endautopayment-alert">
+      <input type="checkbox" name="endautopayment" ng-model="vendor.payment_end_if_alert" value="true" class="radio-text" id="endautopayment-alert"> <span> Remove any bill from auto-pay queue if alert is issued</span>
+    </label>
+
+  </div>
+</div>
+
+<div class= "box col-md-10 col-sm-12">
+  <div class = "box-header">
+    <div class="title">Ending Auto-Pay</div>
+  </div>
+  <div class= "box-content">
+
+    <label class="textradio" for="endautopayment-dontend">
+      <input type= "radio" name="endautopayment" ng-model="vendor.payment_end" value ="0" class="radio-text" id="endautopayment-dontend"> <span>Keep paying till auto-pay is canceled</span>
+    </label>
+
+    <label class="textradio" for="endautopayment-overamount">
+      <input type= "radio" name="endautopayment" ng-model="vendor.payment_end" value ="1" class="radio-text" id="endautopayment-overamount"> <span>End auto-pay if amount exceeds $ <input ng-model="vendor.payment_end_exceed" name="payment_end_exceed" class="text-radio" min="0" type="number"></span>
+      <span ng-show="!vendorForm.payment_end_exceed.$valid" class="error-input">
+        Must be a number greater than 0
+      </span>
+    </label>
+
+    <label class="textradio" for="endautopayment-payments">
+      <input type= "radio" name="endautopayment" ng-model="vendor.payment_end" value ="2" class="radio-text" id="endautopayment-payments"> <span>End auto-pay after  <input type="number"ng-model="vendor.payment_end_payments" name="payment_end_payments" class="text-radio" min="0"> payments</span>
+      <span ng-show="!vendorForm.payment_end_payments.$valid" class="error-input">
+        Must be a number greater than 0
+      </span>
+    </label>
+
+    <label class="textradio" for="endautopayment-date">
+      <input type= "radio" name="endautopayment" ng-model="vendor.payment_end" value ="3" class="radio-text" id="endautopayment-date"> <span>Pay invoices due before and including <input ng-model="vendor.payment_date" class="text-radio form-control" placeholder="mm/dd/yyyy" type="date" name="payment_date" min={{todayDate()}}></span>
+      <span ng-show="!vendorForm.payment_date.$valid" class="error-input">
+        Must be a valid date in the future in the format of mm/dd/yyyy
+      </span>
+    </label>
+
+  </div>
+</div>
+<div class= "box col-md-10 col-sm-12">
+  <div class = "box-header">
+    <div class="title">Auto-Pay Amount</div>
+  </div>
+  <div class= "box-content">
+
+    <label class="textradio" for="autopayamount-full">
+      <input type= "radio" name="autopayamount" ng-model="vendor.payment_amount" value ="0" class="radio-text" id="autopayamount-full"> <span>Pay in full</span>
+    </label>
+
+    <label class="textradio" for="autopayamount-amount">
+      <input type= "radio" name="autopayamount" ng-model="vendor.payment_amount" value ="1" class="radio-text" id="autopayamount-amount"> <span>Pay a fixed amount of $ <input ng-model="vendor.payment_amount_fixed" name="payment_amount_fixed" min="0" type="number"class="text-radio"></span>
+      <span ng-show="!vendorForm.payment_amount_fixed.$valid" class="error-input">
+        Must be a number greater than 0
+      </span>
+    </label>
+  </div>
+</div>

@@ -1,0 +1,92 @@
+<ion-view title="{{vendor.name}}">
+  <ion-nav-buttons side="right">
+   <button class="button" style="z-index:100;" ui-sref="app.tabs.vendorEdit({id: vendor.id})">Edit</button>
+   <button class="right-buttons button button-icon icon ion-help" style="z-index:99;" ng-click="openIntercom();">
+    </button>    
+ </ion-nav-buttons>
+  <ion-content class="has-header">
+    <ion-list>
+      <ion-item>
+        <strong>{{vendor.name}}</strong>
+        <br>
+        {{vendor.address1}} {{vendor.address2}} {{vendor.address3}}
+        <br>
+        {{vendor.city}}, {{vendor.state}}, {{vendor.zip}}
+      </ion-item>
+      <ion-item ng-if="vendor.contact_person">
+        <small class="billsync-blue">contact person</small>
+        <br>
+        {{vendor.contact_person}}
+      </ion-item>
+      <ion-item ng-if="vendor.email">
+        <small class="billsync-blue">e-mail</small>
+        <br>
+        {{vendor.email}}
+      </ion-item>
+      <ion-item ng-if="vendor.business_number">
+        <small class="billsync-blue">business number</small>
+        <br>
+        {{vendor.business_number}}
+      </ion-item>
+      <ion-item ng-if="vendor.fax_number">
+        <small class="billsync-blue">fax number</small>
+        <br>
+        {{vendor.fax_number}}
+      </ion-item>
+      <ion-item ng-if="vendor.cell_number">
+        <small class="billsync-blue">cell number</small>
+        <br>
+        {{vendor.cell_number}}
+      </ion-item>
+      <ion-item ng-if="vendor.tax_id_number">
+        <small class="billsync-blue">tax id number</small>
+        <br>
+        {{vendor.tax_id_number}}
+      </ion-item>
+      <ion-item ng-if="vendor.routing_number">
+        <small class="billsync-blue">bank routing number</small>
+        <br>
+        {{vendor.routing_number}}
+      </ion-item>
+      <ion-item ng-if="vendor.bank_account_number">
+        <small class="billsync-blue">bank account number</small>
+        <br>
+        {{vendor.bank_account_number}}
+      </ion-item>
+      <ion-item style="white-space:normal">
+        <small class="billsync-blue">payment terms</small>
+        <br>
+        <span ng-if="vendor.keep_due_date">Due date is kept on the bill.</span>
+        Due date is
+        <span ng-if="vendor.payment_term === 0">{{vendor.after_recieved}} days after bill date.</span>
+        <span ng-if="vendor.payment_term === 1">{{vendor.day_of_the_month}} day of month.</span>
+        <span ng-if="vendor.payment_term === 5">every {{vendor.auto_pay_weekly}}.</span>
+        <span ng-if="vendor.payment_term === 2">{{vendor.before_due_date}} days before due date.</span>
+        <span ng-if="vendor.payment_term === 4">{{vendor.after_due_date}} days after due date.</span>
+        Vendor is
+        <span ng-if="vendor.payment_status === 'do_not_autopay'">not on Auto-Pay.</span>
+        <span ng-if="vendor.payment_status === 'autopay'">on Auto-Pay.</span>
+        <span ng-if="vendor.payment_status === 'allways_mark_as_paid'">always marked as paid.</span>
+        <span ng-if="vendor.payment_end_if_alert">Bills are removed from autopay queue.</span>
+        <span ng-if="vendor.payment_end === 0">Bills are paid till auto-pay is cancelled.</span>
+        <span ng-if="vendor.payment_end === 1">Auto-pay ends if amount exceeds ${{vendor.payment_end_exceed}}.</span>
+        <span ng-if="vendor.payment_end === 2">Auto-pay ends after {{vendor.payment_end_payments}} payments.</span>
+        <span ng-if="vendor.payment_end === 3">Auto-pay is until {{vendor.payment_date}}.</span>
+        <span ng-if="vendor.payment_amount === 0">Bills are auto-paid in full.</span>
+        <span ng-if="vendor.payment_amount === 1">Bills are auto-paid by fixed amount of ${{vendor.payment_amount_fixed}}.</span>
+      </ion-item>
+      <!--ion-item class="item-divider">
+        Line Items
+      </ion-item-->
+      <div class="row">
+        <div class="col">
+          <b>Line Items</b>
+        </div>
+      </div>
+      <ion-item ng-repeat="line_item in vendor.line_items" ng-click="showLineItem(line_item, $index)">
+        <div style="  float: left;  width: 75%;  overflow: hidden;  margin-right: 3%;  white-space: nowrap;  text-overflow: ellipsis;">{{$index + 1}}. {{line_item.description}} </div>
+        <div>${{line_item.last_price | number: 2}}</div>
+      </ion-item>
+    </ion-list>
+  </ion-content>
+</ion-view>

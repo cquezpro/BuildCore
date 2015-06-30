@@ -1,0 +1,20 @@
+<!-- TODO_FIELDS  fields name for invoices: default_due_date -->
+<div class="pagetitle">
+  <h1>
+    <span>User Information</span>
+  </h1>
+</div>
+<div class="profile">
+  <tabset>
+    <tab ng-repeat="tab in tabs" heading="{{tab.heading}}" active="tab.active" ng-if="authorizeView(tab.partial)" select="prepareTab(tab.name)">
+      <div ng-include src="tab.partial"></div>
+    </tab>
+  </tabset>
+</div>
+<div class="clearfix"></div>
+<div>
+  <hr>
+  <button type="submit" class="btn-theme" ng-click="save()" ng-if="!individualsTab && (authorizeAction('update-edit-profile-business-information') || authorizeAction('update-edit-profile-alerts') || authorizeAction('update-edit-profile-accounting'))">Save</button>
+  <button type="submit" class="btn-theme" ng-click="saveIndividuals()" ng-if="individualsTab">Save</button>
+  <button ng-click="cancel()" class="btn-theme">Cancel</button>
+</div>

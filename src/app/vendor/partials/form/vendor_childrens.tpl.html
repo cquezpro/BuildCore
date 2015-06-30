@@ -1,0 +1,31 @@
+<!--p ng-class="{ 'text-success': saved, 'text-warning': saving }">{{message}}</p-->
+
+
+<table ng-if="vendors" class='table responsive-table bstable table-hover'>
+  <tr>
+    <th class="hidden-xs center">Vendors</th>
+    <th></th>
+  </tr>
+
+  <tr ng-repeat="vendor in vendors">
+    <td ng-click="editvendor(vendor.id)">
+      {{ vendor.name }}<br>
+      <small>
+        <span ng-if="vendor.address1 && vendor.city && vendor.state && vendor.zip">
+          {{vendor.address1}}, {{vendor.city}}, {{vendor.state}}, {{vendor.zip}}
+        </span>
+        <span ng-if="(!vendor.address1 || !vendor.city || !vendor.state || !vendor.zip) && vendor.routing_number && vendor.bank_account_number">
+            ACH information on file
+        </span>
+        <span ng-if="(!vendor.address1 || !vendor.city || !vendor.state || !vendor.zip) && !vendor.routing_number && !vendor.bank_account_number">
+            ??, ??
+        </span>
+      </small>
+    </td>
+    <td>
+    <div style="margin-top:8px;height:30px;">
+      <a class="btn-theme" ng-click="unmerge(vendor)">Unmerge</a>
+    </div>
+    </td>
+  </tr>
+</table>

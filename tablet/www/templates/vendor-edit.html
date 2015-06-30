@@ -1,0 +1,42 @@
+<ion-view title="Edit {{vendor.name}}" hide-back-button="true">
+  <ion-nav-buttons side="left">
+    <button class="button button-clear ion-chevron-left" ng-click="$ionicGoBack($event)">
+    </button>
+  </ion-nav-buttons>
+  <ion-nav-buttons side="right">
+   <button class="right-buttons button button-icon icon ion-help" style="z-index:99;" ng-click="openIntercom();">
+    </button>    
+  </ion-nav-buttons>
+  <ion-content class="has-header">
+    <ion-list>
+        <ion-item class="item-icon-right element-clickable" ui-sref="app.tabs.vendorBasicInfo({id: vendor.id})" ng-if="authorizeAction('edit-vendor-basic-information')">
+          Basic Information
+          <i class="icon ion-ios7-arrow-right"></i>
+        </ion-item>
+        <ion-item class="item-icon-right element-clickable" ui-sref="app.tabs.vendorPaymentTerms({id: vendor.id})" ng-if="authorizeAction('edit-vendor-payment-terms')">
+          Payment Terms
+          <i class="icon ion-ios7-arrow-right"></i>
+        </ion-item>
+        <ion-item class="item-icon-right element-clickable" ui-sref="app.tabs.vendorAlerts({id: vendor.id})" ng-if="authorizeAction('edit-vendor-alerts')">
+          Alerts
+          <i class="icon ion-ios7-arrow-right"></i>
+        </ion-item>
+        <ion-item class="item-icon-right element-clickable" ui-sref="app.tabs.vendorAccounting({id: vendor.id})" ng-if="authorizeAction('edit-vendor-accounting')">
+          Accounting
+          <i class="icon ion-ios7-arrow-right"></i>
+        </ion-item>
+        <ion-item class="item-icon-right element-clickable" ui-sref="app.tabs.vendorLineItems({id: vendor.id})">
+          Line Items
+          <i class="icon ion-ios7-arrow-right"></i>
+        </ion-item>
+        <ion-item class="item-icon-right element-clickable" ui-sref="app.tabs.vendorBills({id: vendor.id})">
+          Bills
+          <i class="icon ion-ios7-arrow-right"></i>
+        </ion-item>
+        <ion-item class="item-icon-right element-clickable" ui-sref="app.tabs.vendorCombineVendors({id: vendor.id})">
+          Combine Vendors
+          <i class="icon ion-ios7-arrow-right"></i>
+        </ion-item>
+    </ion-list>
+  </ion-content>
+</ion-view>

@@ -1,0 +1,68 @@
+<div class= "box-content">
+  <h4>By Wire</h4>
+  <div ng-show="errors.groupFields">
+    <ul>
+      <li ng-repeat="error in errors.groupFields">{{error}}</li>
+    </ul>
+  </div>
+  <div class="text-wrapper">
+    <input class="input" name= "routing" ng-model="vendor.routing_number" type= "number"  placeholder = "Bank Routing Number" ng-minlength="9" ng-maxlength="9" name="routingNumber" integer ng-class="{full: vendorForm.routing.$viewValue.length}" />
+    <label for="routingNumber" >Bank Routing Number</label>
+    <span ng-show="vendorForm.routing.$error.number">
+      Only numbers allowed
+    </span>
+    <span ng-show="vendorForm.routing.$error.maxlength || vendorForm.routing.$error.minlength">
+      The value must be 9 digits.
+    </span>
+  </div>
+
+  <div class="text-wrapper">
+    <input class="input" ng-model="vendor.bank_account_number" name= "account"  type= "number" placeholder = "Bank Account Number" integer ng-class="{full: vendorForm.account.$viewValue.length}">
+    <label for="account">Bank Account Number</label>
+    <span ng-show="vendorForm.account.$error.number">
+      Only numbers allowed
+    </span>
+  </div>
+
+  <h4>By Check</h4>
+  <div ng-show="errors.groupFields">
+    <ul>
+      <li ng-repeat="error in errors.groupFields">{{error}}</li>
+    </ul>
+  </div>
+  <div class="text-wrapper">
+    <input class="input" ng-model="vendor.address1" name= "add1"  type= "text" placeholder = "Address Line 1" ng-class="{full: vendor.address1.length}" >
+    <label for="add1">Address Line 1</label>
+  </div>
+
+  <div class="text-wrapper">
+    <input class="input" ng-model="vendor.address2" name= "add2"  type= "text" placeholder = "Address Line 2" ng-class="{full: vendor.address2.length}" >
+    <label for="add2">Address Line 2</label>
+  </div>
+
+  <div class="text-wrapper">
+    <input class="input" ng-model="vendor.address3" name= "add3"  type= "text" placeholder = "Address Line 3" ng-class="{full: vendor.address3.length}" >
+    <label for="add2">Address Line 3</label>
+  </div>
+
+  <div class="text-wrapper">
+    <input class="input" ng-model="vendor.city" name= "city"  type= "text" placeholder = "City" ng-class="{full: vendor.city.length}" >
+    <label for="city">City</label>
+  </div>
+
+  <div class="text-wrapper">
+    <span ng-show="vendorForm.state.$error.states && vendorForm.state.$dirty && vendor.state.length > 1">
+      Example: NY
+    </span>
+    <input class="input" ng-model="vendor.state" name="state" type= "text" placeholder="State" ng-class="{full: vendorForm.state.$viewValue.length}">
+    <label for="state">State</label>
+    <span ng-show="vendorForm.state.$error.states && vendorForm.state.$dirty && vendor.state.length > 1">
+      Must be a valid US state
+    </span>
+  </div>
+
+  <div class="text-wrapper">
+    <input class="input" ng-model="vendor.zip" name="zipCode" type= "text" placeholder="Zipcode" ng-class="{full: vendor.zip.length}" >
+    <label for="city">Zipcode</label>
+  </div>
+</div>

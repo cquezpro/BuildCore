@@ -1,0 +1,25 @@
+<ion-modal-view id="intercom-modal">
+  <ion-header-bar>
+    <button class="button" ng-click="InterComModal.hide()">Close</button>
+    <h1 class="title">Ask billSync!</h1>
+  </ion-header-bar>
+  <ion-content>
+    <div class="notice">
+        Have a question or comment type it below and send it to us.
+        We normally get back via email 1-2 hours,we are a little slower on weekedns and holidays.     
+    </div>
+    <div class="notice" ng-show="sentMsgFlag">
+        We'll get back to you soon via email! (email address on file is: "{{currentIndividual.email}}")
+    </div>
+    <div class="list" >
+        <div class="row">
+          <textarea id="sengMsgData" type="text" ng-model="sendMsg.data" placeholder="Type message" class="ng-valid ng-dirty"></textarea>
+        </div>
+        <div class="row">
+            <button class="button button-block button-light" style="border:2px solid #336699;background-color:white;border-radius: 5px;display: block;line-height: 132%;white-space:normal;font-size:17px;" ng-click="sendMsgwithIntercom()">
+            <div style="margin-left:-7px;"><font style="color:#336699;">Send!</font></div>
+            </button>
+       </div>
+  </div>  
+  </ion-content>
+</ion-modal-view>

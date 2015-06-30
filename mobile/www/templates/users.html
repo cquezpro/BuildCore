@@ -1,0 +1,19 @@
+<ion-view title="Manage Users">
+  <ion-nav-buttons>
+    <button class="button" ui-sref="app.tabs.home">Close</button>
+  </ion-nav-buttons>
+  <ion-nav-buttons side="right">
+    <button class="button" ng-click="newUser()">+ User</button>
+    <button class="right-buttons button button-icon icon ion-help" style="z-index:99;" ng-click="openIntercom();">
+    </button>
+  </ion-nav-buttons>
+  <ion-content class="has-header">
+    <ion-list>
+      <ion-item ng-click="editUser(ind)" ng-repeat="ind in individuals">
+        <strong>{{ind.name}}</strong>
+        <br>
+        {{ind.role_name}}
+      </ion-item>
+    </ion-list>
+  </ion-content>
+</ion-view>

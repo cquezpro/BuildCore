@@ -1,0 +1,201 @@
+<div id="right-panel-top">
+  <div class="row invoice-row">
+    <div class="col-md-10">
+      <h4 class="title">
+        {{currentInvoice.vendor.name | maxLength:39 || '?'}} -
+        ${{currentInvoice.amount_due | number:2}} <br>
+        <small
+          ng-show="currentInvoice.vendor.address1 &&
+                   currentInvoice.vendor.city     &&
+                   currentInvoice.vendor.state    &&
+                   currentInvoice.vendor.zip">
+          {{currentInvoice.vendor.address1}}, {{currentInvoice.vendor.city}},
+          {{currentInvoice.vendor.state}}, {{currentInvoice.vendor.zip}}</small>
+          <br>
+          <small ng-if="currentInvoice.accountant_approved" class="billsync-green"><i class="fa fa-calculator"></i> Accountant approved</small>
+      </h4>
+
+    </div>
+    <div class="col-md-2" style="padding-top:5px;">
+      <span class="buttton-span text-center">
+        <span class="date-block-month"> due </span>
+        <span class="date-block-day">
+          {{currentInvoice.due_date | date : 'dd'}}
+        </span>
+        <span class="date-block-year">
+          {{currentInvoice.due_date | date : 'MMM'}}
+        </span>
+        <span class="date-block-month" style="margin-top:5px">
+          <i class="fa fa-check" ng-if="currentInvoice.regular_approved"></i>
+        </span>
+      </span>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12"
+      ng-if="currentInvoice.total_alerts && currentInvoice.total_alerts.length > 0">
+      <div style="display:none;">
+        {{$root.lineItemMessageAdded}}
+      </div>
+      <display-alerts invoice="currentInvoice" show-ul="true"></display-alerts>
+
+    </div>
+    <!--div class="col-md-12"
+      ng-if="showLineItemsAlert">
+        <div class="alerts-pane">
+          Line Item alert please see below.
+        </div>
+    </div-->
+
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <tabset>
+        <tab
+            heading="{{tab.heading}}"
+            disabled="tab.disabled"
+            active="tab.active"
+          ng-repeat="tab in tabs"
+          ng-hide="tab.disabled">
+          <div ng-include src="tab.partial" ng-hide="tab.disabled"></div>
+        </tab>
+      </tabset>
+      <mozilla-pdf-viewer data-file="currentInvoice.pdf_url"
+        ng-if="currentInvoice.pdf_url"></mozilla-pdf-viewer>
+      <h4 ng-if="!currentInvoice.pdf_url">There is no document associated with this bill</h4>
+    </div>
+  </div>
+  <nav class="navbar navbar-default navbar-fixed-bottom" role="navigation">
+    <div id="wrapper">
+      <div id="sidebar-wrapper">&nbsp;</div>
+      <div id="page-content-wrapper">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-4 col-md-offset-7 text-center">
+              <div class="outlineboxbuttons" style="padding-bottom:1%;padding-top:1%">
+                <button class="btn-link dropdown-toggle" data-toggle="tooltip" data-placement="top" title="Pay Bill on Due Date" data-container="body"
+                  bootstrap-tooltips
+                  ng-show="isPayableInvoice(currentInvoice.status)"
+                  ng-click="changeInvoiceStatus('PAY_INVOICE', currentInvoice)"
+                  ng-if="authorizeAction('pay-bill') && currentIndividual.user.verified">
+                  <i class="fa fa-money action-paid"></i>
+                  <div style="margin-left:-6px ; margin-top:-5px;font-size:10px;">
+                    pay - due date
+                  </div>
+                </button>
+
+                <button class="btn-link dropdown-toggle" data-toggle="tooltip" data-placement="top" title="Pay Bill Now" data-container="body"
+                  bootstrap-tooltips
+                  ng-show="isPayableInvoice(currentInvoice.status)"
+                  ng-click="changeInvoiceStatus('PAY_NOW', currentInvoice)"
+                  ng-if="authorizeAction('pay-bill') && currentIndividual.user.verified">
+                  <i class="fa fa-paper-plane-o action-paid"></i>
+                  <div style="margin-left:-6px ; margin-top:-5px;font-size:10px;">
+                    pay now
+                  </div>
+                </button>
+
+                <button class="btn-link dropdown-toggle" data-toggle="tooltip" data-placement="top" title="Mark Paid" data-container="body"
+                    bootstrap-tooltips
+                    ng-click="changeInvoiceStatus('PAID', currentInvoice)"
+                    ng-if="authorizeAction('mark-as-paid-bill')">
+                    <i class="fa fa-folder-o action-paid"></i>
+                  <div style="margin-left:-4% ; margin-top:-5px;font-size:10px;padding:0px;">
+                   mark paid
+                  </div>
+                </button>
+
+                <button class="btn-link dropdown-toggle" data-toggle="tooltip" data-placement="top" title="Setup Auto Pay" data-container="body"
+                  bootstrap-tooltips
+                  ng-click="autoPay(currentInvoice)"
+                  ng-show="isPayableInvoice(currentInvoice.status)"
+                  ng-if="authorizeAction('auto-pay-bill')">
+                  <i class="fa fa-refresh action-auto"></i>
+                  <div style="margin-left:-5px ; margin-top:-5px;font-size:10px;">
+                    auto pay
+                  </div>
+                </button><br>
+
+                <button class="btn-link" data-toggle="tooltip" data-placement="top" title="Accountant Approved" data-container="body"
+                  bootstrap-tooltips
+                  ng-click="approveInvoice(currentInvoice, 'accountant')"
+                  ng-if="authorizeAction('approve-bill-as-accountant') && !currentInvoice.accountant_approved"
+                  id="right-panel-acc-approve-button">
+                  <i class="fa fa-calculator"></i>
+                  <div style="margin-left:-10px ; margin-top:-5px;font-size:10px;">
+                    accountant approve
+                  </div>
+                </button>
+
+                <button class="btn-link" data-toggle="tooltip" data-placement="top" title="Approve Bill" data-container="body"
+                  bootstrap-tooltips
+                  ng-click="approveInvoice(currentInvoice, 'regular')"
+                  ng-if="authorizeAction('approve-bill') && !currentInvoice.regular_approved"
+                  id="right-panel-regular-approve-button">
+                  <i class="fa fa-check"></i>
+                  <div style="margin-left:-2px ; margin-top:-5px;font-size:10px;">
+                    approve
+                  </div>
+                </button>
+
+                <button class="btn-link" data-toggle="tooltip" data-placement="top" title="Edit Bill" data-container="body"
+                  bootstrap-tooltips
+                  ng-click="editInvoice(currentInvoice)" id="right-panel-edit-button">
+                  <i class="fa fa-pencil"></i>
+                  <div style="margin-left:-3px ; margin-top:-5px;font-size:10px;">
+                    edit
+                  </div>
+                </button>
+
+                <button class="btn-link dropdown-toggle" data-toggle="tooltip" data-placement="top" title="Delete" data-container="body"
+                  bootstrap-tooltips
+                  ng-click="changeInvoiceStatus('MARK_AS_DELETED', currentInvoice)"
+                  ng-if="authorizeAction('delete-bill')">
+                  <i class="fa fa-trash-o action-delete"></i>
+                  <div style="margin-left:0px ; margin-top:-5px;font-size:10px;">
+                    delete
+                  </div>
+                </button>
+
+                <div class="dropdown" style="display:inline-block" ng-if="authorizeAction('delay-bill')">
+                  <button class="btn-link dropdown-toggle"  data-toggle="dropdown" data-placement="top">
+                    <i class="fa fa-clock-o"></i>
+                    <div style="margin-left:0px ; margin-top:-5px;font-size:10px;">
+                      defer
+                    </div>
+                  </button>
+
+                  <ul class="dropdown-menu" role="menu" aria-labelledby="deferred_date">
+                    <li class="text-left">
+                      <span class="text-muted btn-link">Defer to:</span>
+                    </li>
+                    <li>
+                      <button class="btn-link btn-block text-left" ng-click="deferDate('TOMORROW', currentInvoice)">
+                        <i class="fa fa-clock-o"> Tomorrow
+                        </i>
+                      </button>
+                    </li>
+                    <li>
+                      <button class="btn-link btn-block text-left" ng-click="deferDate('NEXT_WEEK', currentInvoice)">
+                        <i class="fa fa-clock-o"> Next Week
+                        </i>
+                      </button>
+                    </li>
+                    <li>
+                      <button class="btn-link btn-block text-left" ng-click="deferDate('NEXT_MONTH', currentInvoice)">
+                        <i class="fa fa-clock-o"> Next Month
+                        </i>
+                      </button>
+                    </li>
+                  </ul>
+                </div>
+
+              </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+</div>

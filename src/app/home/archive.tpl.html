@@ -1,0 +1,79 @@
+<div>
+  <div class="pagetitle">
+    <h1>
+      <span>Archive</span>
+    </h1>
+  </div>
+  <table class="table responsive-table bstable table-responsive table-hover">
+    <thead>
+      <th width="30" class="hidden-xs hidden-sm"></th>
+      <th class="center" width="30">Due</th>
+      <th>Vendor</th>
+      <th class="center">Amount</th>
+      <th class="center">Alert</th>
+      <th class="center">Action</th>
+    </thead>
+    <tbody>
+      <tr ng-repeat="invoice in invoices">
+
+        <td class="hidden-xs hidden-sm">
+          <label for="invoice-{{invoice.id}}">
+            <input type="checkbox" ng-checked="allChecked" ng-model="invoice.checked" id="invoice-{{invoice.id}}">
+            <span></span>
+          </label>
+        </td> <!-- for group actions for the button above -->
+
+        <td ng-click="editBill(invoice.id)" class="center">
+            <span class="date-block-month">
+              {{invoice.due_date | date : 'MMM'}}
+            </span>
+            <span class="date-block-day">
+              {{invoice.due_date | date : 'dd'}}
+            </span>
+            <span class="date-block-year" ng-show="checkDate(invoice.due_date)">
+              {{invoice.due_date | date : 'yyyy'}}
+            </span>
+        </td>
+
+        <td ng-click="editBill(invoice.id)">
+          <span class="vendor-block-vendor">{{invoice.vendor.name || '?'}}</span>
+          <span class="vendor-block-address">
+            <span ng-if="invoice.vendor.address1 && invoice.vendor.city && invoice.vendor.state && invoice.vendor.zip">
+                {{invoice.vendor.address1}}, {{invoice.vendor.city}}, {{invoice.vendor.state}}, {{invoice.vendor.zip}}
+            </span>
+            <span ng-if="(!invoice.vendor.address1 || !invoice.vendor.city || !invoice.vendor.state || !invoice.vendor.zip) && invoice.vendor.routing_number && invoice.vendor.bank_account_number">
+                ACH information on file
+            </span>
+            <span ng-if="(!invoice.vendor.address1 || !invoice.vendor.city || !invoice.vendor.state || !invoice.vendor.zip) && !invoice.vendor.routing_number && !invoice.vendor.bank_account_number">
+                ??, ??
+            </span>
+          </span>
+        </td>
+
+        <td ng-click="editBill(invoice.id)" class="center">
+            <span class="amount-due-block-amount">$
+              <span ng-show="invoice.amount_due.length > 0">{{invoice.amount_due | number:0}}</span>
+              <span ng-hide="invoice.amount_due.length > 0">?</span>
+            </span>
+            <span class="amount-due-block-date">Act by: {{ invoice.act_by | date : 'M/d' }}</span>
+        </td>
+
+        <td ng-click="editBill(invoice.id)"></td>
+
+        <td class="showover center">
+          <div class="btn-group" dropdown>
+            <button type="button" class="btn-theme" dropdown-toggle>
+              Actions <span><i class='fa fa-angle-down'></i></span>
+            </button>
+
+            <ul class="dropdown-menu left" role="menu">
+              <li ng-if="authorizeAction('resend-payment')"><a ng-click="resendPayment(invoice)"><i class="fa fa-money"></i> Resend Payment</a></li>
+              <li ng-if="authorizeAction('auto-pay-bill')"><a ng-click="autoPay(invoice)"><i class="fa fa-refresh"></i> Auto Pay Going Forward</a></li>
+            </ul>
+          </div>
+
+        </td> <!-- need to get the tooltips to work see UI boostrap documentation-->
+      </tr>
+    </tbody>
+  </table>
+</div>

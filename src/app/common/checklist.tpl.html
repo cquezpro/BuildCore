@@ -1,0 +1,24 @@
+<ul class="nav navbar-nav navbar-right" style="margin-right:5px" ng-hide="100 == getCompletationPersent() && currentIndividual.user.modal_used" ng-if="!freePass()">
+  <li class="dropdown user-menu">
+    <a href="" class="dropdown-toggle" data-toggle="dropdown" title="{{getCompletationPersent()}} more tasks to unlock a treat!">
+      <i class="fa fa-list"></i>
+      <span class="checklist-badge"><strong>{{getCompletationPersent()}}</strong></span>
+    </a>
+    <ul class="dropdown-menu checklist-box">
+      <li>
+        <span class="logo">b</span>
+        <span class="checklist-title">{{getCompletationPersent()}} more tasks to unlock a treat!</span>
+        <hr>
+      </li>
+      <li ng-repeat="check in checklists">
+        <i class="fa fa-check" ng-show="check.done" ng-class="{'text-green': check.done}"></i>
+        <span ng-hide="check.done" ng-class="{'text-muted': check.disabled}">{{$index + 1}}.</span>
+        <span ng-class="{'message-done': check.done, 'text-muted': check.disabled}"><a href="" ng-if="$index === 3 && !check.done" ng-click="confirmEmail()">{{ check.msg }}</a><span ng-hide="$index === 3 && !check.done">{{ check.msg }}</span></span>
+        <i class="fa fa-info"></i>
+      </li>
+      <li ng-if="!currentIndividual.user.modal_used && 100 == getCompletationPersent()">
+        <button type="button" class="btn-theme" ng-click="unlockTreat()">Unlock a Treat!</button>
+      </li>
+    </ul>
+  </li>
+</ul>

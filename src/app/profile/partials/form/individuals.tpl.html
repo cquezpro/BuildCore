@@ -1,0 +1,137 @@
+
+<div class ="box col-md-12 col-xs-12">
+
+  <div class="box-header">
+    <div class='title'>
+      Users
+    </div>
+
+    <button class="btn-theme" ng-click = "newIndividual()" ng-if="authorizeAction('add-delete-user')" style="margin-left:5px;line-height:1.42857;font-weight:400"><i class="fa fa-plus"></i> add user</button>
+  </div>
+  <span class="text-wrapper">Bills below <input type="text" style="width:50px" placeholder="0"> do not need an approval to be paid</span>
+  <div class= "box-content">
+
+    <div style="margin-left:12px;margin-right:20px;">
+        <div class="row" style="color: #909090;
+        font-family: 'Open Sans',sans-serif;
+        font-weight: 300;border-bottom: 1px solid #d0d0d0;padding:8px;">
+          <div class="col-md-3">
+            User Name
+          </div>
+          <div class="col-md-3 text-center">
+            Role
+          </div>
+          <div class="col-md-3 text-center">
+            Scope
+          </div>
+          <div class="col-md-3 text-center">
+            Limits
+          </div>
+        </div>
+        <div class="row" ng-repeat="i in individuals">
+         <div class="col-md-3 text-wrapper" style="color: #000;
+        font-family: 'Open Sans',sans-serif;
+        font-weight: 300;">
+            <div ng-hide="i.edit_mode">
+              {{i.name}}
+              <br>
+              <span class="small">{{i.email}} / {{i.mobile_phone}}</span>
+              <a href="" ng-click="i.edit_mode = true"><i class="fa fa-pencil action-edit"></i></a>
+            </div>
+            <div ng-show="i.edit_mode" class="text-wrapper">
+              <input type="text" class="input" placeholder="User Name" ng-model="i.name" style="width:100%" ng-change="i.changed = true">
+              <br>
+              <input type="text" class="input" placeholder="E-mail" ng-model="i.email" style="width:40%" ng-change="i.changed = true">
+              <input class="input" type="text" ng-model="i.mobile_phone" placeholder="Phone"name="mobile_phone" ui-mask="{{masks.mobile_number}}" ng-focus="refreshMask('mobile_number', '999-999-9999')" ng-blur="clearMask('mobile_number')" ng-change="i.changed = true" style="width:40%" >
+              <i class="fa fa-info" tooltip="Phone numbers are not required, though if a phone number is not entered the user cannot text bills, receive alerts by text, or pay bills on Due Date by text"></i>
+
+              <a href="" ng-click="i.edit_mode = false" style="margin-left:5px"><i class="fa fa-check"></i></a>
+            </div>
+            <p class="text-danger">{{i.error}}</p>
+          </div>
+          <div class="col-md-3 text-center text-wrapper">
+                <ui-select ng-model="$parent.i.role_id" on-select="$parent.i.changed = true">
+                  <ui-select-match placeholder="Select Role...">{{$select.selected.name}}</ui-select-match>
+                  <ui-select-choices repeat="role.id as role in roles">
+                    {{role.name}}
+                  </ui-select-choices>
+                </ui-select>
+          </div>
+          <div class="col-md-3 text-center text-wrapper">
+              <ui-select multiple ng-model="$parent.i.selected_scopes_ids" ng-change="$parent.i.changed = true">
+                <ui-select-match placeholder="Able to view all bills">{{$item.name}}</ui-select-match>
+                <ui-select-choices repeat="sc.type + '-' + sc.id as sc in availableScopes">
+                  {{sc.name}}
+                </ui-select-choices>
+              </ui-select>
+          </div>
+          <div class="col-md-3 text-center text-wrapper">
+                <input type="text" class="input" placeholder="Min" ng-model="i.limit_min" ng-change="i.changed = true" style="width:40%">
+                <input type="text" class="input" placeholder="Max" ng-model="i.limit_max" ng-change="i.changed = true" style="width:40%">
+          </div>
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+    <!--table class="table table-response bstable" id="usersTable">
+
+      <thead>
+        <th>User Name</th>
+        <th class="center">Role</th>
+        <th class="center">Scope</th>
+        <th class="center">Limits</th>
+      </thead>
+
+      <tbody>
+        <tr ng-repeat="i in individuals">
+          <td>
+            <div ng-hide="i.edit_mode">
+              {{i.name}}
+              <br>
+              <span class="small">{{i.email}} / {{i.mobile_phone}}</span>
+              <a href="" ng-click="i.edit_mode = true"><i class="fa fa-pencil action-edit"></i></a>
+            </div>
+            <div ng-show="i.edit_mode" class="text-wrapper">
+              <input type="text" class="input" placeholder="User Name" ng-model="i.name" style="width:100%" ng-change="i.changed = true">
+              <br>
+              <input type="text" class="input" placeholder="E-mail" ng-model="i.email" style="width:40%" ng-change="i.changed = true">
+              <input class="input" type="text" ng-model="i.mobile_phone" placeholder="Phone"name="mobile_phone" ui-mask="{{masks.mobile_number}}" ng-focus="refreshMask('mobile_number', '999-999-9999')" ng-blur="clearMask('mobile_number')" ng-change="i.changed = true" style="width:40%" >
+              <i class="fa fa-info" tooltip="Phone numbers are not required, though if a phone number is not entered the user cannot text bills, receive alerts by text, or pay bills on Due Date by text"></i>
+
+              <a href="" ng-click="i.edit_mode = false" style="margin-left:5px"><i class="fa fa-check"></i></a>
+            </div>
+            <p class="text-danger">{{i.error}}</p>
+          </td>
+          <td style="width:20%;overflow:visible">
+            <ui-select ng-model="$parent.i.role_id" on-select="$parent.i.changed = true">
+              <ui-select-match placeholder="Select Role...">{{$select.selected.name}}</ui-select-match>
+              <ui-select-choices repeat="role.id as role in roles">
+                {{role.name}}
+              </ui-select-choices>
+            </ui-select>
+          </td>
+          <td style="width:35%;overflow:visible">
+            <ui-select multiple ng-model="$parent.i.authorization_scopes" ng-change="$parent.i.changed = true" style="height:200px;">
+              <ui-select-match placeholder="Able to view all bills">{{$item.name}}</ui-select-match>
+              <ui-select-choices repeat="sc in availableScopes">
+                {{sc.name}}
+              </ui-select-choices>
+            </ui-select>
+          </td>
+          <td class="center text-wrapper" style="width:20%">
+            <input type="text" class="input" placeholder="Min" ng-model="i.limit_min" ng-change="i.changed = true" style="width:40%">
+            <input type="text" class="input" placeholder="Max" ng-model="i.limit_max" ng-change="i.changed = true" style="width:40%">
+          </td>
+        </tr>
+
+      </tbody>
+    </table-->
+    <p ng-class="{ 'text-danger': !saveResult.saved, 'text-success': saveResult.saved, 'text-warning': saveResult.saving }">{{saveResult.text}}</p>
+  </div>
+</div>

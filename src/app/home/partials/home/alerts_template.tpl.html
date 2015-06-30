@@ -1,0 +1,36 @@
+<div>
+
+  <div ng-if="!showUl">
+     <div ng-repeat="alert in invoice.total_alerts" ng-if="canShowAlert(alert.category)">
+       <span ng-if="alert.category !== 'duplicate_invoice'" tooltip="{{alert.large_text}}" tooltip-append-to-body="true">
+         {{alert.short_text}}
+         <span ng-if="alert.category == 'duplicate_invoice'"></span><span ng-if="!$last">,</span>
+       </span>
+       <span ng-if="alert.category == 'duplicate_invoice'" tooltip="{{alert.large_text}}" tooltip-append-to-body="true" ng-click="solveDuplicateInvoice(alert.alertable_id, alert.invoice_owner_id)">
+         {{alert.long_text}}
+       </span>
+     </div>
+     <div ng-if="invoice.deferred_date">
+       <span>Deferred till {{invoice.deferred_date | date: 'MM/dd' }}</span>
+     </div>
+   </div>
+
+  <div class="alerts-pane" ng-if="showUl && alertsToShow(invoice.total_alerts)">
+    <span class="strong">Alerts</span>
+    <ul>
+      <li ng-repeat="alert in $root.globalAlerts" ng-if="canShowAlert(alert.category)">
+
+        <span ng-if="(alert.category !== 'new_line_item' && alert.category !== 'line_item_quantity' && alert.category !== 'line_item_price_increase')" tooltip="{{alert.large_text === undefined || alert.large_text === null ? alert.short_text : alert.large_text}}" tooltip-append-to-body="true" ng-click="solveDuplicateInvoice(alert.alertable_id, alert.invoice_owner_id)">
+         {{alert.large_text}}
+        </span>
+
+        <span ng-if="(alert.category == 'new_line_item' || alert.category == 'line_item_quantity' || alert.category == 'line_item_price_increase') && canShowAlert(alert.category)" tooltip-append-to-body="true" >
+          Line Item alert please see below.
+        </span>
+
+      </li>
+    </ul>
+
+
+  </div>
+</div>

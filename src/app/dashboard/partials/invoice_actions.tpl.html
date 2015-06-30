@@ -1,0 +1,116 @@
+<span class="pull-right">
+
+  <div class="row text-center">
+    <button class="btn-link dropdown-toggle"
+      ng-show="isEditableInvoice(invoice.status)"
+      ng-click="editInvoice(invoice)">
+      <i class="fa fa-pencil"></i>
+      <div style="margin-top:-6px;font-size:11px;">
+      edit
+      </div>
+    </button>
+
+    <button class="btn-link dropdown-toggle"
+    ng-if="authorizeAction('pay-bill')"
+    ng-show="isPayableInvoice(invoice.status) && currentIndividual.user.verified"
+    ng-click="changeInvoiceStatus('READY_TO_PAY_TO_PAYMENT_QUEUE', invoice)">
+      <i class="fa fa-money"></i>
+      <div style="margin-top:-7px;font-size:11px;">
+        pay
+        <br>
+        due date
+      </div>
+    </button>
+
+    <button class="btn-link dropdown-toggle" data-toggle="dropdown">
+      <i class="fa fa-ellipsis-h"></i>
+      <div style="margin-top:-10px;font-size:11px;">
+      more
+      </div>
+    </button>
+    <ul class="dropdown-menu" role="menu" aria-labelledby="other-button-1">
+      <li ng-if="authorizeAction('pay-bill') && currentIndividual.user.verified">
+        <button class="btn-link btn-block text-left"
+          ng-show="isPayableInvoice(invoice.status) && currentIndividual.user.verified"
+          ng-click="changeInvoiceStatus('PAY_INVOICE', invoice)">
+          <i class="fa fa-money action-paid"></i>
+          Pay on Due Date
+        </button>
+      </li>
+      <li ng-if="authorizeAction('pay-bill') && currentIndividual.user.verified">
+        <button class="btn-link btn-block text-left"
+          ng-show="isPayableInvoice(invoice.status)"
+          ng-click="changeInvoiceStatus('PAY_NOW', invoice)">
+          <i class="fa fa-paper-plane-o action-paid"></i>
+          Pay Now
+        </button>
+      </li>
+      <li ng-if="authorizeAction('mark-as-paid-bill') && currentIndividual.user.verified">
+        <button class="btn-link btn-block text-left"
+          ng-click="changeInvoiceStatus('PAID', invoice)">
+          <i class="fa fa-folder-o action-paid"></i>
+          Mark Paid
+        </button>
+      </li>
+      <li ng-if="authorizeAction('auto-pay-bill') && authorizeAction('pay-authorized-bill')">
+        <button class="btn-link btn-block text-left"
+          ng-click="autoPay(invoice)"
+          ng-show="isPayableInvoice(invoice.status)">
+          <i class="fa fa-refresh action-auto"></i>
+          Auto Pay
+        </button>
+      </li>
+      <li ng-if="authorizeAction('approve-bill-as-accountant') && !invoice.accountant_approved">
+        <button class="btn-link text-left"
+          ng-click="approveInvoice(invoice, 'accountant')">
+          <i class="fa fa-calculator"></i>
+          Approve as Accountant
+        </button>
+      </li>
+      <li ng-if="authorizeAction('approve-bill') && !invoice.regular_approved">
+        <button class="btn-link btn-block text-left"
+          ng-click="approveInvoice(invoice, 'regular')">
+          <i class="fa fa-check"></i>
+          Approve
+        </button>
+      </li>
+      <li>
+        <button class="btn-link btn-block text-left"
+          ng-click="editInvoice(invoice)">
+          <i class="fa fa-pencil action-edit"></i>
+          Edit
+        </button>
+      </li>
+      <li ng-if="authorizeAction('delete-bill')">
+        <button class="btn-link btn-block text-left"
+          ng-click="changeInvoiceStatus('MARK_AS_DELETED', invoice)">
+          <i class="fa fa-trash-o action-delete"></i>
+          Delete
+        </button>
+      </li>
+      <li role="date-changer" class="divider"></li>
+      <li>
+        <span class="text-muted btn-link">Defer to:</span>
+      </li>
+      <li ng-if="authorizeAction('delay-bill')">
+        <button class="btn-link btn-block text-left" ng-click="deferDate('TOMORROW', invoice)">
+          <i class="fa fa-clock-o"> Tomorrow
+          </i>
+        </button>
+      </li>
+      <li ng-if="authorizeAction('delay-bill')">
+        <button class="btn-link btn-block text-left" ng-click="deferDate('NEXT_WEEK', invoice)">
+          <i class="fa fa-clock-o"> Next Week
+          </i>
+        </button>
+      </li>
+      <li ng-if="authorizeAction('delay-bill')">
+        <button class="btn-link btn-block text-left" ng-click="deferDate('NEXT_MONTH', invoice)">
+          <i class="fa fa-clock-o"> Next Month
+          </i>
+        </button>
+      </li>
+    </ul>
+  </div>
+
+</span>

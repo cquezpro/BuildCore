@@ -1,0 +1,11 @@
+<% if @users.present? %>
+  <h1>There are <%= @users.count %> on this file.</h1>
+  <p><%= @ach.report %></p>
+  <ul>
+    <% @ach.report.split("\n").each do |e| %>
+      <li><%= e %></li>
+    <% end %>
+  </ul>
+<% else %>
+  <h1>There are no ACH transactions today</h1>
+<% end %>

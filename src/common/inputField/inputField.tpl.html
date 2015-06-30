@@ -1,0 +1,6 @@
+<div ng-class="{error: errors}" class="text-wrapper">
+  <input type="{{inputType}}" class="{{inputType}} {{classes}}" ng-model="model" name="{{ label }}" id="{{ label }}" placeholder="{{ label }}" ng-class="{full: model.length }"/><label for="{{ label }}">{{ label }}</label>
+  <div class="alert alert-danger" style="border-radius:5px !important;padding: 3px;" ng-show="errors">
+    <div ng-repeat="error in errors track by $index">{{error}}</div>
+  </div>
+</div>

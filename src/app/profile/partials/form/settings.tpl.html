@@ -1,0 +1,285 @@
+<div class ="box col-md-10 col-xs-12" ng-class="{submitted: submitted}">
+  <div class="box-header">
+    <div class='title'>E-mail Notifications</div>
+  </div>
+  <div class= "box-content">
+
+    <table class="table table-response bstable">
+
+      <thead>
+        <th></th>
+        <th class="center">For Every Change</th>
+        <th class="center">Daily Digest</th>
+        <th class="center">Weekly Digest</th>
+        <th class="center">No Email Notice</th>
+      </thead>
+
+      <tbody>
+        <tr>
+          <td>New Vendor</td>
+          <td class="center">
+            <label for="email_new_invoice_onchange">
+              <input type="checkbox" name="email_new_invoice_onchange" id="email_new_invoice_onchange" ng-model="currentIndividual.email_new_invoice_onchange" />
+              <span></span>
+            </label>
+          </td>
+          <td class="center">
+            <label for="email_new_invoice_daily">
+              <input type="checkbox" name="email_new_invoice_daily" id="email_new_invoice_daily" ng-model="currentIndividual.email_new_invoice_daily" />
+              <span></span>
+            </label>
+          </td>
+          <td class="center">
+            <label for="email_new_invoice_weekly">
+              <input type="checkbox" name="email_new_invoice_weekly" id="email_new_invoice_weekly" ng-model="currentIndividual.email_new_invoice_weekly" />
+              <span></span>
+            </label>
+          </td>
+          <td class="center">
+            <label for="email_new_invoice_none">
+              <input type="checkbox" name="email_new_invoice_none" id="email_new_invoice_none" ng-model="currentIndividual.email_new_invoice_none" />
+              <span></span>
+            </label>
+          </td>
+        </tr>
+
+        <tr>
+          <td>Bill Changes</td>
+          <td class="center">
+            <label for="email_change_invoice_onchange">
+              <input type="checkbox" name="email_change_invoice_onchange" id="email_change_invoice_onchange" ng-model="currentIndividual.email_change_invoice_onchange" />
+              <span></span>
+            </label>
+          </td>
+          <td class="center">
+            <label for="email_change_invoice_daily">
+              <input type="checkbox" name="email_change_invoice_daily" id="email_change_invoice_daily" ng-model="currentIndividual.email_change_invoice_daily" />
+              <span></span>
+            </label>
+          </td>
+          <td class="center">
+            <label for="email_change_invoice_weekly">
+              <input type="checkbox" name="email_change_invoice_weekly" id="email_change_invoice_weekly" ng-model="currentIndividual.email_change_invoice_weekly" />
+              <span></span>
+            </label>
+          </td>
+          <td class="center">
+            <label for="email_change_invoice_none">
+              <input type="checkbox" name="email_change_invoice_none" id="email_change_invoice_none" ng-model="currentIndividual.email_change_invoice_none" />
+              <span></span>
+            </label>
+          </td>
+        </tr>
+
+        <tr>
+          <td>Payments</td>
+          <td class="center">
+            <label for="email_paid_invoice_onchange">
+              <input type="checkbox" name="email_paid_invoice_onchange" id="email_paid_invoice_onchange" ng-model="currentIndividual.email_paid_invoice_onchange" />
+              <span></span>
+            </label>
+          </td>
+          <td class="center">
+            <label for="email_paid_invoice_daily">
+              <input type="checkbox" name="email_paid_invoice_daily" id="email_paid_invoice_daily" ng-model="currentIndividual.email_paid_invoice_daily" />
+              <span></span>
+            </label>
+          </td>
+          <td class="center">
+            <label for="email_paid_invoice_weekly">
+              <input type="checkbox" name="email_paid_invoice_weekly" id="email_paid_invoice_weekly" ng-model="currentIndividual.email_paid_invoice_weekly" />
+              <span></span>
+            </label>
+          </td>
+          <td class="center">
+            <label for="email_paid_invoice_none">
+              <input type="checkbox" name="email_paid_invoice_none" id="email_paid_invoice_none" ng-model="currentIndividual.email_paid_invoice_none" />
+              <span></span>
+            </label>
+          </td>
+        </tr>
+
+        <tr>
+          <td>Savings</td>
+          <td class="center">
+            <label for="email_savings_onchange">
+              <input type="checkbox" name="email_savings_onchange" id="email_savings_onchange" ng-model="currentIndividual.email_savings_onchange" />
+              <span></span>
+            </label>
+          </td>
+          <td class="center">
+            <label for="email_savings_daily">
+              <input type="checkbox" name="email_savings_daily" id="email_savings_daily" ng-model="currentIndividual.email_savings_daily" />
+              <span></span>
+            </label>
+          </td>
+          <td class="center">
+            <label for="email_savings_invoice_weekly">
+              <input type="checkbox" name="email_savings_invoice_weekly" id="email_savings_invoice_weekly" ng-model="currentIndividual.email_savings_invoice_weekly" />
+              <span></span>
+            </label>
+          </td>
+          <td class="center">
+            <label for="email_savings_invoice_none">
+              <input type="checkbox" name="email_savings_invoice_none" id="email_savings_invoice_none" ng-model="currentIndividual.email_savings_invoice_none" />
+              <span></span>
+            </label>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class ="box col-md-10 col-xs-12">
+  <div class="box-header">
+    <div class='title'>Text Notifications</div>
+  </div>
+  <div class= "box-content">
+
+    <table class="table table-response bstable">
+
+      <thead>
+        <th></th>
+        <th class="center">For Every Change</th>
+        <th class="center">Daily Digest</th>
+        <th class="center">Weekly Digest</th>
+        <th class="center">No Text Notice</th>
+      </thead>
+
+      <tbody>
+        <tr>
+          <td>New Vendor</td>
+          <td class="center">
+            <label for="text_new_invoice_onchange">
+              <input type="checkbox" name="text_new_invoice_onchange" id="text_new_invoice_onchange" ng-model="currentIndividual.text_new_invoice_onchange" />
+              <span></span>
+            </label>
+          </td>
+          <td class="center">
+            <label for="text_new_invoice_daily">
+              <input type="checkbox" name="text_new_invoice_daily" id="text_new_invoice_daily" ng-model="currentIndividual.text_new_invoice_daily" />
+              <span></span>
+            </label>
+          </td>
+          <td class="center">
+            <label for="text_new_invoice_weekly">
+              <input type="checkbox" name="text_new_invoice_weekly" id="text_new_invoice_weekly" ng-model="currentIndividual.text_new_invoice_weekly" />
+              <span></span>
+            </label>
+          </td>
+          <td class="center">
+            <label for="text_new_invoice_none">
+              <input type="checkbox" name="text_new_invoice_none" id="text_new_invoice_none" ng-model="currentIndividual.text_new_invoice_none" />
+              <span></span>
+            </label>
+          </td>
+        </tr>
+
+        <tr>
+          <td>Bill Changes</td>
+          <td class="center">
+            <label for="text_change_invoice_onchange">
+              <input type="checkbox" name="text_change_invoice_onchange" id="text_change_invoice_onchange" ng-model="currentIndividual.text_change_invoice_onchange" />
+              <span></span>
+            </label>
+          </td>
+          <td class="center">
+            <label for="text_change_invoice_daily">
+              <input type="checkbox" name="text_change_invoice_daily" id="text_change_invoice_daily" ng-model="currentIndividual.text_change_invoice_daily" />
+              <span></span>
+            </label>
+          </td>
+          <td class="center">
+            <label for="text_change_invoice_weekly">
+              <input type="checkbox" name="text_change_invoice_weekly" id="text_change_invoice_weekly" ng-model="currentIndividual.text_change_invoice_weekly" />
+              <span></span>
+            </label>
+          </td>
+          <td class="center">
+            <label for="text_change_invoice_none">
+              <input type="checkbox" name="text_change_invoice_none" id="text_change_invoice_none" ng-model="currentIndividual.text_change_invoice_none" />
+              <span></span>
+            </label>
+          </td>
+        </tr>
+
+        <tr>
+          <td>Payments</td>
+          <td class="center">
+            <label for="text_paid_invoice_onchange">
+              <input type="checkbox" name="text_paid_invoice_onchange" id="text_paid_invoice_onchange" ng-model="currentIndividual.text_paid_invoice_onchange" />
+              <span></span>
+            </label>
+          </td>
+          <td class="center">
+            <label for="text_paid_invoice_daily">
+              <input type="checkbox" name="text_paid_invoice_daily" id="text_paid_invoice_daily" ng-model="currentIndividual.text_paid_invoice_daily" />
+              <span></span>
+            </label>
+          </td>
+          <td class="center">
+            <label for="text_paid_invoice_weekly">
+              <input type="checkbox" name="text_paid_invoice_weekly" id="text_paid_invoice_weekly" ng-model="currentIndividual.text_paid_invoice_weekly" />
+              <span></span>
+            </label>
+          </td>
+          <td class="center">
+            <label for="text_paid_invoice_none">
+              <input type="checkbox" name="text_paid_invoice_none" id="text_paid_invoice_none" ng-model="currentIndividual.text_paid_invoice_none" />
+              <span></span>
+            </label>
+          </td>
+        </tr>
+
+        <tr>
+          <td>Savings</td>
+          <td class="center">
+            <label for="text_savings_onchange">
+              <input type="checkbox" name="text_savings_onchange" id="text_savings_onchange" ng-model="currentIndividual.text_savings_onchange" />
+              <span></span>
+            </label>
+          </td>
+          <td class="center">
+            <label for="text_savings_daily">
+              <input type="checkbox" name="text_savings_daily" id="text_savings_daily" ng-model="currentIndividual.text_savings_daily" />
+              <span></span>
+            </label>
+          </td>
+          <td class="center">
+            <label for="text_savings_invoice_weekly">
+              <input type="checkbox" name="text_savings_invoice_weekly" id="text_savings_invoice_weekly" ng-model="currentIndividual.text_savings_invoice_weekly" />
+              <span></span>
+            </label>
+          </td>
+          <td class="center">
+            <label for="text_savings_invoice_none">
+              <input type="checkbox" name="text_savings_invoice_none" id="text_savings_invoice_none" ng-model="currentIndividual.text_savings_invoice_none" />
+              <span></span>
+            </label>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <br/>
+    <div>
+      <label for="pay_bills_through_text">
+        <input type="checkbox" name="pay_bills_through_text" id="pay_bills_through_text" ng-model="currentIndividual.user.pay_bills_through_text" />
+        <span></span>
+        Let me pay by bills on due date through text, please text me at
+      </label>
+
+      <div class="form-group sms-input">
+        <label for="sms_time">Text Payment Time </label>
+        <ui-select ng-model="$parent.currentIndividual.user.sms_time" style="width:200px;display:inline-block" name="sms_time">
+          <ui-select-match placeholder="SMS Time...">
+            {{$select.selected.label}}
+          </ui-select-match>
+          <ui-select-choices repeat="times.id as times in select_times | filter: $select.search">
+            <div ng-bind-html="times.label | highlight: $select.search"></div>
+          </ui-select-choices>
+        </ui-select>
+        each day.
+      </div>
+  </div>
+</div>

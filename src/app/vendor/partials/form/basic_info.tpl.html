@@ -1,0 +1,119 @@
+<div class ="box col-md-10 col-xs-12">
+  <div class="box-header">
+    <div class='title'>Contact</div>
+  </div>
+  <div class= "box-content">
+
+
+    <div class="text-wrapper">
+      <input class="input" type="text" name="name" ng-model="vendor.name" placeholder="Vendor Name" id="vendorName" ng-class="{full: vendor.name.length}" required/>
+      <label for="vendorName">Vendor Name</label>
+      <span ng-show="errors.name">
+        <span ng-repeat="error in errors.name" class="error-input">Name {{error}}</span>
+      </span>
+    </div>
+
+    <div class="text-wrapper">
+      <input class="input" type="text" name="name" ng-model="vendor.contact_person" placeholder="Contact Person" id="vendorContact" ng-class="{full: vendor.contact_person.length}"/>
+      <label for="vendorContact">Contact Person</label>
+    </div>
+
+
+    <div class="text-wrapper">
+      <input class="input" name="email" type="email" ng-model="vendor.email"  placeholder = "E-Mail" name="eMail" id="eMail" ng-class="{full: vendorForm.email.$viewValue.length}" />
+      <label for="email">E-Mail</label>
+    </div>
+
+    <div class="text-wrapper">
+      <input class="input" type="text" name= "businessNumber"  ng-model="vendor.business_number" ui-mask="{{masks.business_number}}" placeholder="Business Number" ng-focus="refreshMask('business_number', '999-999-9999')" ng-blur="clearMask('business_number')" ng-class="{full: vendorForm.businessNumber.$viewValue.length}"/>
+      <label for="businessNumber">business Number</label>
+    </div>
+
+    <div class="text-wrapper">
+      <input class="input" type="text" name="faxNumber" ng-model="vendor.fax_number" placeholder="Fax Number" ui-mask="{{masks.fax_number}}" ng-focus="refreshMask('fax_number', '999-999-9999')" ng-blur="clearMask('fax_number')" ng-class="{full: vendorForm.faxNumber.$viewValue.length}" />
+      <label for="faxNumber">Fax Number</label>
+    </div>
+
+    <div class="text-wrapper">
+      <input class="input" type="text" ng-model="vendor.cell_number" placeholder="Cell Number"name="cellNumber" ng-class="{full: vendorForm.cellNumber.$viewValue.length}" ui-mask="{{masks.cell_number}}" ng-focus="refreshMask('cell_number', '999-999-9999')" ng-blur="clearMask('cell_number')" >
+      <label for="cellNumber">Cell Number</label>
+    </div>
+
+    <div class="text-wrapper">
+      <input class="input" type="text" name="taxIdNumber" ng-model="vendor.tax_id_number" placeholder="Tax ID #" ng-class="{full: vendor.tax_id_number.length}" ui-mask="{{masks.tax_id_number}}" ng-focus="refreshMask('tax_id_number','99-9999999')" ng-class="{full: vendorForm.taxIdNumber.$viewValue.length}" ng-blur="clearMask('tax_id_number')"/>
+      <label for="taxIdNumber">Tax ID #</label>
+    </div>
+
+  </div>
+</div>
+
+<div class ="box col-md-10 col-xs-12">
+  <div class="box-header">
+    <div class='title'>Payment Method</div>
+  </div>
+  <div class= "box-content">
+    <!-- COMMENTED TILL ACH PAYMENTS FOR VENDOR IS IMPLEMENTED -->
+    <!-- <h4>Pay by Bank Wire</h4><br>
+    <div ng-show="errors.groupFields">
+      <span ng-repeat="error in errors.groupFields" class="error-input">{{error}}</span>
+    </div>
+    <div class="text-wrapper">
+      <input class="input" name="routing" ng-model="vendor.routing_number" type="text" placeholder="{{vendor.routing_number || 'Bank Routing Number'}}" ng-pattern="/^\d{9}$/" ng-class="{full: vendor.routing_number || vendorForm.routing.$viewValue.length}" ng-change="checkVendorGroups()" ng-blur="setWasFocused(vendorForm.routing)"/>
+      <label for="routingNumber" ><span ng-show="vendorForm.routing.$dirty && vendorForm.routing.$error.pattern">-</span> Bank Routing Number</label>
+      <span ng-show="vendorForm.routing.$wasFocused && vendorForm.routing.$dirty && vendorForm.routing.$error.pattern" class="error-input">
+        The value must be 9 digits.
+      </span>
+    </div>
+
+    <div class="text-wrapper">
+      <input class="input" ng-model="vendor.bank_account_number" name="account"  type="text" placeholder = "{{vendor.bank_account_number || 'Bank Account Number'}}" integer ng-pattern="/^\d+$/" ng-class="{full: vendor.bank_account_number || vendorForm.account.$viewValue.length}" ng-change="checkVendorGroups()" ng-blur="setWasFocused(vendorForm.account)">
+      <label for="account"><span ng-show="vendorForm.account.$dirty && vendorForm.account.$error.pattern">-</span> Bank Account Number</label>
+      <span ng-show="vendorForm.account.$wasFocused && vendorForm.account.$dirty && vendorForm.account.$error.pattern" class="error-input">
+        Only numbers allowed
+      </span>
+    </div> -->
+
+    <h4>Pay by Mail</h4> <br>
+    <div ng-show="errors.groupFields">
+      <span ng-repeat="error in errors.groupFields" class="error-input">{{error}}</span>
+    </div>
+    <div class="text-wrapper">
+      <input class="input" ng-model="vendor.address1" name= "add1"  type= "text" placeholder = "Address Line 1" ng-class="{full: vendor.address1.length}" ng-change="checkVendorGroups()">
+      <label for="add1">Address Line 1</label>
+    </div>
+
+    <div class="text-wrapper">
+      <input class="input" ng-model="vendor.address2" name= "add2"  type= "text" placeholder = "Address Line 2" ng-class="{full: vendor.address2.length}" ng-change="checkVendorGroups()">
+      <label for="add2">Address Line 2</label>
+    </div>
+
+    <div class="text-wrapper">
+      <input class="input" ng-model="vendor.address3" name= "add3"  type= "text" placeholder = "Address Line 3" ng-class="{full: vendor.address3.length}" ng-change="checkVendorGroups()">
+      <label for="add2">Address Line 3</label>
+    </div>
+
+    <div class="text-wrapper">
+      <input class="input" ng-model="vendor.city" name= "city"  type= "text" placeholder = "City" ng-class="{full: vendor.city.length}" ng-change="checkVendorGroups()" style="width:49%">
+      <label for="city">City</label>
+      <input class="input" ng-model="vendor.state" name="state" type= "text" placeholder="State" ng-class="{full: vendorForm.state.$viewValue.length}" ng-change="checkVendorGroups()" ng-blur="setWasFocused(vendorForm.state)" style="width:10%">
+      <label for="state" style="left:50%"><span ng-show="vendorForm.state.$error.states && vendorForm.state.$dirty && vendor.state.length > 1">-</span> State</label>
+      <input class="input" ng-model="vendor.zip" name="zipCode" type= "text" placeholder="Zipcode" ng-class="{full: vendor.zip.length}" ng-change="checkVendorGroups()" style="width:20%">
+      <label for="zipCode" style="left:60%">Zipcode</label>
+      <span ng-show="vendorForm.state.$wasFocused && vendorForm.state.$error.states && vendorForm.state.$dirty && vendor.state.length > 1" class="error-input">
+        Must be a valid US state
+      </span>
+      <span ng-show="vendorForm.state.$wasFocused && vendorForm.state.$error.states && vendorForm.state.$dirty && vendor.state.length > 1" class="error-input">
+        Must be a valid TWO letter state abberviation (e.g. NY or NC)
+      </span>
+    </div>
+
+    <div class="text-wrapper">
+
+    </div>
+
+    <div class="text-wrapper">
+
+    </div>
+
+  </div>
+</div>

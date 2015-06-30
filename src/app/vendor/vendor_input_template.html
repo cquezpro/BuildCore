@@ -1,0 +1,21 @@
+<div class="text-wrapper">
+	{{errorBlock}}
+	<input class="input" name= "routing" ng-model="$parent.vendor.{{ fieldName }}" type= "text"  placeholder = "{{ placeHolder}}" ng-pattern="{{ REGEX}}" name="{{ fieldName }}" required/>
+	<label for="{{ fieldName }}">{{ placeholder}}</label>
+</div>
+
+
+Example error block
+
+<div class="error-block" ng-show="vendorForm.routing.$dirty && vendorForm.routing.$invalid && !vendorForm.routing.$focused">
+		<p ng-show="vendorForm.routing.$error.pattern" class="text-error">Please enter a valid routing number</p>
+</div>
+
+<div vendorInput datafield="fieldName" placeholder="placeHolder" REGEX="" errorBlock =""></div>
+
+
+
+
+<div class="error-block" ng-show="vendorForm.routing.$dirty && vendorForm.routing.$invalid && !vendorForm.routing.$focused">
+					    			<p ng-show="vendorForm.routing.$error.pattern" class="text-error">Please enter a valid routing number</p>
+					    		</div>

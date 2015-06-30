@@ -1,0 +1,8 @@
+test: &default
+  adapter: postgresql
+  pool: 5
+  timeout: 5000
+  encoding: unicode
+  host: localhost
+  database: scrutinizer
+  password: scrutinizer

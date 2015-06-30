@@ -1,0 +1,62 @@
+<div class="modal fade" id="workers-table-modal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header" style="border-bottom:0">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h3 class="modal-title worker">Higher score means HIGHER PAY</h3>
+      </div>
+      <div class="modal-body">
+        <p> Workers scores are computed at the END OF EACH day on the following baisis:
+          <ul>
+            <li>For every blank that is double verfied by another worker +1</li>
+            <li>For every blank that is disagreement from at least two other workers -2</li>
+            <li>For every blank where no agreement is reached between a set of 3 workers 0</li>
+          </ul>
+          </p>
+
+          <p>Workers are then placed into tiers with the following benefits:
+            <table class="table">
+              <thead>
+                <th>Tier</th>
+                <th>Score</th>
+                <th>Benefits</th>
+              </thead>
+              <tbody>
+                <tr ng-class="{'active': workerLevel('Training camp')}">
+                  <td>Training Camp</td>
+                  <td>Less than 50 points</td>
+                  <td>none</td>
+                </tr>
+
+                <tr ng-class="{'active': workerLevel('Rookie')}">
+                  <td>Rookie</td>
+                  <td>Greater than 50 points</td>
+                  <td>none</td>
+                </tr>
+
+                <tr ng-class="{'active': workerLevel('Scholar')}">
+                  <td>Scholar</td>
+                  <td>Top 50% of workers with over 50 points</td>
+                  <td>Qualify for higher wage tasks</td>
+                </tr>
+
+                <tr ng-class="{'active': workerLevel('Rising start')}">
+                  <td>Rising Star</td>
+                  <td>Top 15% of workers with over 1000 points</td>
+                  <td>10% higher wages</td>
+                </tr>
+
+                <tr ng-class="{'active': workerLevel('Superstar')}">
+                  <td>Superstar Star</td>
+                  <td>Top 5% of workers with atleast 1500 points</td>
+                  <td>50% higher wages!</td>
+                </tr>
+
+              </tbody>
+            </table>
+
+          </p>
+      </div>
+    </div>
+  </div>
+</div>

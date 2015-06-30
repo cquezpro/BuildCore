@@ -1,0 +1,33 @@
+<ion-modal-view>
+      <ion-header-bar>
+        <!--<button ng-click="close()" class="button button-outline button-positive ion-close-round text-right"></button>-->
+        <button class="button" ng-click="closeDetail()">Close</button>
+      </ion-header-bar>
+    <ion-content>
+       <ion-item class="item-divider">
+          Payment Detail
+        </ion-item>
+        <label class="item">
+          <strong><span class="vendor-block-vendor">{{detailVendor.name}}</span></strong>
+        </label>
+        <label class="item" ng-if="detailVendor.address1 && detailVendor.city && detailVendor.state && detailVendor.zip">
+            <span >
+                {{detailVendor.address1}}, {{detailVendor.city}}, {{detailVendor.state}}, {{detailVendor.zip}}
+            </span>          
+        </label>
+        <label class="item">
+            <span>${{detailVendor.check_total | number: 2}}</span>          
+        </label>
+        <label class="item">
+            <span>Check #{{detailVendor.check_number}}  </span>       
+        </label>
+        <label class="item">
+            <span class="input-label">Bills Paid (bill date/bill ID/amount)</span>  
+            <div ng-repeat="invoice in detailVendor.bills">
+              {{invoice.date | date: "shortDate"}} - #{{invoice.number}} - ${{invoice.amount_due | number: 2}}
+            <br/>
+          </div> 
+        </label>
+
+    </ion-content>
+</ion-modal-view>         

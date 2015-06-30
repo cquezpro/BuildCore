@@ -1,0 +1,272 @@
+
+<div>
+  <div class="pagetitle">
+    <h1>
+      <span>
+      Payments
+      <span class="mainactions">
+        <button type="button" class="btn-theme" ng-click="openModal()" ng-if="authorizeAction('create-upload-bill')"><i class="fa fa-cloud-upload"></i> upload multiple bills</button>
+        <button type="button" class="btn-theme" ng-click="addBill()" ng-if="authorizeAction('create-upload-bill')"><i class="fa fa-plus"></i> add bill</button>
+      </span>
+      </span>
+
+    </h1>
+  </div>
+
+  <div id="loading" class="row" ng-show="loading">
+    <h4 class="text-center">Loading <i class="fa fa-spinner fa-spin"></i></h4>
+  </div>
+
+  <div ng-show="noBillsNotice">
+    <h3 class="text-center">You're all clear!  Add more invoices by emailing them to <br> bills@bill-sync.com or uploading them above</h3>
+  </div>
+
+  <table class="table responsive-table bstable table-responsive table-hover table-first" ng-show="!loading && totalBillsWithoutProcessingCount > 0">
+    <thead>
+      <th width="30" class="hidden-xs hidden-sm"></th>
+      <th class="center" width="30">Due</th>
+      <th>Vendor</th>
+      <th class="center">Amount</th>
+      <th class="center">Alert</th>
+      <th class="center">Action</th>
+    </thead>
+    <tbody>
+      <tr ng-show="invoices.payment_queue.length > 0">
+        <td class="showover hidden-xs hidden-sm">
+          <label for="choice_{{choices.payment_pending[0].status}}">
+            <input type="checkbox" ng-model="payment_pending" id="choice_{{choices.payment_pending[0].status}}" ng-change="checkOrUncheck(invoices.payment_queue, 'payment_pending')">
+            <span class="dropdown" on-toggle="toggled(open)"> <a href class="dropdown-toggle">
+                <i class='fa fa-angle-down'></i>
+              </a>
+              <ul class="dropdown-menu">
+                <li ng-repeat="item in choices.payment_pending" ng-click="changeStatus(item.status, null, invoices.payment_queue)">
+                  <a>{{item.text}}</a>
+                </li>
+              </ul>
+            </span>
+          </label>
+        </td>
+        <td colspan="5" class="no-hover"><span class="table-head">Payment Pending</span></td>
+      </tr>
+      <!-- comment -->
+      <tr ng-repeat="invoice in invoices.payment_queue" id="{{invoice.id}}" ng-class="{removeAnimation: invoice.action, addAnimation: animation_invoice_ids.indexOf(invoice.id) !== -1}">
+
+        <td class="hidden-xs hidden-sm">
+          <label for="invoice-{{invoice.id}}">
+            <input type="checkbox" ng-checked="allChecked" ng-model="invoice.checked" id="invoice-{{invoice.id}}">
+            <span></span>
+          </label>
+        </td> <!-- for group actions for the button above -->
+
+        <td ng-click="editBill(invoice.id)" class="center">
+            <span class="date-block-month">
+              {{invoice.due_date | date : 'MMM'}}
+            </span>
+            <span class="date-block-day">
+              {{invoice.due_date | date : 'dd'}}
+            </span>
+            <span class="date-block-year" ng-show="checkDate(invoice.due_date)">
+              {{invoice.due_date | date : 'yyyy'}}
+            </span>
+        </td>
+
+        <td ng-click="editBill(invoice.id)">
+          <span class="vendor-block-vendor">{{invoice.vendor.name || '?'}}</span>
+          <span class="vendor-block-address">
+            <span ng-if="invoice.vendor.address1 && invoice.vendor.city && invoice.vendor.state && invoice.vendor.zip">
+                {{invoice.vendor.address1}}, {{invoice.vendor.city}}, {{invoice.vendor.state}}, {{invoice.vendor.zip}}
+            </span>
+            <span ng-if="(!invoice.vendor.address1 || !invoice.vendor.city || !invoice.vendor.state || !invoice.vendor.zip) && invoice.vendor.routing_number && invoice.vendor.bank_account_number">
+                ACH information on file
+            </span>
+            <span ng-if="(!invoice.vendor.address1 || !invoice.vendor.city || !invoice.vendor.state || !invoice.vendor.zip) && !invoice.vendor.routing_number && !invoice.vendor.bank_account_number">
+                ??, ??
+            </span>
+          </span>
+        </td>
+
+        <td ng-click="editBill(invoice.id)" class="center">
+            <span class="amount-due-block-amount">$
+              <span ng-show="invoice.amount_due.length > 0">{{invoice.amount_due | number:0}}</span>
+              <span ng-hide="invoice.amount_due.length > 0">?</span>
+            </span>
+            <span class="amount-due-block-date">act by: {{ invoice.act_by | date : 'M/d' }}</span>
+        </td>
+
+
+        <td ng-click="editBill(invoice.id)">
+          <span class="vendor-block-address">sending: {{invoice.payment_send_date | date:"MM/dd"}}</span>
+          {{invoice.total_alerts_count}}
+        </td>
+
+        <td class="showover center">
+          <button type="button" class="btn-theme" ng-click="changeStatus('cancel_payment!', invoice)"><i class="fa fa-ban action-cancel"></i> Cancel Payment </button>
+          <div class="btn-group" dropdown>
+            <button type="button" class="btn-theme" dropdown-toggle>
+              Other <span><i class='fa fa-angle-down'></i></span>
+            </button>
+            <ul class="dropdown-menu left" role="menu">
+              <li ng-if="authorizeAction('mark-as-paid-bill')"><a ng-click="changeStatus('mark_as_paid!', invoice)"><i class="fa fa-check action-paid"></i> Mark Paid</a></li>
+              <li ng-if="authorizeAction('pay-bill') &&  currentIndividual.user.verified"><a ng-click="autoPay(invoice)"><i class="fa fa-refresh action-auto"></i> Auto Pay</a></li>
+              <li><a ng-click="changeStatus('cancel_payment!', invoice)"><i class="fa fa-ban action-cancel"></i> Cancel Payment</a></li>
+              <li><a ng-click="editBill(invoice.id)"><i class="fa fa-pencil action-edit"></i> Edit</a></li>
+              <li ng-if="authorizeAction('delete-bill')"><a ng-click="changeStatus('mark_as_deleted!', invoice)"><i class="fa fa-trash-o action-delete"></i> Delete</a></li>
+            </ul>
+          </div>
+
+        </td> <!-- need to get the tooltips to work see UI boostrap documentation-->
+      </tr>
+
+      <tr ng-show="invoices.recently_paid.length > 0">
+        <td class="hidden-xs hidden-sm">
+        </td> <!-- for group actions for the button above -->
+        <td colspan="5" class="no-hover"><span class="table-head">Recently Paid</span></td>
+      </tr>
+
+
+      <tr ng-repeat="invoice in invoices.recently_paid" id="{{invoice.id}}" ng-class="{removeAnimation: invoice.action, addAnimation: animation_invoice_ids.indexOf(invoice.id) !== -1}">
+
+        <td class="hidden-xs hidden-sm">
+
+        </td> <!-- for group actions for the button above -->
+
+        <td ng-click="editBill(invoice.id)" class="center">
+            <span class="date-block-month">
+              {{invoice.due_date | date : 'MMM'}}
+            </span>
+            <span class="date-block-day">
+              {{invoice.due_date | date : 'dd'}}
+            </span>
+            <span class="date-block-year" ng-show="checkDate(invoice.due_date)">
+              {{invoice.due_date | date : 'yyyy'}}
+            </span>
+        </td>
+
+        <td ng-click="editBill(invoice.id)">
+          <span class="vendor-block-vendor">{{invoice.vendor.name || '?'}}</span>
+          <span class="vendor-block-address">
+            <span ng-if="invoice.vendor.address1 && invoice.vendor.city && invoice.vendor.state && invoice.vendor.zip">
+                {{invoice.vendor.address1}}, {{invoice.vendor.city}}, {{invoice.vendor.state}}, {{invoice.vendor.zip}}
+            </span>
+            <span ng-if="(!invoice.vendor.address1 || !invoice.vendor.city || !invoice.vendor.state || !invoice.vendor.zip) && invoice.vendor.routing_number && invoice.vendor.bank_account_number">
+                ACH information on file
+            </span>
+            <span ng-if="(!invoice.vendor.address1 || !invoice.vendor.city || !invoice.vendor.state || !invoice.vendor.zip) && !invoice.vendor.routing_number && !invoice.vendor.bank_account_number">
+                ??, ??
+            </span>
+          </span>
+        </td>
+
+        <td ng-click="editBill(invoice.id)" class="center">
+            <span class="amount-due-block-amount">$
+              <span ng-show="invoice.amount_due.length > 0">{{invoice.amount_due | number:0}}</span>
+              <span ng-hide="invoice.amount_due.length > 0">?</span>
+            </span>
+            <span class="amount-due-block-date">Act by: {{ invoice.act_by | date : 'M/d' }}</span>
+        </td>
+
+
+        <td ng-click="editBill(invoice.id)">
+        <span class="vendor-block-address">paid on: {{(invoice.payment_date || invoice.check_date) | date : 'M/d'}}</span>
+        <span class="vendor-block-address" ng-show="invoice.check_number">check number: {{invoice.check_number}}</span>
+        </td>
+
+        <td class="showover center">
+          <div class="btn-group" dropdown>
+            <button type="button" class="btn-theme" dropdown-toggle>
+              Other <span><i class='fa fa-angle-down'></i></span>
+            </button>
+            <ul class="dropdown-menu left" role="menu">
+              <li ng-if="authorizeAction('auto-pay-bill')"><a ng-click="autoPay(invoice)"><i class="fa fa-refresh action-auto"></i> Auto Pay Going Forward</a></li>
+            </ul>
+          </div>
+
+        </td> <!-- need to get the tooltips to work see UI boostrap documentation-->
+      </tr>
+
+    </tbody>
+  </table>
+
+  <h4 ng-show="!loading && invoices.in_process.length > 0">
+    Proccessing <br>
+    <small>We are currently processing {{ invoices.in_process.length }} invoices for your company. We should have them done soon!</small>
+  </h4> <!-- for all invoices status 1 or 2 -->
+
+  <table class="table responsive-table bstable table-responsive table-hover" ng-show="invoices.in_process.length > 0">
+    <thead>
+      <th width="30" class="hidden-xs hidden-sm"></th>
+      <th class="center" width="30">Due</th>
+      <th>Vendor</th>
+      <th class="center">Amount</th>
+      <th class="center">Source</th>
+      <th class="center">Action</th>
+    </thead>
+    <tbody>
+      <tr ng-repeat="invoice in invoices.in_process" id="{{invoice.id}}" ng-class="{removeAnimation: invoice.action, addAnimation: animation_invoice_ids.indexOf(invoice.id) !== -1}">
+
+        <td class="hidden-xs hidden-sm">
+          <label for="invoice-{{invoice.id}}">
+            <input type="checkbox" ng-checked="allChecked" ng-model="invoice.checked" id="invoice-{{invoice.id}}">
+            <span></span>
+          </label>
+        </td> <!-- for group actions for the button above -->
+
+        <td ng-click="editBill(invoice.id)" class="center">
+            <span class="date-block-month">
+              {{invoice.due_date | date : 'MMM'}}
+            </span>
+            <span class="date-block-day">
+              {{invoice.due_date | date : 'dd'}}
+            </span>
+            <span class="date-block-year" ng-show="checkDate(invoice.due_date)">
+              {{invoice.due_date | date : 'yyyy'}}
+            </span>
+        </td>
+
+        <td ng-click="editBill(invoice.id)">
+          <span class="vendor-block-vendor">{{invoice.vendor.name || '?'}}</span>
+          <span class="vendor-block-address">
+            <span ng-if="invoice.vendor.address1 && invoice.vendor.city && invoice.vendor.state && invoice.vendor.zip">
+                {{invoice.vendor.address1}}, {{invoice.vendor.city}}, {{invoice.vendor.state}}, {{invoice.vendor.zip}}
+            </span>
+            <span ng-if="(!invoice.vendor.address1 || !invoice.vendor.city || !invoice.vendor.state || !invoice.vendor.zip) && invoice.vendor.routing_number && invoice.vendor.bank_account_number">
+                ACH information on file
+            </span>
+            <span ng-if="(!invoice.vendor.address1 || !invoice.vendor.city || !invoice.vendor.state || !invoice.vendor.zip) && !invoice.vendor.routing_number && !invoice.vendor.bank_account_number">
+                ??, ??
+            </span>
+          </span>
+        </td>
+
+        <td ng-click="editBill(invoice.id)" class="center">
+            <span class="amount-due-block-amount">$
+              <span ng-show="invoice.amount_due.length > 0">{{invoice.amount_due | number:0}}</span>
+              <span ng-hide="invoice.amount_due.length > 0">?</span>
+            </span>
+            <span class="amount-due-block-date">Act by: {{ invoice.act_by | date : 'M/d' }}</span>
+        </td>
+
+
+        <td ng-click="editBill(invoice.id)" class="center">
+          {{getSourceText(invoice)}}
+        </td>
+
+        <td class="showover center">
+          <button class="btn-theme" ng-click="editBill(invoice.id)"><i class="fa fa-pencil action-edit"></i> Add Details</button>
+          <div class="btn-group" dropdown>
+            <button type="button" class="btn-theme" dropdown-toggle>
+              Other <span><i class='fa fa-angle-down'></i></span>
+            </button>
+            <ul class="dropdown-menu left" role="menu">
+              <li ng-if="authorizeAction('mark-as-paid-bill')"><a ng-click="changeStatus('mark_as_paid!', invoice)"><i class="fa fa-check action-paid"></i> Mark Paid</a></li>
+              <li><a ng-click="editBill(invoice.id)"><i class="fa fa-pencil action-edit"></i> Edit</a></li>
+              <li ng-if="authorizeAction('delete-bill')"><a ng-click="changeStatus('mark_as_deleted!', invoice)"><i class="fa fa-trash-o action-delete"></i> Delete</a></li>
+            </ul>
+          </div>
+
+        </td>
+      </tr>
+
+    </tbody>
+  </table>
+</div>

@@ -1,0 +1,33 @@
+<div class="checklist-box bsgenfont" style="margin-top:-10px; font-size: 15px;" ng-hide="100 == getCompletationPersent() && currentIndividual.user.modal_used" ng-class="{minimized: checklistMinimized}" ng-if="!freePass()">
+    <ul class="checklist bsgenfont">
+      <li ng-repeat="check in checklists">    
+        <i
+          class="ion-checkmark text-green"
+          ng-show="check.done"
+          ng-class="{'text-green': check.done}">
+        </i>
+
+        <span 
+          ng-hide="check.done"
+          style="{{check.done ? 'display:none;':''}}"
+          ng-class="{'text-muted': check.disabled}">
+          {{$index + 1}}.
+        </span>
+
+        <span 
+          ng-class="{'message-done': check.done, 'text-muted': check.disabled}"
+          style="font-family: 'Open Sans',sans-serif;">
+          <a href="#" ng-if="$index === 3 && !check.done" ng-click="confirmEmail()" style="color:#369;text-decoration:none">{{ check.msg }}</a>
+          <span ng-hide="$index === 3 && !check.done">
+            <a href="#" ng-show="check.url && !check.done" ng-click="openUrl(check)" style="color:#369;text-decoration:none">{{ check.msg }}</a>
+            <span ng-show="!check.url || check.done">{{ check.msg }}</span>
+          </span>
+        </span>
+
+        <i class="ion-information"></i>
+      </li>
+    </ul>
+    <div ng-if="!currentIndividual.user.modal_used && 100 == getCompletationPersent()">
+      <button type="button" class="btn-theme" ng-click="unlockTreat()">Unlock a  Treat!</button>
+    </div>
+</div>

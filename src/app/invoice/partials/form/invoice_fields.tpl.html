@@ -1,0 +1,44 @@
+<div class="text-wrapper">
+  <input class="input" type="text" name="number" ng-model="invoice.number" placeholder="Invoice number" ng-class="{full: invoice.number.length}" />
+  <label for="number">Invoice Number</label>
+</div>
+
+<div class="text-wrapper" ng-class="{fullLabel: invoice.due_date}">
+  <label for="due_date"><span ng-show="invoiceForm.due_date.$error.required">-</span> Invoice Due Date</label>
+  <input class="input" type="text" name="due_date" id="due_date" datepicker-popup="MM/dd/yy" ng-model="invoice.due_date" is-open="$parent.inv_due_date" datepicker-options="dateOptions" close-text="Close" show-weeks="false" ng-class="{full: invoice.due_date.length}" placeholder="Due Date" ng-focus="focusLabel('#due_date')" ng-blur="blurLabel('#due_date')"/>
+  <span>
+    <button type="button" class="btn-theme" ng-click="openDatePicker($event, 'inv_due_date')"><i class="fa fa-calendar"></i></button>
+  </span>
+</div>
+
+<div class="text-wrapper">
+  <input class="input" type="text" name="account_number" ng-model="invoice.account_number" placeholder="Account Number" ng-class="{full: invoice.account_number.length}" />
+  <label for="account_number">Account Number</label>
+</div>
+
+<div class="text-wrapper" ng-class="{fullLabel: invoice.date}">
+
+  <input class="input" type="text" name="date" id="date" datepicker-popup="MM/dd/yy" ng-model="invoice.date" is-open="$parent.inv_date" datepicker-options="dateOptions" close-text="Close" show-weeks="false" ng-class="{full: invoice.date}" placeholder="Date of Delivery" ng-focus="focusLabel('#date')" ng-blur="blurLabel('#date')"/>
+  <span>
+    <button type="button" class="btn-theme" ng-click="openDatePicker($event, 'inv_date')"><i class="fa fa-calendar"></i></button>
+  </span>
+  <label for="date">Date of Delivery</label>
+</div>
+
+<div class="text-wrapper left-inner-addon-theme">
+  <span>$</span>
+  <input class="input" name="amount_due" type="text" ng-model="invoice.amount_due" placeholder="Amount due" ng-class="{full: invoice.amount_due}" money required>
+  <label for="amount_due">Amount Due</label>
+</div>
+
+<div class="text-wrapper left-inner-addon-theme">
+  <span>$</span>
+  <input class="input" type="text" name="tax" ng-model="invoice.tax" placeholder="Tax" ng-class="{full: invoice.tax.length}" money/>
+  <label for="tax">Tax</label>
+</div>
+
+<div class="text-wrapper left-inner-addon-theme">
+  <span>$</span>
+  <input class="input" type="text" name="other_fee" ng-model="invoice.other_fee" placeholder="Other Fee" ng-class="{full: $viewValue.length}" money />
+  <label for="other_fee">Other Fee</label>
+</div>

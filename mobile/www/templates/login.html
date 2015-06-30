@@ -1,0 +1,54 @@
+<ion-modal-view style="background-color: #FDFDFC;">
+  <ion-header-bar class="large-bar" style="height:120px">
+    <div class="row">
+      <div class="col text-center" style="padding:0px;">
+        <img src="img/billsync.png" style="width:100px;height:100px">
+        <div style="font-size:15px; font-weight: bold; color: #336699">Hi! Get started with your billSync login.</div>
+      </div>
+    </div>
+  </ion-header-bar>
+  <ion-content id="login" class="has-large-header">
+    <ion-list>
+      <label class="item item-input item-floating-label" style="background-color: #FDFDFC;">
+        <span class="input-label">E-Mail</span>
+        <input style="background-color: #FDFDFC" type="text" placeholder="E-Mail" ng-model="loginData.email">
+      </label>
+      <!--ion-item class="item-input">
+        <span class="input-label  text-right">E-Mail</span>
+        <input type="email" ng-model="loginData.email">
+      </ion-item-->
+     
+      <label class="item item-input item-floating-label" style="background-color: #FDFDFC;">
+        <span class="input-label">Password</span>
+        <input style="background-color: #FDFDFC" type="{{chkState ? 'text' : 'password'}}" ng-model="loginData.password" placeholder="Password">
+      </label>
+      <!--ion-item class="item-input">
+        <span class="input-label text-right">Password</span>
+        <input type="{{chkState ? 'text' : 'password'}}" ng-model="loginData.password">
+      </ion-item-->
+      <ion-item class="item item-checkbox" style="border-style:none;">
+           <label class="checkbox">
+             <input type="checkbox" ng-click="showPassword()">
+           </label>
+           Show password
+      </ion-item>
+      
+      <ion-item style="border-style:none;">
+        <div class="row">
+          <div class="col">
+            <button class="button button-block button-light" style="border:2px solid #336699;background-color:white;border-radius: 5px;display: block;line-height: 132%;white-space:normal;font-size:17px;" ng-click="doLogin()">
+            <div style="margin-left:-7px;"><font style="color:#336699;">Login</font></div>
+            </button>
+          </div>
+          <!--<div class="col">
+            <button class="button button-block button-light" ng-click="showSignUp()">Sign up</button>
+          </div>-->
+        </div>
+      </ion-item>
+       <ion-item class="item item-checkbox" style="border-style:none; text-align:center; margin-left:-7px;">
+           <a class="btn btn-link" ng-click="showForgotPassword()">forgot password?</a>
+      </ion-item>
+    </ion-list>
+  </ion-content>
+</ion-modal-view>
+

@@ -1,0 +1,19 @@
+<div class ="box col-md-10 col-xs-12">
+  <div class="box-header">
+    <div class='title'>Edit location: </div>
+  </div>
+  <div class= "box-content">
+    <address-fields address="editing_address"></address-fields>
+  </div>
+</div>
+<div>
+  <button class="btn-theme" ng-click="save()" ng-disabled="http_request">
+    <div ng-show="http_request">
+      Saving...
+    </div>
+    <div ng-hide="http_request">
+      Save
+    </div>
+  </button>
+  <button class="btn-theme" ng-click="canselAndCloseModal()">Cancel</button>
+</div>

@@ -1,0 +1,9 @@
+Vendor Name: <%= @vendor.name %>
+<br>
+Vendor Phone: <%= @vendor.cell_number %>
+<br>
+Vendor Email: <%= @vendor.email %>
+<br>
+Invoices: <%= @invoices.map { |o| app_url anchor: invoice_anchor(o) }.join(", ") %>
+<br>
+-The billSync Team, hello@bill-sync.com

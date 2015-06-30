@@ -1,0 +1,113 @@
+<table class="table responsive-table bstable table-responsive table-hover">
+  <thead>
+    <th width="30">
+    </th>
+    <th>Alert</th> <!-- Leave this section blank for now will come back once we start doing more back end calculations-->
+    <th>Vendor</th> <!-- Pulls from the vendor database-->
+    <th class="center">Amount</th> <!-- Pulls from the vendor database-->
+    <th class="center">Due Date</th> <!-- From invoice database-->
+    <th class="center">Action</th> <!-- buttons should change the status of an invoice see google doc for statuses-->
+  </thead>
+  <tbody>
+    <tr>
+      <td class="showover">
+        <label for="choice_{{choices[0].status}}">
+          <input type="checkbox" ng-model="allChecked" id="choice_{{choices[0].status}}" ng-change="checkOrUncheck()">
+          <span class="dropdown" on-toggle="toggled(open)">
+            <a href class="dropdown-toggle">
+              <i class='fa fa-angle-down'></i>
+            </a>
+            <ul class="dropdown-menu">
+              <li ng-repeat="item in choices" ng-click="changeStatus(item.status, null, 'true')">
+                <a>{{item.text}}</a>
+              </li>
+            </ul>
+          </span>
+        </label>
+      </td>
+      <td colspan="5" class="no-hover"><span class="table-head">Missing Information</span></td>
+    </tr>
+    <tr ng-repeat="invoice in collection">
+      <td>
+        <label for="invoice-{{invoice.id}}">
+          <input type="checkbox" ng-checked="allChecked" ng-model="invoice.checked" id="invoice-{{invoice.id}}">
+          <span></span>
+        </label>
+      </td> <!-- for group actions for the button above -->
+      <td></td>
+      <td>
+        {{invoice.vendor.name || '?'}}<br>
+        <small>
+            <span ng-if="invoice.vendor.address1 && invoice.vendor.city && invoice.vendor.state && invoice.vendor.zip">
+                {{invoice.vendor.address1}}, {{invoice.vendor.city}}, {{invoice.vendor.state}}, {{invoice.vendor.zip}}
+            </span>
+            <span ng-if="(!invoice.vendor.address1 || !invoice.vendor.city || !invoice.vendor.state || !invoice.vendor.zip) && invoice.vendor.routing_number && invoice.vendor.bank_account_number">
+                ACH information on file
+            </span>
+            <span ng-if="(!invoice.vendor.address1 || !invoice.vendor.city || !invoice.vendor.state || !invoice.vendor.zip) && !invoice.vendor.routing_number && !invoice.vendor.bank_account_number">
+                ??, ??
+            </span>
+        </small>
+      </td> <!-- should be the vendor name from the vendor table, if not available put a question mark-->
+      <td class="center">
+          {{invoice.amount_due}}<br>
+          <small>Act by:</small>
+      </td> <!-- Always round to the nearest dollar for display -->
+      <td>{{invoice.due_date}}</td> <!-- From invoice table -->
+      <td class="showover">
+        <div class="btn-group" dropdown>
+          <button type="button" class="btn-theme" dropdown-toggle>
+            Actions <span><i class='fa fa-angle-down'></i></span>
+          </button>
+          <ul class="dropdown-menu" role="menu">
+            <li><a href="#"><i class="fa fa-money"></i>Pay on Due Date</a></li>
+            <li><a ng-click="changeStatus('ready_to_pay_to_payment_queue!', invoice)"><i class="fa fa-check"></i>Mark Paid</a></li>
+            <li ng-if="authorizeAction('auto-pay-bill')"><a ng-click="autoPay(invoice)"><i class="fa fa-refresh"></i>Auto Pay</a></li>
+            <li><a ng-click="changeStatus(4, invoice)"><i class="fa fa-ban-circle"></i>Cancel Payment</a></li>
+            <li><a ng-click="changeStatus(8, invoice)"><i class="fa fa-folder-close"></i>Archive</a></li>
+            <li class="divider"></li>
+            <li><a ng-click="editBill(invoice.id)"><i class="fa fa-pencil"></i>Edit</a></li>
+            <li><a ng-click="changeStatus(11, invoice)"><i class="fa fa-trash"></i>Delete</a></li>
+          </ul>
+        </div>
+
+      </td> <!-- need to get the tooltips to work see UI boostrap documentation-->
+    </tr>
+    <tr>
+      <td class="showover">
+        <label for="choice_{{choices[0].status}}">
+          <input type="checkbox" ng-model="allChecked" id="choice_{{choices[0].status}}" ng-change="checkOrUncheck()">
+          <span class="dropdown" on-toggle="toggled(open)">
+            <a href class="dropdown-toggle">
+              <i class='fa fa-angle-down'></i>
+            </a>
+            <ul class="dropdown-menu">
+              <li ng-repeat="item in choices" ng-click="changeStatus(item.status, null, 'true')">
+                <a>{{item.text}}</a>
+              </li>
+            </ul>
+          </span>
+        </label>
+      </td>
+      <td colspan="5"><span class="table-head">Ready for Payment</span></td>
+    </tr>
+        <tr>
+      <td class="showover">
+        <label for="choice_{{choices[0].status}}">
+          <input type="checkbox" ng-model="allChecked" id="choice_{{choices[0].status}}" ng-change="checkOrUncheck()">
+          <span class="dropdown" on-toggle="toggled(open)">
+            <a href class="dropdown-toggle">
+              <i class='fa fa-angle-down'></i>
+            </a>
+            <ul class="dropdown-menu">
+              <li ng-repeat="item in choices" ng-click="changeStatus(item.status, null, 'true')">
+                <a>{{item.text}}</a>
+              </li>
+            </ul>
+          </span>
+        </label>
+      </td>
+      <td colspan="5"><span class="table-head">Payment Pending</span></td>
+    </tr>
+  </tbody>
+</table>

@@ -1,0 +1,76 @@
+<form name="registrationForm"
+  ng-submit="submit()">
+  <div class="modal-header" style="border-bottom: 0px solid #e5e5e5;">
+    <h4 class="modal-title">15 seconds can save you 15% or more of your time</h4>
+  </div>
+
+  <div class="modal-body" style="border-bottom: 0px solid #e5e5e5;">
+    
+    <!--div class="alert alert-danger"
+      ng-show="errors && isFormSubmitted">
+      <p>{{errors}}</p>
+    </div-->
+
+    <input-field classes="input" model="newIndividual.name" errors="errors.name" input-type="text" label="Full Name"></input-field>
+
+    <input-field classes="input" model="newIndividual.business_name" errors="errors.business_name" input-type="text" label="Company Name"></input-field>
+
+    <div ng-class="{error: errors.mobile_phone}" class="text-wrapper">
+      <input class="input" type="text" name= "mobilePhone"  ng-model="newIndividual.mobile_phone" value="newIndividual.mobile_phone" ui-mask="{{masks.mobile_phone}}" placeholder="Cell Phone" ng-focus="refreshMask('mobile_phone', '999-999-9999')" ng-blur="clearMask('mobile_phone')" ng-class="{full: newIndividual.mobile_phone.length}"/>
+      <div class="alert alert-danger" style="border-radius:5px !important;padding: 3px;" ng-show="errors.mobile_phone">
+        <div ng-repeat="error in errors.mobile_phone track by $index">{{error}}</div>
+      </div>
+    </div>
+
+    <input-field classes="input" model="newIndividual.email" errors="errors.email" input-type="email" label="Email"></input-field>
+
+    <input-field ng-hide="showPassword" classes="input" model="newIndividual.password" errors="errors.password" input-type="password" label="Password"></input-field>
+
+    <input-field ng-show="showPassword" classes="input" model="newIndividual.password" errors="errors.password" input-type="text" label="Password"></input-field>
+    
+    <span class="help-block">Must be 6 characters long, currently {{newIndividual.password.length || 0}} characters</span>
+
+    <span>
+      <label for="showpassword2">
+        <input type="checkbox" ng-model="showPassword" name="showpassword2" id="showpassword2"/>
+        <span> show password</span>
+      </label>
+    </span>
+
+    <!--div ng-class="{error: errors}" class="text-wrapper" errors="errors.password_confirmation">
+      <input type="password" class="password input" ng-model="newIndividual.password_confirmation" name="password_confirmation" id="Password Confirmation" placeholder="Password Confirmation" ng-class="{full: model.length }">
+      <label for="Password Confirmation">Password Confirmation</label>
+      <div
+        ng-show="errors.password_confirmation"
+        ng-repeat="error in errors.password_confirmation">{{ error }}</div>
+    </div>
+    <span class="text-danger"
+      ng-show="newIndividual.password !== newIndividual.password_confirmation &&
+               registrationForm.password_confirmation.$dirty">Does not match at the moment</span-->
+
+    <br>
+    <label for="terms_of_service">
+      <input type="checkbox" name="terms_of_service" id="terms_of_service" ng-model="newIndividual.terms_of_service" />
+      <span></span>
+      Agree to the billSync <a href="http://bill-sync.com/terms-privacy/#ert_pane1-1" title="" target="blank">Terms of Service</a> and <a href="http://bill-sync.com/terms-privacy/" title="" target="blank">Privacy Policy</a>
+    </label>
+
+
+
+    <!--div
+      ng-show="errors.terms_of_service"
+      ng-repeat="error in errors.terms_of_service">{{ error }}</div>
+    </div-->
+
+    <div ng-show="errors.terms_of_service" class="alert alert-danger" style="border-radius:5px !important;padding: 3px;" ng-show="errors">
+      <div ng-repeat="error in errors.terms_of_service">{{error}}</div>
+    </div>
+
+  <div class="modal-footer" style="border-top: 0px solid #e5e5e5;">
+    <a class="btn btn-link" href="http://bill-sync.com/">home</a>|
+    <a class="btn btn-link"
+      ng-click="showSignInModal()">Sign In!</a>
+    <button type="submit" class="btn-theme login-get-running-btn">Sign up for Free</button>
+  </div>
+
+</form>

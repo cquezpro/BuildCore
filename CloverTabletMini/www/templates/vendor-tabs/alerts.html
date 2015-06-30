@@ -1,0 +1,149 @@
+<ion-view title="Alerts" hide-back-button="true">
+  <ion-nav-buttons side="left">
+    <button class="button button-clear ion-chevron-left" ng-click="$ionicGoBack($event)">
+    </button>
+  </ion-nav-buttons>
+  <ion-nav-buttons side="right">
+   <button class="right-buttons button button-icon icon ion-help" style="z-index:99;" ng-click="openIntercom();">
+    </button>    
+  </ion-nav-buttons>
+  <ion-content class="has-header">
+    <ion-list>
+      <ion-item class="item-divider">
+        Increase in Bill Total
+      </ion-item>
+      <ion-item class="item-checkbox">
+        <label class="checkbox">
+          <input type="checkbox" ng-model="vendor.settings.alert_total_text">
+        </label>
+        Text
+      </ion-item>
+      <ion-item class="item-checkbox">
+        <label class="checkbox">
+          <input type="checkbox" ng-model="vendor.settings.alert_total_email">
+        </label>
+        Email
+      </ion-item>
+      <ion-item class="item-checkbox">
+        <label class="checkbox">
+          <input type="checkbox" ng-model="vendor.settings.alert_total_flag">
+        </label>
+        Flag in App
+      </ion-item>
+      
+      <ion-item class="item-divider">
+        New Line Item
+      </ion-item>
+      <ion-item class="item-checkbox">
+        <label class="checkbox">
+          <input type="checkbox" ng-model="vendor.settings.alert_item_text">
+        </label>
+        Text
+      </ion-item>
+      <ion-item class="item-checkbox">
+        <label class="checkbox">
+          <input type="checkbox" ng-model="vendor.settings.alert_item_email">
+        </label>
+        Email
+      </ion-item>
+      <ion-item class="item-checkbox">
+        <label class="checkbox">
+          <input type="checkbox" ng-model="vendor.settings.alert_item_flag">
+        </label>
+        Flag in App
+      </ion-item>
+      
+      <ion-item class="item-divider">
+        Change in Line Item Quantity
+      </ion-item>
+      <ion-item class="item-checkbox">
+        <label class="checkbox">
+          <input type="checkbox" ng-model="vendor.settings.alert_itemqty_text">
+        </label>
+        Text
+      </ion-item>
+      <ion-item class="item-checkbox">
+        <label class="checkbox">
+          <input type="checkbox" ng-model="vendor.settings.alert_itemqty_email">
+        </label>
+        Email
+      </ion-item>
+      <ion-item class="item-checkbox">
+        <label class="checkbox">
+          <input type="checkbox" ng-model="vendor.settings.alert_itemqty_flag">
+        </label>
+        Flag in App
+      </ion-item>
+      
+      <ion-item class="item-divider">
+        Unit Price Change
+      </ion-item>
+      <ion-item class="item-checkbox">
+        <label class="checkbox">
+          <input type="checkbox" ng-model="vendor.settings.alert_itemprice_text">
+        </label>
+        Text
+      </ion-item>
+      <ion-item class="item-checkbox">
+        <label class="checkbox">
+          <input type="checkbox" ng-model="vendor.settings.alert_itemprice_email">
+        </label>
+        Email
+      </ion-item>
+      <ion-item class="item-checkbox">
+        <label class="checkbox">
+          <input type="checkbox" ng-model="vendor.settings.alert_itemprice_flag">
+        </label>
+        Flag in App
+      </ion-item>
+      
+      <ion-item class="item-divider">
+        Duplicated Bills
+      </ion-item>
+      <ion-item class="item-checkbox">
+        <label class="checkbox">
+          <input type="checkbox" ng-model="vendor.settings.alert_duplicate_invoice_text">
+        </label>
+        Text
+      </ion-item>
+      <ion-item class="item-checkbox">
+        <label class="checkbox">
+          <input type="checkbox" ng-model="vendor.settings.alert_duplicate_invoice_email">
+        </label>
+        Email
+      </ion-item>
+      <ion-item class="item-checkbox">
+        <label class="checkbox">
+          <input type="checkbox" ng-model="vendor.settings.alert_duplicate_invoice_flag">
+        </label>
+        Flag in App
+      </ion-item>
+      
+      <ion-item class="item-divider">
+        Marked Through Bills
+      </ion-item>
+      <ion-item class="item-checkbox">
+        <label class="checkbox">
+          <input type="checkbox" ng-model="vendor.settings.alert_marked_through_text">
+        </label>
+        Text
+      </ion-item>
+      <ion-item class="item-checkbox">
+        <label class="checkbox">
+          <input type="checkbox" ng-model="vendor.settings.alert_marked_through_email">
+        </label>
+        Email
+      </ion-item>
+      <ion-item class="item-checkbox">
+        <label class="checkbox">
+          <input type="checkbox" ng-model="vendor.settings.alert_marked_through_flag">
+        </label>
+        Flag in App
+      </ion-item>
+      
+      <ion-item>
+        <button class="button button-outline button-positive" ng-click="save()">Save</button>
+      </ion-item>
+    </ion-list>
+  </ion-content>
+</ion-view>

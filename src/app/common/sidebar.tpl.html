@@ -1,0 +1,42 @@
+<ul class="sidebar-nav">
+  <!--div class="side-search">
+    <input class="side-search search" placeholder="&#xf002; search"/>
+  </div-->
+  <li
+    ui-route="#/dashboard"
+    ng-class="{active:$uiRoute}"
+    ng-if="authorizeState('dashboard')">
+    <a ui-sref='dashboard'
+      ng-class="{active:$uiRoute}">
+      <i class='fa fa-home'></i>
+      <span>Home</span><span class="menu-count">{{$root.billsCount}}<span>
+    </a>
+    <span class="menu-description">Pay on Due Date, Auto-Pay, and See Alerts</span>
+  </li>
+
+  <li
+    ui-route="#/current-payments"
+    ng-class="{active:$uiRoute}"
+    ng-if="authorizeState('home')">
+    <a ui-sref='current_payments'
+      ng-class="{active:$uiRoute}">
+      <i class='fa fa-money'></i>
+      <span>Payments</span>
+    </a>
+    <span class="menu-description">See Pending and Recently Paid Bills</span>
+  </li>
+  <li ng-if="authorizeState('vendor')">
+    <a ui-sref="vendor" ng-class="{active: stateCopy.$current.name === 'vendor' || stateCopy.$current.name === 'vendornew' || stateCopy.$current.name === 'vendoredit'}">
+      <i class='fa fa-group'></i>
+      <span>Vendors</span>
+    </a>
+    <span class="menu-description">Manage payment terms and information</span>
+  </li>
+  <li ng-if="authorizeState('reports')">
+    <a ui-sref="reports" ng-class="{active: stateCopy.$current.name === 'reports' || stateCopy.$current.name === 'lastitemprice' || stateCopy.$current.name === 'billarchive' || stateCopy.$current.name === 'outstandingbills' || stateCopy.$current.name === 'vendorterms' || stateCopy.$current.name === 'paymentreconcilation' || stateCopy.$current.name === 'items_detail' || stateCopy.$current.name === 'descendingdollar'}">
+      <i class='fa fa-dashboard'></i>
+      <span>Reports</span>
+    </a>
+    <span class="menu-description">Stay on top of your costs, help your accoutant</span>
+  </li>
+</ul>

@@ -1,0 +1,90 @@
+<ion-view title="Manage Users">
+  <ion-nav-buttons>
+    <button class="button" ui-sref="app.tabs.home">Close</button>
+  </ion-nav-buttons>
+  <ion-nav-buttons side="right">
+    <button class="button" ng-click="newUser()">+ User</button>
+  </ion-nav-buttons>
+  <ion-content class="has-header">
+
+
+    <ion-list>
+
+      <div class="row">
+        <div class="col">
+          <ion-item>
+            <div class="row">
+              <div class="col col-50">
+                <strong>User Name</strong>
+              </div>
+              <div class="col text-center">
+                <strong>Role</strong>
+              </div>
+              <div class="col text-center">
+                <strong>Scope</strong>
+              </div>
+              <div class="col text-center">
+                <strong>Min $ Limits</strong>
+              </div>
+              <div class="col text-center">
+                <strong>Max $ Limits</strong>
+              </div>
+              <div class="col text-center">
+                <strong>Edit</strong>
+              </div>
+            </div>
+          </ion-item>
+
+          <ion-item ng-repeat="ind in individuals">
+            <div class="row">
+              <div class="col col-50">
+                {{ind.name}}
+                <br>
+                <span class="small">{{ind.email}} / {{ind.mobile_phone}}</span>
+
+              </div>
+              <div class="col text-center">
+                {{ind.role_name}}
+              </div>
+              <div class="col text-center">
+                <div class="row" ng-if="ind.authorization_scopes.length>0" ng-repeat="scope in ind.authorization_scopes">
+                  <div class="col">
+                     {{scope.name}} 
+                  </div>
+                </div>
+                <div ng-if="ind.authorization_scopes.length==0">
+                  none 
+                </div>
+              </div>
+              <div class="col text-center">
+                {{ind.limit_min!=null && ind.limit_min!='' ? ind.limit_min : 'none'}}              
+              </div>
+              <div class="col text-center">
+                {{ind.limit_max!=null ? ind.limit_max : 'none'}}
+              </div>
+              <div class="col text-center">
+                <button class="button button-icon icon ion-edit"
+                  ng-click="editUser(ind)">
+                </button>
+              </div>
+            </div>
+          </ion-item>
+
+        </div>
+      </div>
+
+
+
+
+    </ion-list>
+
+    <!--ion-list>
+      <ion-item ng-repeat="ind in individuals">
+        <strong>{{ind.name}}</strong>
+        <br>
+        {{ind.role_name}}
+      </ion-item>
+    </ion-list-->
+
+  </ion-content>
+</ion-view>

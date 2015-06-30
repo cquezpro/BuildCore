@@ -1,0 +1,55 @@
+<ion-view title="Vendors">
+  <ion-nav-buttons>
+    <button class="button" ui-sref="app.tabs.home">Close</button>
+  </ion-nav-buttons>
+  <ion-nav-buttons side="right">
+   <button class="right-buttons button button-icon icon ion-help" style="z-index:99;" ng-click="openIntercom();">
+   </button>
+ </ion-nav-buttons>
+
+	<ion-content>
+		<ion-refresher
+	    pulling-text="Pull to refresh..."
+	    on-refresh="getVendors()">
+	  </ion-refresher>
+	  <ion-list class="billsync-list">
+	  	<ion-item style="border-bottom: 2px solid #000;">
+	    	<div class="row">
+	    		<div class="col">
+	    			<strong>Name</strong>
+	    		</div>
+	    		<div class="col col-20">
+	    			<strong>Total</strong>
+	    		</div>
+	    		<div class="col col-20">
+	    			<strong>< 30</strong>
+	    		</div>
+	    		<div class="col col-20">
+	    			<strong>> 30</strong>
+	    		</div>
+	    	</div>
+	    </ion-item>
+	    <div class="row" style="margin-top:10px;" ng-if="(vendors==null || vendors.length==0)">
+	  		<div class="col text-center" >
+	  			Add more bills by tapping the <ion-icon or add bill> Add bill below and we will get to work! <br> <ion-chevron-down>
+	  		</div>
+	  	</div>
+	    <ion-item ng-repeat="vendor in vendors" ui-sref="app.tabs.vendorView({id: vendor.id})" class="element-clickable">
+	    	<div class="row">
+	    		<div class="col">
+	    			{{vendor.name | maxLength: 10}}
+	    		</div>
+	    		<div class="col col-20">
+	    			<small>${{ vendor.total_outstanding | number:0 }}</small>
+	    		</div>
+	    		<div class="col col-20">
+	    			<small>${{ vendor.less_than_30_sum | number:0 }}</small>
+	    		</div>
+	    		<div class="col col-20">
+	    			<small>${{ vendor.more_than_30_sum | number:0 }}</small>
+	    		</div>
+	    	</div>
+	    </ion-item>
+	  </ion-list>
+	</ion-content>  
+</ion-view>

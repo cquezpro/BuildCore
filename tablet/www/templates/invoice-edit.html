@@ -1,0 +1,234 @@
+<ion-view title="Edit Bill">
+  <ion-content class="has-header">
+    <div class="row">
+      <div class="col col-25">
+      </div>
+      <div class="col col-50">
+        <div class="button-bar">
+          <a class="button button-positive" id="details2Button" ng-click="clickDetails();">Details</a>
+          <a class="button button-outline button-positive" id="lineItems2Button" ng-click="clickLineItems();">Line Items</a>
+          <a class="button button-outline button-positive" id="accounting2Button" ng-click="clickAccounting();">Accounting</a>
+        </div>
+      </div>
+      <div class="col col-25">
+      </div>
+    </div>
+    <ion-list class="billsync-list">
+      <div class="row">
+        <div class="col">
+          <ion-item>
+            <div class="row">
+              <div class="col text-center">
+                <button class="button button-outline button-positive icon-left ion-refresh" ng-click="rotatePdf()">rotate</button>
+                <button class="button button-outline button-positive icon-left ion-plus-circled" ng-click="zoomIn()">zoom in</button>
+                <button class="button button-outline button-positive icon-left ion-minus-circled" ng-click="zoomOut()">zoom out</button>
+                <button class="button button-outline button-positive icon-left ion-arrow-left-c" ng-click="prev()" ng-show="m_pageCount > 1">prev</button>
+                <button class="button button-outline button-positive icon-left ion-arrow-right-c" ng-click="next()" ng-show="m_pageCount > 1">next</button>
+              </div>
+            </div> 
+            <div class="row" >
+              <div class="col text-center"  style="heigth:100px;border:1px solid grey;" ng-if="invoice.pdf_url">
+                <img id="pdfImg" ng-src="{{m_pdfImgUrl}}" ng-class="rotate" style="border:1px solid black">
+              </div>
+            </div>    
+          </ion-item>
+        </div>
+        <div class="col">
+          <div id="detailsTab" ng-if="elems.detailsSection">
+            <form name="form.invoiceForm">
+              <label class="item item-input">
+                <span class="input-label text-right">Vendor Name</span>
+                <input type="text" placeholder="..." ng-model="invoice.vendor.name" name="vendor_name">
+              </label>
+              <label class="item item-input">
+                <span class="input-label text-right">Address Line 1</span>
+                <input type="text" placeholder="..." ng-model="invoice.vendor.address1" name="address1">
+              </label>
+              <label class="item item-input">
+                <span class="input-label text-right">Address Line 2</span>
+                <input type="text" placeholder="..." ng-model="invoice.vendor.address2" name="address2">
+              </label>
+              <label class="item item-input">
+                <span class="input-label text-right">City</span>
+                <input type="text" placeholder="..." ng-model="invoice.vendor.city" name="vendor_city">
+              </label>
+              <label class="item item-input">
+                <span class="input-label text-right">State</span>
+                <input type="text" placeholder="..." ng-model="invoice.vendor.state" name="vendor_state">
+              </label>
+              <label class="item item-input">
+                <span class="input-label text-right">ZIP</span>
+                <input type="text" placeholder="..." ng-model="invoice.vendor.zip" name="vendor_zip">
+              </label>
+              <label class="item item-input">
+                <span class="input-label text-right">Bill Number</span>
+                <input type="text" placeholder="..." ng-model="invoice.number" name="invoice_number">
+              </label>
+              <label class="item item-input">
+                <span class="input-label text-right">Bill Due Date</span>
+                <input type="date" placeholder="..." ng-model="invoice.due_date" name="due_date">
+              </label>
+              <label class="item item-input">
+                <span class="input-label text-right">Account Number</span>
+                <input type="text" placeholder="..." ng-model="invoice.account_number" name="account_number">
+              </label>
+              <label class="item item-input">
+                <span class="input-label text-right">Date of Delivery</span>
+                <input type="text" placeholder="..." ng-model="invoice.date" name="date">
+              </label>
+              <label class="item item-input">
+                <span class="input-label text-right">Amount due</span>
+                <input type="text" placeholder="..." ng-model="invoice.amount_due" name="amount_due">
+              </label>
+              <label class="item item-input">
+                <span class="input-label text-right">Tax</span>
+                <input type="text" placeholder="..." ng-model="invoice.tax" name="tax">
+              </label>
+              <label class="item item-input text-right">
+                <span class="input-label">Other Fee</span>
+                <input type="text" placeholder="..." ng-model="invoice.other_fee" name="other_fee">
+              </label>
+            </form>
+            <ion-item>
+              <div class="row">
+                <div class="col text-center">
+                  <button class="button button-outline button-positive" ng-click="saveDetails()">Save</button>
+                </div>
+              </div>    
+            </ion-item>
+          </div>
+
+          <div id="accountingTab" ng-if="elems.accountingSection">
+            <table class="billsync-table" style="width: 100%;">
+              <thead>
+                <tr>
+                  <th class="col-50">Item</th>
+                  <th class="col-20">Total</th>
+                  <th>Expense Account</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr  ng-click="alertTooltip(transaction.alerts)" ng-repeat="transaction in currentInvoice.invoice_transactions" style="{{transaction.alerts.length > 0 ? 'border: 2px solid #fbb919; background: rgba(251,185,25,.5);border-radius: 5px;': '' }}">
+                  <td>{{ transaction.description }}</td>
+                  <td>${{ transaction.total | number:2 }}</td>
+                  <td>
+                    <div class="list" style="border-radius: 5px;">
+                      <select ng-model="transaction.expense_account_id" class="text-center" ng-options="account.id as account.name for account in selected_vendor.expense_accounts">
+                      </select>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <ion-item>
+              <div class="row">
+                <div class="col text-center">
+                  <button class="button button-outline button-positive" ng-click="saveAccounting()">Save</button>
+                </div>
+              </div>    
+            </ion-item>
+          </div>
+
+
+          <div id="lineItemsTab" ng-if="elems.lineItemsSection">
+            <form>
+              <fieldset ng-disabled="invoice.by_billsync">
+                <table class="billsync-table" style="width:100%">                 
+                  <thead>
+                    <tr>
+                      <th style="width:35px;">Qty</th>
+                      <th style="width:65px;">Code</th>
+                      <th style="width:205px;">Description</th>
+                      <th style="width:75px;">Price</th>
+                      <th style="width:75px;">Discount</th>
+                      <th style="width:75px;">Total</th>
+                      <th></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <input class="input lineiteminput" name="liQuantity" type="text" ng-model="new_line_item.quantity" ng-change="addLineItem('liQuantity')" placeholder="Quantity" money style="width:30px;">
+                      </td>
+                      <td>
+                        <input class="input lineiteminput" type="text" name="line_item_typeahead" ng-model="new_line_item.code" placeholder="Code" typeahead="line_item as line_item.code for invoice_transactions in getLineItems($viewValue, 'code')" typeahead-template-url="code.html" typeahead-on-select="setLineItem($item, $model, $label, 'code', new_line_item)" ng-class="{full: $viewValue.length}" style="width:60px;">
+                      </td>
+                      <td>
+                        <input class="input lineiteminput" type="text" name="line_item_typeahead" ng-model="new_line_item.description" placeholder="Description" typeahead="line_item as line_item.description for invoice_transactions in getLineItems($viewValue, 'description') | filter:{description:$viewValue}" typeahead-template-url="description.html" typeahead-on-select="setLineItem($item, $model, $label, 'description', new_line_item)" ng-class="{full: $viewValue.length}" style="width:200px;">
+                      </td>
+                      <td>
+                        <input class="input lineiteminput" name="liPrice" type="text" ng-model="new_line_item.price"  ng-change="addLineItem('liPrice')" placeholder="Price" money style="width:70px;">
+                      </td>
+                      <td>
+                        <input class="input lineiteminput" name="liDiscount" type="text" ng-model="new_line_item.discount" ng-change="addLineItem('liDiscount')" placeholder="Discount" money style="width:70px;">
+                      </td>
+                      <td>
+                        <input class="input lineiteminput" name="liTotal" type="text" ng-model="new_line_item.total" value="{{new_line_item.total || new_line_item.quantity * new_line_item.price}}" ng-change="addLineItem('liTotal')" placeholder="Total" money style="width:70px;">
+                      </td>
+                    </tr>
+                    <tr ng-if="!line_item.default_item" ng-repeat="line_item in invoice.invoice_transactions track by $index" on-finish-render ng-hide="line_item.description === 'Other'" ng-class="{'red': line_item.failed}">                    
+                      <td>
+                        <input class="input lineiteminput" name="liQuantity{{$index}}" type="text" ng-model="line_item.quantity" integer ng-disable="line_item.automatic_calculation" money style="width:30px;">
+                      </td>
+                      <td>
+                        <input class="input lineiteminput" type="text" name="line_item_typeahead" ng-model="line_item.code" placeholder="Code" typeahead="line_item as line_item.code for invoice_transactions in getLineItems($viewValue, 'code')" typeahead-template-url="code.html" typeahead-on-select="setLineItem($item, $model, $label, 'code', line_item)" ng-class="{full: $viewValue.length}" style="width:60px;">
+                      </td>
+                      <td >
+                        <input class="input lineiteminput" type="text" name="line_item_typeahead" ng-model="line_item.description" placeholder="Description" typeahead="line_item as line_item.description for invoice_transactions in getLineItems($viewValue, 'description') | filter:{description:$viewValue}" typeahead-template-url="description.html" typeahead-on-select="setLineItem($item, $model, $label, 'description', line_item)" ng-class="{full: $viewValue.length}" style="width:200px;">
+                      </td>
+                      <td>
+                        <input class="input lineiteminput" name="liPrice{{$index}}" type="text" ng-model="line_item.price" placeholder="Price" money style="width:70px;">
+                      </td>                     
+                      <td><input class="input lineiteminput" name="liDiscount{{$index}}" type="text" ng-model="line_item.discount" placeholder="Discount" money ng-disable="line_item.automatic_calculation" style="width:70px;"></td>
+                      <td>
+                        <input class="input lineiteminput" name="liTotal{{$index}}" type="text" ng-model="line_item.total" placeholder="Total" ng-if="line_item.automatic_calculation" min="-9999999">
+                        <input class="input lineiteminput" name="liTotal{{$index}}" type="text" ng-model="line_item.total" placeholder="Total" money ng-if="!line_item.automatic_calculation" min="-9999999" style="width:70px;"/>
+                      </td>
+                      <td>
+                        <a class="btn-theme" ng-click="removeLineItem($index)" style="float:left" ng-disabled="invoice.by_billsync"><i class="fa fa-times"></i></a>
+                      </td>
+                    </tr>
+                    
+                    <tr class="lastrow">
+                      <td></td>
+                      <td></td>
+                      <td colspan="3" align="right">
+                        <span ng-if="invoice.default_item">
+                          Unaccounted for line items
+                        </span>
+                        <span ng-if="!invoice.default_item">
+                          Items Total
+                        </span>
+                      </td>
+                      <td class="final amount" ng-class="{'notzero': getClass().toFixed() !== '0', }">
+                        <span ng-if="invoice.default_item">
+                          {{getUnacounted() | number:2}}
+                        </span>
+                        <span ng-if="!invoice.default_item">
+                          {{getTotal() | number:2}}
+                        </span>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+
+              </fieldset>
+            </form>
+
+             <ion-item>
+              <div class="row">
+                <div class="col text-center">
+                  <button class="button button-outline button-positive" ng-click="saveLineItems()">Save</button>
+                </div>
+              </div>    
+            </ion-item>
+          </div>
+
+         
+
+        </div>
+      </div>
+
+    </ion-list>
+  </ion-content>
+</ion-view>

@@ -1,0 +1,26 @@
+<div class="modal fade" id="instruction-modal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header" style="border-bottom:0">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h3 class="modal-title worker">Instructions</h3>
+      </div>
+      <div class="modal-body modalBody">
+        <ul ng-if="defaultForm">
+          <li>From the invoice on the left find the key fields and enter thier values in the form to the right</li>
+          <li>If the vendor is already in our database the vendor fields will auto-populate when you pick it from the dropdown</li>
+          <li>If the vendor is NOT in the database you will fill in the address and bank information</li>
+          <li>If a field is missing from an invoice please leave that field blank</li>
+          <li>If you need to see some sample invoices and corresponding entry blanks please <a href="#/invoice/sample" target="_blank">click here.</a> Also check the "<i class="fa fa-question-circle" data-toggle="tooltip" title="" data-container="body" data-original-title="get clarification by hovering over me!"></i>" for tips.</li>
+          <li>Every submission will be scored based on each input with 1 point awarded for every correct input and -2 for every incorrect input.  Workers with higher scores will be paid at a higher rate. For more details click <a href="" data-toggle="modal" data-target="#workers-table-modal">here</a></li>
+          <li>You can also reachout to us at <a href="mailto:projectscottyalto@gmail.com?subject=MTurk Question">projectscottyalto@gmail.com</a> if you have any questions</li>
+        </ul>
+
+        <ul ng-if="!defaultForm">
+          <li>You can reachout to us at <a href="mailto:projectscottyalto@gmail.com?subject=MTurk Question">projectscottyalto@gmail.com</a> if you have any questions</li>
+        </ul>
+
+      </div>
+    </div>
+  </div>
+</div>

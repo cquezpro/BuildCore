@@ -1,0 +1,64 @@
+<div>
+  <div class="pagetitle">
+    <h1>
+      <span>Last Item Price</span>
+    </h1>
+  </div>
+  <a ui-sref="reports" ng-class="{active:$uiRoute}"><i class='fa fa-arrow-left'></i> back to reports</a>
+  <form>
+
+  <div class="col-md-3">
+    <span class="selectionlabel">Vendor:</span><br>
+    <ui-select ng-model="$parent.selected_vendor" on-select="vendorChanged()">
+      <ui-select-match placeholder="Select">
+        {{$select.selected.name}}
+      </ui-select-match>
+      <ui-select-choices repeat="vendor.id as vendor in vendors | filter: $select.search">
+        <div ng-bind-html="vendor.name | highlight: $select.search"></div>
+      </ui-select-choices>
+    </ui-select>
+  </div>
+
+  <div class="col-md-3">
+    <span class="selectionlabel" ng-if="currentIndividual.user.locations_feature">Class/Location:</span><br>
+    <select ng-options="class.id as class.name for class in qb_classes" ng-model="selected_class" ng-change="classChanged()" ng-if="currentIndividual.user.locations_feature"></select>
+  </div>
+</form>
+<div class="clearfix"></div>
+<div class="fixed-header-div">
+  <div class="fixed-height-div">
+    <table class="table-hover billsync-table fixed-header-table">
+      <thead>
+        <tr>
+          <th>
+            Item
+            <a ng-click="predicate = 'description'; reverse=!reverse" style="margin-left:-30px">Item</a>
+          </th>
+          <th>
+            Vendor
+            <a ng-click="predicate = 'vendor_name'; reverse=!reverse" style="margin-left:-50px">Vendor</a>
+          </th>
+          <th>
+            Last Price
+            <a ng-click="predicate = 'last_price'; reverse=!reverse" style="margin-left:-70px">Last Price</a>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-show="line_items.length === 0">
+          <td colspan="3" class="center">There are no items to show for the selected date/vendor range</td>
+        </tr>
+        <tr ng-repeat="line_item in line_items | orderBy:predicate:reverse" ng-click="editItem(line_item.id)" ng-show="line_items.length > 0">
+          <td>{{line_item.description}}  <i class='fa fa-line-chart'></i></td>
+          <td>{{line_item.vendor_name}}</td>
+          <td>${{line_item.last_price | number: 2}}</td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="clearfix"></div>
+     <pagination total-items="totalItems" ng-model="currentPage" ng-change="pageChanged()" items-per-page="per_page"></pagination>   
+  </div>
+</div>
+ 
+
+</div>

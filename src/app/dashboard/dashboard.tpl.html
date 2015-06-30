@@ -1,0 +1,156 @@
+<div class="dashboard" ng-init="init()">
+  <div id="loading" class="row" ng-show="loading">
+    <h4 class="text-center">Loading <i class="fa fa-spinner fa-spin"></i></h4>
+  </div>
+  <div class="col-md-12 text-center"
+    ng-hide="loading || billsCount">
+
+    <br><br>
+    <span ng-hide="invoicesInProcess === 0">
+      <h4>
+        Proccessing <br>
+         <a ui-sref="processing"><small>We are currently processing {{ invoicesInProcess }} bills for your company.</small></a>
+      </h4>
+    </span>
+
+    <br>
+
+
+    <button type="button" class="btn-theme"
+      ng-click="openModal()" ng-if="authorizeAction('create-upload-bill')">
+      <i class="fa fa-cloud-upload"></i> upload multiple bills
+    </button>
+
+    <br>
+
+    <h3>Yes, your down to zero! Take a break, enjoy the comic, crack a smile. If you have more bills send them to us, by text (917.746.1141) or email (bills@bill-sync.com). Manage who can send it to us on the users page.</h3>
+
+    <img alt="DilbertImage"
+      ng-src="{{$root.dilbertRecord.local_image_url}}">
+  </div>
+
+  <!--div ng-show="billsCount && !loading"  class="row">
+    <div class="col-md-5 text-center">
+            <button type="button" class="btn-theme"
+              ng-click="openModal()" ng-if="authorizeAction('create-upload-bill')">
+              <i class="fa fa-cloud-upload"></i> upload multiple bills
+            </button>
+
+            <button style="margin-left:20px;" type="button" class="btn-theme"
+              ng-click="addBill()" ng-if="authorizeAction('create-upload-bill')">
+              <i class="fa fa-plus"></i> add bill
+            </button>
+    </div>
+
+  </div-->
+  <!--div ng-show="billsCount && !loading" class="row" style="margin-top:0px;">
+    <div class="col-md-5 text-center">
+      <span ng-if="invoicesInProcess>0">
+          <h4>
+            <small>We are currently processing {{ invoicesInProcess }} invoices for your company. We should have them done soon!</small>
+          </h4>
+      </span>
+      <span ng-if="invoicesInProcess==0">
+          <h4>
+            <small>We've processed all your bills!  Keep them coming.</small>
+          </h4>
+      </span>
+    </div>
+  </div-->
+
+
+  <div class="col-md-5"
+    ng-show="billsCount && !loading" style="height:90vh;overflow-y:scroll">
+    <table class="table responsive-table table-responsive round">
+        <tr class="invoice-row">
+          <td class="top-menu-actions center">
+            <div class="row" style="margin-top:-4px;">
+              <div class="col-md-12">
+                <button type="button" class="btn-theme"
+                  ng-click="openModal()" ng-if="authorizeAction('create-upload-bill')">
+                  <i class="fa fa-cloud-upload"></i> upload multiple bills
+                </button>
+
+                <button type="button" class="btn-theme"
+                  ng-click="addBill()" ng-if="authorizeAction('create-upload-bill')" style="margin-left: 3px;">
+                  <i class="fa fa-plus"></i> add bill
+                </button>
+              </div>
+            </div>
+            <div class="row" style="margin-top:-10px;margin-bottom:-12px;">
+              <div class="col-md-12">
+                <span ng-if="invoicesInProcess>0">
+                    <h4>
+                      <a ui-sref="processing"><small>We are currently processing {{ invoicesInProcess }} bills for your company.</small></a>
+                    </h4>
+                </span>
+                <span ng-if="invoicesInProcess==0">
+                    <h4>
+                      <small>We've processed all your bills!  Keep them coming.</small>
+                    </h4>
+                </span>
+              </div>
+            </div>
+          </td>
+        </tr>
+
+        <!-- available classes dispute-row, message-row, deals-row -->
+        <tr class="invoice-row" id="invoice-{{invoice.id}}"
+          ng-repeat="invoice in invoices"
+          ng-class="{ round: invoice === currentInvoice,
+                      addAnimation: invoice.animateOut }"
+          ng-click="setCurrentInvoice(invoice)"
+          line-out-animation
+            trigger="invoice.animateOut">
+          <td class="cell" style="overflow:visible">
+          <div class="row">
+            <div class="col-md-2 text-center">
+              <span class="date-block-month"> due </span>
+              <span class="date-block-day">
+                {{invoice.due_date | date : 'dd'}}
+              </span>
+              <span class="date-block-year">
+                {{invoice.due_date | date : 'MMM'}}
+              </span>
+              <span class="date-block-month" style="margin-top:5px">
+                <i class="fa fa-calculator" ng-if="invoice.accountant_approved"></i>
+                <i class="fa fa-check" ng-if="invoice.regular_approved"></i>
+              </span>
+            </div>
+            <div class="col-md-5" style="overflow:hidden;text-overflow:ellipsis;padding-right:0">
+              <strong>{{invoice.vendor.name || '?'}}</strong>
+              <br>
+              <small>{{invoice.category}}</small>
+              <div>
+                <span class="rcvd">rcvd {{invoice.date | date : 'MMM-dd'}}</span><span ng-if="invoice.total_alerts.length > 0" style = "color: #f94524">/{{invoice.humanized_alert_text}}</span>
+              </div>
+            </div>
+            <div class="col-md-1" style="padding-left:0">
+              <strong> - ${{invoice.amount_due | number:0}}</strong>
+            </div>
+            <div class="col-md-4"
+              ng-include=" 'dashboard/partials/invoice_actions.tpl.html' ">
+            </div>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        </td>
+      </tr>
+    </table>
+  </div>
+  <div class="col-md-7 right-invoice-panel"
+    ng-show="currentInvoice && billsCount"
+    right-invoice-panel
+    invoice="currentInvoice"
+    style="height:90vh;overflow:scroll;margin-top:-5px;">
+  </div>
+</div>

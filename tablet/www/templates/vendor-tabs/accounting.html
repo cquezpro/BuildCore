@@ -1,0 +1,69 @@
+<ion-view title="Accounting" hide-back-button="true">
+  <ion-nav-buttons side="left">
+    <button class="button button-clear ion-chevron-left" ng-click="$ionicGoBack($event)">
+    </button>
+  </ion-nav-buttons>
+  <ion-nav-buttons side="right">
+   <button class="right-buttons button button-icon icon ion-help" style="z-index:99;" ng-click="openIntercom();">
+    </button>    
+  </ion-nav-buttons>
+  <ion-content class="has-header">
+    <ion-list>
+      <label class="item item-input item-select">
+        <div class="input-label">
+          Default AP Account
+        </div>
+        <select ng-model="vendor.liability_account_id" ng-options="account.id as account.name group by account.account_type for account in vendor.liability_accounts">
+        </select>
+      </label>
+      <label class="item item-input item-select">
+        <div class="input-label">
+          Expense Account
+        </div>
+        <select ng-model="vendor.expense_account_id" ng-options="account.id as account.name group by account.account_type for account in vendor.expense_accounts">
+        </select>
+      </label>
+      <label class="item item-input item-select" ng-if="currentIndividual.user.qb_classes && currentIndividual.user.qb_classes.length > 0">
+        <div class="input-label">
+          Default Item class
+        </div>
+        <select ng-model="vendor.default_qb_class_id" ng-options="klass.id as klass.name for klass in qb_classes">
+        </select>
+      </label>
+      <ion-item class="item-divider">
+        Line Items
+      </ion-item>
+      <ion-item>
+        <div class="row">
+          <div class="col">
+            <strong>Description</strong>
+          </div>
+          <div class="col text-center">
+            <strong>Account</strong>
+          </div>
+          <div class="col" ng-if="currentIndividual.user.qb_classes && currentIndividual.user.qb_classes.length > 0">
+            <strong>Class</strong>
+          </div>
+        </div>
+      </ion-item>
+      <ion-item ng-repeat="line_item in vendor.line_items">
+        <div class="row">
+          <div class="col">
+            {{line_item.description}}
+          </div>
+          <div class="col text-center">
+            <select  style="heigth:54px;" ng-model="line_item.expense_account_id" ng-options="account.id as account.name group by account.account_type for account in vendor.expense_accounts" ng-change="updateItems(line_item.description,line_item.expense_account_id, 'expense_account_id')" class="text-center" style="width:100%">
+            </select>
+          </div>
+          <div class="col text-center" ng-if="currentIndividual.user.qb_classes && currentIndividual.user.qb_classes.length > 0">
+            <select style="heigth:54px;" ng-model="line_item.qb_class_id" ng-options="klass.id as klass.name for klass in qb_classes" ng-change="updateItems(line_item.description,line_item.qb_class_id, 'qb_class_id')" class="text-center" style="width:100%">
+            </select>
+          </div>
+        </div>
+      </ion-item>
+      <ion-item>
+        <button class="button button-outline button-positive" ng-click="save()">Save</button>
+      </ion-item>
+    </ion-list>
+  </ion-content>
+</ion-view>

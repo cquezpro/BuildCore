@@ -1,0 +1,170 @@
+<div>
+  <div class="pagetitle">
+    <h1>
+      <span>
+      Bills
+      <span class="mainactions">
+        <button type="button" class="btn-theme dropdown-toggle" ng-click ="" tooltip="upload bills for billSync to process"><i class="fa fa-cloud-upload"></i></button>
+        <button type="button" class="btn-theme dropdown-toggle" ng-click ="" tooltip="add bill"><i class="fa fa-plus"></i></button>
+      </span>
+      </span>
+
+    </h1>
+  </div>
+
+  <h4>Missing Information</h4>
+  <invoice-table collection="invoices.missing_information"></invoice-table>
+
+  <h4>Ready for Payment</h4>
+    </div> <!-- This drop down controls group actions for the this section-->
+    <invoice-table collection="invoices.missing_information"></invoice-table>
+      <table class="table responsive-table">
+      <thead>
+        <th>
+          <label for="something10"><input type="checkbox" id="something10"><span></span>
+          </label>
+            <a class='dropdown-toggle' data-toggle='dropdown' href='#'>
+              <i class='fa fa-angle-down'></i>
+            </a>
+            <ul class='dropdown-menu'> <!-- This drop down controls group actions for the this section-->
+              <li>
+                <a href='#'>
+                  pay
+                </a>
+              </li>
+              <li>
+                <a href='#'>
+                  delete
+                </a>
+              </li>
+              <li>
+                <a href='#'>
+                  mark as paid
+                </a>
+              </li>
+            </ul>
+        </th>
+        <th>Alert</th> <!-- Leave this section blank for now will come back once we start doing more back end calculations-->
+        <th>Vendor</th> <!-- Pulls from the vendor database-->
+        <th>Amount</th> <!-- From invoice database-->
+        <th>Act By</th> <!-- Leave blank will figure out once I figure out how best to process payments-->
+        <th>Due Date</th> <!-- From invoice database-->
+        <th class="text-center">Pay</th> <!-- buttons should change the status of an invoice see google doc for statuses-->
+        <th class="text-center">Edit</th> <!-- for now lets just have link to page with the fields we need for testing, make it a plain page with inputs will design it after-->
+      </thead>
+      <tbody>
+        <tr>
+          <td><label for="something2"><input type="checkbox" id="something2"><span></span></label></td> <!-- for group actions for the button above -->
+          <td></td>
+          <td>Vendor name <br><small>Address 1, City, ST, zipcode</small></td> <!-- should be the vendor name from the vendor table, if not available put a question mark-->
+          <td>$32</td> <!-- Always round to the nearest dollar for display -->
+          <td>Act By Date</td>  <!-- Put in a filler for now will need to figure out the calculation here later -->
+          <td>Invioce Due date</td> <!-- From invoice table -->
+          <td class="center"><button class="btn-theme" ng-click ="" tooltip="pay"><i class="fa fa-money"></i></button> <!-- change invoice status to 5 -->
+          <button class="btn-theme" ng-click ="" tooltip="auto-pay"><i class="fa fa-refresh"></i></button> <!-- take to autopayment section for vendor -->
+          <button class="btn-theme" ng-click =""><i class="fa fa-folder-close" tooltip="mark as paid"></i></button></td> <!-- change invoice status to 8 -->
+          <td class="center"><button class="btn-theme" ng-click ="" tooltip="edit"><i class="fa fa-pencil"></i></button> <!-- take to edit screen for now basic screen is fine will build next -->
+          <button class="btn-theme" ng-click ="" tooltip="delete"><i class="fa fa-trash"></i></button></td> <!-- Delete, need to get the tooltips to work see UI boostrap documentation-->
+        </tr>
+      </tbody>
+    </table>
+  <h4>Payment Pending</h4>
+      <table class="table responsive-table">
+      <thead>
+        <th>
+          <label for="something10"><input type="checkbox" id="something10"><span></span>
+          </label>
+            <a class='dropdown-toggle' data-toggle='dropdown' href='#'>
+              <i class='fa fa-angle-down'></i>
+            </a>
+            <ul class='dropdown-menu'> <!-- This drop down controls group actions for the this section-->
+              <li>
+                <a href='#'>
+                  cancel auto-pay
+                </a>
+              </li>
+              <li>
+                <a href='#'>
+                  remove from queue
+                </a>
+              </li>
+              <li>
+                <a href='#'>
+                  delete
+                </a>
+              </li>
+              <li>
+                <a href='#'>
+                  mark as paid
+                </a>
+              </li>
+            </ul>
+        </th>
+        <th>Alert</th> <!-- Leave this section blank for now will come back once we start doing more back end calculations-->
+        <th>Vendor</th> <!-- Pulls from the vendor database-->
+        <th>Amount</th> <!-- From invoice database-->
+        <th>Act By</th> <!-- Leave blank will figure out once I figure out how best to process payments-->
+        <th>Due Date</th> <!-- From invoice database-->
+        <th class="center">Pay</th> <!-- buttons should change the status of an invoice see google doc for statuses-->
+        <th class="center">Edit</th> <!-- for now lets just have link to page with the fields we need for testing, make it a plain page with inputs will design it after-->
+      </thead>
+      <tbody>
+
+        <tr> <!-- for invoices that are already paid but within the last 10 days display as follows (status 6 or 7)-->
+          <td></td> <!-- for invoices that have been paid no action can be taken so do not show the checkbox-->
+          <td></td>
+          <td>Vendor name <br><small>Address 1, City, ST, zipcode</small></td>
+          <td>$32</td> <!-- Always round to the nearest dollar for display -->
+          <td>Act By Date</td>  <!-- Put in a filler for now will need to figure out the calculation here later -->
+          <td>Invioce Due Date</td> <!-- From invoice table -->
+          <td class="center">Auto-Paid</td> <!-- list the payment method either, maunal pay, or auto pay link the the auto pay section for the vendor  -->
+          <td class="center"><button class="btn-theme" ng-click ="" tooltip="edit"><i class="fa fa-pencil"></i></button> <button class="btn-theme" ng-click ="" tooltip="delete"><i class="fa fa-trash"></i></button></td> <!-- need to get the tooltips to work see UI boostrap documentation-->
+        </tr>
+
+        <tr> <!-- follow this format for all status 5 invoices that are auto paid -->
+          <td><label for="something3"><input type="checkbox" id="something3"><span></span></label></td> <!-- for group actions for the button above keep the check box for bills that are currently in queue to be paid status 5 -->
+          <td></td>
+          <td>Vendor name <br><small>Address 1, City, ST, zipcode</small></td> <!-- should be the vendor name from the vendor table, if not available put a question mark-->
+          <td>$32</td> <!-- Always round to the nearest dollar for display -->
+          <td>Act By Date</td>  <!-- Put in a filler for now will need to figure out the calculation here later -->
+          <td>Invioce Due date</td> <!-- From invoice table -->
+          <td class="center">
+          <button class="btn-theme" ng-click ="" tooltip="auto-pay"><i class="fa fa-refresh"></i></button> <!-- take to autopayment section for vendor -->
+          <button class="btn-theme" ng-click =""><i class="fa fa-folder-close" tooltip="mark as paid"></i></button></td> <!-- change invoice status to 8 -->
+          <td class="center"><button class="btn-theme" ng-click ="" tooltip="edit"><i class="fa fa-pencil"></i></button> <!-- take to edit screen for now basic screen is fine will build next -->
+          <button class="btn-theme" ng-click ="" tooltip="delete"><i class="fa fa-trash"></i></button></td> <!-- Delete, need to get the tooltips to work see UI boostrap documentation-->
+        </tr>
+
+        <tr> <!-- follow this format for all status 5 invoices that are manual paid -->
+          <td><label for="something4"><input type="checkbox" id="something4"><span></span></label></td> <!-- for group actions for the button above keep the check box for bills that are currently in queue to be paid status 5 -->
+          <td></td>
+          <td>Vendor name <br><small>Address 1, City, ST, zipcode</small></td> <!-- should be the vendor name from the vendor table, if not available put a question mark-->
+          <td>$32</td> <!-- Always round to the nearest dollar for display -->
+          <td>Act By Date</td>  <!-- Put in a filler for now will need to figure out the calculation here later -->
+          <td>Invioce Due date</td> <!-- From invoice table -->
+          <td class="center"> <button class="btn-theme" ng-click ="" tooltip="cancel payment"><i class="fa fa-ban-circle"></i></button>
+          <button class="btn-theme" ng-click ="" tooltip="auto-pay"><i class="fa fa-refresh"></i></button> <!-- take to autopayment section for vendor -->
+          <button class="btn-theme" ng-click =""><i class="fa fa-folder-close" tooltip="mark as paid"></i></button></td> <!-- change invoice status to 8 -->
+          <td class="center"><button class="btn-theme" ng-click ="" tooltip="edit"><i class="fa fa-pencil"></i></button> <!-- take to edit screen for now basic screen is fine will build next -->
+          <button class="btn-theme" ng-click ="" tooltip="delete"><i class="fa fa-trash"></i></button></td> <!-- Delete, need to get the tooltips to work see UI boostrap documentation-->
+        </tr>
+
+      </tbody>
+    </table>
+
+  <h4>Proccessing</h4> <!-- for all invoices status 1 or 2 -->
+   <table class="table responsive-table">
+      <thead>
+        <th>Invoice</th>
+        <th class="center">Action</th>
+      </thead>
+      <tbody>
+        <tr>
+          <td>[put image thubnail here]</td>
+          <td class="center"><button class="btn-theme" ng-click ="" tooltip="edit"><i class="fa fa-pencil"></i></button> <!-- take to edit screen for now basic screen is fine will build next -->
+          <button class="btn-theme" ng-click ="" tooltip="delete"><i class="fa fa-trash"></i></button></td> <!-- Delete, need to get the tooltips to work see UI boostrap documentation-->
+        </tr>
+      </tbody>
+    </table>
+</div>
+

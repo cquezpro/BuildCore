@@ -1,0 +1,24 @@
+<ion-header-bar>
+	<button class="button" ui-sref="app.tabs.home">Cancel</button>
+  <h1 class="title" ng-show="picNum >= 0">Page {{picNum + 1}} of {{imgSrcs.length}}</h1>
+   <button class="right-buttons button button-icon icon ion-help" style="z-index:99;" ng-click="openIntercom();">
+    </button>    
+</ion-header-bar>
+
+
+<ion-content>
+  <img class="padding" style="width:100%" ng-src="{{imgSrcs[picNum]}}">	
+  <p style="text-align:center;color:#fff" ng-show="picNum >= 0">Can you read this? If not please retake again.</p>
+</ion-content>  
+
+<ion-footer-bar>
+  <button class="button icon ion-arrow-left-a" ng-click="previousPage()" ng-disabled="picNum <= 0"></button>
+
+  <div class="button-bar">
+  	<button class="button" ng-click="retake()">Retake</button>
+	  <button class="button" ng-click="submit()">Submit</button>
+	  <button class="button" ng-click="addPage()">+ Page</button>
+  </div>
+
+  <button class="button icon ion-arrow-right-a" ng-click="nextPage()" ng-disabled="picNum >= imgSrcs.length - 1"></button>	
+</ion-footer-bar>

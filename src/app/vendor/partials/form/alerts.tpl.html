@@ -1,0 +1,141 @@
+<table class="table table-response col-md-8 col-sm-12 bstable">
+  <thead>
+    <th></th>
+    <th class="center">Text</th>
+    <th class="center">Email</th>
+    <th class="center">Flag in App</th>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Significant Increase in Invoice Total</td>
+      <td class="center">
+        <label for="invoiceincrease-text">
+          <input type="checkbox" name="invoiceincrease" id="invoiceincrease-text" ng-model="vendor.settings.alert_total_text" />
+          <span></span>
+        </label>
+      </td>
+      <td class="center">
+        <label for="invoiceincrease-email">
+          <input type="checkbox" name="invoiceincrease" id="invoiceincrease-email" ng-model="vendor.settings.alert_total_email"/>
+          <span></span>
+        </label>
+      </td>
+      <td class="center">
+        <label for="invoiceincrease-app">
+          <input type="checkbox" name="invoiceincrease" id="invoiceincrease-app" ng-model="vendor.settings.alert_total_flag" />
+          <span></span>
+        </label>
+      </td>
+    </tr>
+
+    <tr>
+      <td>New Line Item</td>
+      <td class="center">
+        <label for="newlineitem-text">
+          <input type="checkbox" name="newlineitem" id="newlineitem-text" ng-model="vendor.settings.alert_item_text"/>
+          <span></span>
+        </label>
+      </td>
+      <td class="center">
+        <label for="newlineitem-email">
+          <input type="checkbox" name="newlineitem" id="newlineitem-email" ng-model="vendor.settings.alert_item_email"/>
+          <span></span>
+        </label>
+      </td>
+      <td class="center">
+        <label for="newlineitem-app">
+          <input type="checkbox" name="newlineitem" id="newlineitem-app" ng-model="vendor.settings.alert_item_flag"/>
+          <span></span>
+        </label>
+      </td>
+    </tr>
+
+    <tr>
+      <td>Significant Change in Line Item Quanity</td>
+      <td class="center">
+        <label for="qtylineitem-text">
+          <input type="checkbox" name="qtylineitem" id="qtylineitem-text" ng-model="vendor.settings.alert_itemqty_text"/>
+          <span></span>
+        </label>
+      </td>
+      <td class="center">
+        <label for="qtylineitem-email">
+          <input type="checkbox" name="qtylineitem" id="qtylineitem-email" ng-model="vendor.settings.alert_itemqty_email"/>
+          <span></span>
+        </label>
+      </td>
+      <td class="center">
+        <label for="qtylineitem-app">
+          <input type="checkbox" name="qtylineitem" id="qtylineitem-app" ng-model="vendor.settings.alert_itemqty_flag"/>
+          <span></span>
+        </label>
+      </td>
+    </tr>
+
+    <tr>
+      <td>Unit Price Change</td>
+      <td class="center">
+        <label for="pricelineitem-text">
+          <input type="checkbox" name="pricelineitem" id="pricelineitem-text" ng-model="vendor.settings.alert_itemprice_text"/>
+          <span></span>
+        </label>
+      </td>
+      <td class="center">
+        <label for="pricelineitem-email">
+          <input type="checkbox" name="pricelineitem" id="pricelineitem-email" ng-model="vendor.settings.alert_itemprice_email"/>
+          <span></span>
+        </label>
+      </td>
+      <td class="center">
+        <label for="pricelineitem-app">
+          <input type="checkbox" name="pricelineitem" id="pricelineitem-app" ng-model="vendor.settings.alert_itemprice_flag"/>
+          <span></span>
+        </label>
+      </td>
+    </tr>
+
+    <tr>
+      <td>Duplicated Invoices</td>
+      <td class="center">
+        <label for="duplicate-invoice-text">
+          <input type="checkbox" name="duplicate-invoice" id="duplicate-invoice-text" ng-model="vendor.settings.alert_duplicate_invoice_text"/>
+          <span></span>
+        </label>
+      </td>
+      <td class="center">
+        <label for="duplicate-invoice-email">
+          <input type="checkbox" name="duplicate-invoice" id="duplicate-invoice-email" ng-model="vendor.settings.alert_duplicate_invoice_email"/>
+          <span></span>
+        </label>
+      </td>
+      <td class="center">
+        <label for="duplicate-invoice-app">
+          <input type="checkbox" name="duplicate-invoice" id="duplicate-invoice-app" ng-model="vendor.settings.alert_duplicate_invoice_flag"/>
+          <span></span>
+        </label>
+      </td>
+    </tr>
+
+    <tr>
+      <td>Marked Through Invoices</td>
+      <td class="center">
+        <label for="marked-through-text">
+          <input type="checkbox" name="marked-through-text" id="marked-through-text" ng-model="vendor.settings.alert_marked_through_text"/>
+          <span></span>
+        </label>
+      </td>
+      <td class="center">
+        <label for="marked-through-email">
+          <input type="checkbox" name="marked-through-email" id="marked-through-email" ng-model="vendor.settings.alert_marked_through_email"/>
+          <span></span>
+        </label>
+      </td>
+      <td class="center">
+        <label for="marked-through-app">
+          <input type="checkbox" name="marked-through-app" id="marked-through-app" ng-model="vendor.settings.alert_marked_through_flag"/>
+          <span></span>
+        </label>
+      </td>
+    </tr>
+  </tbody>
+</table>

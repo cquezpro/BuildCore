@@ -1,0 +1,58 @@
+
+  <div class="pagetitle">
+    <h1>
+      <span>Vendors</span>
+      <span><button class="btn-theme" ng-click = "newvendor()" ng-if="authorizeAction('create-vendor')"><i class="fa fa-plus"></i> add vendor</button></span>
+    </h1>
+  </div>
+<div>
+  <div id="loading" class="row" ng-show="loading">
+    <h4 class="text-center">Loading <i class="fa fa-spinner fa-spin"></i></h4>
+  </div>
+
+  <div ng-show="noVendorsNotice">
+    <h3 class="text-center">We have not captured any vendors for you yet.  To add a vendor just text a BILL to 917.746.1141 or email one to bills@bill-sync.com.</h3>
+  </div>
+
+  <table class='table responsive-table table-hover billsync-table' ng-show="vendors.length > 0">
+    <thead>
+
+      <th>
+        <a ng-click="orderByField='name'; reverseSort = !reverseSort">Vendor
+          <span ng-show="orderByField == 'name'">
+            <span ng-show="!reverseSort"> <i class='fa fa-angle-up'></i></span>
+            <span ng-show="reverseSort"> <i class='fa fa-angle-down'></i></span>
+          </span>
+        </a>
+      </th>
+
+      <th class="hidden-xs center" ng-if="currentIndividual.user.synced_qb">Category</th>
+      <th class="hidden-xs hidden-sm center">Auto-payment</th>
+      <th class="center">Total Outstanding</th>
+      <th class="hidden-xs hidden-sm center">Less Than 30</th>
+      <th class="hidden-xs hidden-sm center">More Than 30</th>
+      <th>Edit/Remove</th>
+    </thead>
+    <tr ng-repeat = "vendor in vendors|orderBy:orderByField:reverseSort">
+      <td ng-click="editvendor(vendor.id)">
+        {{ vendor.name }}<br>
+        <small>
+          <span ng-if="vendor.address1 && vendor.city && vendor.state && vendor.zip">
+            {{vendor.address1}}, {{vendor.city}}, {{vendor.state}}, {{vendor.zip}}
+          </span>
+          <span ng-if="(!vendor.address1 || !vendor.city || !vendor.state || !vendor.zip) && vendor.routing_number && vendor.bank_account_number">
+              ACH information on file
+          </span>
+          <span ng-if="(!vendor.address1 || !vendor.city || !vendor.state || !vendor.zip) && !vendor.routing_number && !vendor.bank_account_number">
+              ??, ??
+          </span>
+        </small>
+      </td>
+      <td class="hidden-xs" ng-click="editvendor(vendor.id)" ng-if="currentIndividual.user.synced_qb">{{vendor.expense_account.name}}</td>
+      <td class="hidden-xs hidden-sm center" ng-click="editvendor(vendor.id)">{{vendor.humanized_payment_status}}</td>
+      <td class="center" ng-click="editvendor(vendor.id)">$ {{ vendor.total_outstanding | number:0  }}</td>
+      <td class="hidden-xs hidden-sm center" ng-click="editvendor(vendor.id)">$ {{ vendor.less_than_30_sum | number:0  }}</td>
+      <td class="hidden-xs hidden-sm center" ng-click="editvendor(vendor.id)">$ {{ vendor.more_than_30_sum | number:0  }}</td>
+      <td class="showover center"> <button class="btn-theme" ng-click="editvendor(vendor.id)"><i class="fa fa-pencil action-edit"></i> Edit</button></td>
+    </tr>
+  </table>

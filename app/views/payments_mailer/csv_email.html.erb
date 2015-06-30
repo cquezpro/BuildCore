@@ -1,0 +1,25 @@
+<h3>There are <%= @checks %> checks in this file totaling $<%= @total.round(2) %>. </h3>
+
+<% if  @ids.any? %>
+  <h4>Invoices Procesed:</h4>
+  <table>
+    <tr>
+      <td>Invoice ID</td>
+      <td>User ID</td>
+      <td>User name</td>
+      <td>Vendor</td>
+      <td>Amount</td>
+    </tr>
+    <% @invoices.each do |invoice| %>
+      <tr>
+        <td><%= invoice.id %></td>
+        <td><%= invoice.user.id %></td>
+        <td><%= invoice.user.business_name %></td>
+        <td><%= invoice.vendor.name %></td>
+        <td><%= "%.2f" % invoice.amount_due %></td>
+      </tr>
+    <% end %>
+  </table>
+<% end %>
+
+<p>If there are any issues please contact Vijay Brihmadesam at vkbrihma@gmail.com. Thanks, The billSync Team</p>

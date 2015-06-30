@@ -1,0 +1,46 @@
+<ion-view title="Line Items" hide-back-button="true">
+	<ion-nav-buttons side="left">
+     <button class="button button-icon icon ion-ios-arrow-back" style="z-index:100;" ng-click="$ionicGoBack();">
+    </button>    
+  </ion-nav-buttons>
+  <ion-nav-buttons side="right">
+     <button class="right-buttons button button-icon icon ion-help" style="z-index:100;" ng-click="openIntercom();">
+    </button>    
+  </ion-nav-buttons>
+  <ion-content class="has-header">
+    <ion-list class="billsync-list">
+    	<ion-item>
+	    	<div class="row">
+	    		<div class="col">
+	    			<strong>Description</strong>
+	    		</div>
+	    		<div class="col col-20">
+	    			<strong>Last</strong>
+	    		</div>
+	    		<div class="col col-20">
+	    			<strong>Avg</strong>
+	    		</div>
+	    		<div class="col col-20">
+	    			<strong>Diff</strong>
+	    		</div>
+	    	</div>
+	    </ion-item>
+	    <ion-item ng-repeat="line_item in vendor.line_items">
+	    	<div class="row">
+	    		<div class="col">
+	    			{{line_item.description | maxLength: 10}}
+	    		</div>
+	    		<div class="col col-20">
+	    			<small>${{line_item.last_price | number: 0}}</small>
+	    		</div>
+	    		<div class="col col-20">
+	    			<small>${{line_item.average_12_week | number: 0}}</small>
+	    		</div>
+	    		<div class="col col-20">
+	    			<small>%{{line_item.percent_difference | number: 0}}</small>
+	    		</div>
+	    	</div>
+	    </ion-item>
+    </ion-list>
+  </ion-content>
+</ion-view>

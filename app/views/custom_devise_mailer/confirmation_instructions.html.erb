@@ -1,0 +1,15 @@
+<p>We’re excited to get you started with billSync, but first we have to make sure you’re legit.</p>
+
+</p>To show us this a valid account, please click the link below to confirm your email address. We’ll send you a few more setup steps over the course of your trial month, so keep an eye out, and get ready to save more time and money than you could have imagined.</p>
+<br />
+
+<p>
+  <% if Rails.env.production? || Rails.env.development? || Rails.env.staging? %>
+    <%= link_to 'Confirm my account', "https://www.bill-sync.com/auth/confirmation?confirmation_token=#{@token}" %>
+  <% else %>
+    <%= link_to 'Confirm my account', confirmation_url(@resource, confirmation_token: @token) %>
+  <% end %>
+</p>
+
+Thanks,
+Heather -billSync Customer Support Specialist

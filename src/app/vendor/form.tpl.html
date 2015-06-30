@@ -1,0 +1,20 @@
+<div class="pagetitle">
+  <div>
+    <h1><span ng-hide="vendor.name.length">New Vendor - </span>{{ vendor.name }}</h1>
+  </div>
+</div>
+<div>
+  <form name="vendorForm" novalidate>
+    <tabset>
+      <tab ng-repeat="tab in tabs" heading="{{tab.heading}}" active="tab.active" ng-if="authorizeView(tab.partial)">
+        <div ng-include src="tab.partial" class="{{tab.name}}"></div>
+      </tab>
+    </tabset>
+    <div class="clearfix"></div>
+    <div>
+      <hr>
+      <button type="submit" class="btn-theme" ng-click="save()" ng-if="authorizeAction('edit-vendor-basic-information') || authorizeAction('edit-vendor-payment-terms') || authorizeAction('edit-vendor-alerts') || authorizeAction('edit-vendor-accounting')">Save</button>
+      <button ng-click="cancel()" class="btn-theme">Cancel</button>
+    </form>
+  </div>
+</div>

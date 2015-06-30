@@ -1,0 +1,52 @@
+<ion-view title="Combine Vendors" hide-back-button="true">
+  <ion-nav-buttons side="left">
+    <button class="button button-clear ion-chevron-left" ng-click="$ionicGoBack($event)">
+    </button>
+  </ion-nav-buttons>
+  <ion-nav-buttons side="right">
+   <button class="right-buttons button button-icon icon ion-help" style="z-index:99;" ng-click="openIntercom();">
+    </button>    
+  </ion-nav-buttons>
+  <ion-content class="has-header">
+    <ion-list>
+      <ion-item class="item-divider" ng-if="vendor.childrens">
+        Merged Vendors
+      </ion-item>
+      <ion-item ng-repeat="vendor in vendor.childrens">
+        <div class="row">
+          <div class="col">
+            {{ vendor.name }}<br>
+            <small>
+              <span ng-if="vendor.address1 && vendor.city && vendor.state && vendor.zip">
+                {{vendor.address1}}, {{vendor.city}}, {{vendor.state}}, {{vendor.zip}}
+              </span>
+              <span ng-if="(!vendor.address1 || !vendor.city || !vendor.state || !vendor.zip) && vendor.routing_number && vendor.bank_account_number">
+                  ACH information on file
+              </span>
+              <span ng-if="(!vendor.address1 || !vendor.city || !vendor.state || !vendor.zip) && !vendor.routing_number && !vendor.bank_account_number">
+                  ??, ??
+              </span>
+            </small>
+          </div>
+          <div class="col-30"><a class="button button-outline button-positive" ng-click="unmerge(vendor)">Unmerge</a></div>
+        </div>
+      </ion-item>
+      <ion-item ng-hide="is_merging">
+        <button class="button button-outline button-positive" ng-click="startMerging()">Merge</button>
+        <div class="row">
+          <div class="col">
+            
+          </div>
+        </div>
+      </ion-item>
+      <label class="item item-input item-select" ng-show="is_merging">
+        <div class="input-label">
+          Merge Vendor
+        </div>
+        <select ng-model="selected" ng-options="vendor.name for vendor in vendors" ng-change="merge(selected)">
+          <option value="">Select Vendor</option>
+        </select>
+      </label>
+    </ion-list>
+  </ion-content>
+</ion-view>

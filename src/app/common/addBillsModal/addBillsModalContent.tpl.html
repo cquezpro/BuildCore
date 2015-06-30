@@ -1,0 +1,32 @@
+<div class="modal-header">
+    <h3 class="modal-title">Upload your bills!</h3>
+</div>
+<div class="modal-body">
+  <div class="row">
+    <div id="fileList" class="col-xs-6 col-md-3" ng-show="showFiles">
+      <h4>Selected files:</h4>
+    </div>
+  </div>
+
+  <div id="modalDropBox" class="dropzone2">
+    <i class="fa fa-cloud-upload" ng-show="!uploading">Drop your files here</i><br><br>
+    <div class="fileupload" ng-show="!uploading">
+      <input id="fileUploadButton" type="file" class="btn-theme" multiple/>
+      <button class="btn-theme">Select files</button>
+    </div>
+    <div class="processing" ng-show="uploading">
+      <i class="fa fa-circle-o-notch fa-spin"></i> Uploading files
+    </div>
+  </div>
+</div>
+<div class="modal-footer">
+    <button class="btn-theme" ng-click="upload()" ng-disabled="uploading">
+      <div ng-show="uploading">
+        Uploading
+      </div>
+      <div ng-hide="uploading">
+        Upload!
+      </div>
+    </button>
+    <button class="btn-theme" ng-click="canselAndCloseModal()">Cancel</button>
+</div>

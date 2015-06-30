@@ -1,0 +1,711 @@
+
+
+<form name="forms.profileForm"
+  ng-class="{submitted: submitted}">
+
+
+  <div class="alert alert-danger"
+  ng-show="mainErrors">
+    Oops! Please check the errors and try again.
+    <ul>
+      <li
+        ng-repeat="(error, field) in mainErrors">
+        {{ error.split('_').join(' ') }}: {{ field.join(', ') }}
+      </li>
+    </ul>
+  </div>
+
+  <div class ="box col-md-12 col-xs-12" ng-show="showBoxes">
+
+      <div class="col-md-6">
+
+          <div class="box-content" ng-class="{'box-alert': !currentIndividual.user.business_name || !currentIndividual.user.billing_address1 || !currentIndividual.user.billing_city || !currentIndividual.user.billing_state || !currentIndividual.user.billing_zip}">
+            <div class="box-header">
+              <div class='title'>
+                 Business
+                <span
+                  ng-hide="currentIndividual.user.business_name.length">Company</span> Information
+              </div>
+
+            </div>
+            <div class="col-md-12" ng-show="!currentIndividual.user.business_name || !currentIndividual.user.billing_address1 || !currentIndividual.user.billing_city || !currentIndividual.user.billing_state || !currentIndividual.user.billing_zip">
+              <p class="text-danger text-center">Please click Edit and fill out the missing information</p>
+            </div>
+
+              <div class="col-md-6">
+                <label for="business_name">Business Name</label>
+              </div>
+              <div class="col-md-6">
+                {{currentIndividual.user.business_name}}
+              </div>
+              <div class="clearfix"></div>
+              <div class="col-md-6">
+                <label for="doing_business_as">Doing Business As</label>
+              </div>
+              <div class="col-md-6">
+                {{currentIndividual.user.doing_business_as}}
+              </div>
+              <div class="clearfix"></div>
+              <div class="col-md-6">
+                <label for="default_due_date">Default due day</label>
+              </div>
+              <div class="col-md-6">
+                {{currentIndividual.user.default_due_date}}
+              </div>
+            <div class="clearfix"></div>
+
+              <div class="col-md-6">
+                <label for="billing_address1">Billing Address 1</label>
+              </div>
+              <div class="col-md-6">
+                {{currentIndividual.user.billing_address1}}
+              </div>
+            <div class="clearfix"></div>
+
+              <div class="col-md-6">
+                <label for="billing_address2">Billing Address 2</label>
+              </div>
+              <div class="col-md-6">
+                {{currentIndividual.user.billing_address2}}
+              </div>
+            <div class="clearfix"></div>
+
+              <div class="col-md-6">
+                <label for="billing_city">Billing City</label>
+              </div>
+              <div class="col-md-6">
+                {{currentIndividual.user.billing_city}}
+              </div>
+            <div class="clearfix"></div>
+
+              <div class="col-md-6">
+                <label for="billing_zip">Billing State</label>
+              </div>
+              <div class="col-md-6">
+                {{currentIndividual.user.billing_state}}
+              </div>
+            <div class="clearfix"></div>
+
+              <div class="col-md-6">
+                <label for="billing_zip">Billing Zipcode</label>
+              </div>
+              <div class="col-md-6">
+                {{currentIndividual.user.billing_zip}}
+              </div>
+            <div class="clearfix"></div>
+
+              <div class="col-md-offset-10 col-md-2" style="margin-bottom:10px">
+                <button class="btn-theme" ng-click="editBusiness()">Edit</button>
+              </div>
+            <div class="clearfix"></div>
+          </div>
+
+            <div class="box-content" style="margin-top:10px;">
+              <div class="box-header">
+                <div class='title'>User</div>
+              </div>
+
+                  <div class="col-md-6">
+                    <label for="account_number">Name</label>
+                  </div>
+                  <div class="col-md-6">
+                    {{currentIndividual.name}}
+                  </div>
+                <div class="clearfix"></div>
+
+                  <div class="col-md-6">
+                    <label for="mobile_phone">Cell Phone</label>
+                  </div>
+                  <div class="col-md-6">
+                    {{currentIndividual.user.mobile_phone}}
+                  </div>
+                <div class="clearfix"></div>
+
+                  <div class="col-md-6">
+                    <label for="email">E-Mail</label>
+                  </div>
+                  <div class="col-md-6">
+                    {{currentIndividual.email}}
+                  </div>
+                <div class="clearfix"></div>
+
+                <div class="col-md-offset-10 col-md-2" style="margin-bottom:10px">
+                  <button class="btn-theme" ng-click="editUser()">Edit</button>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+
+      </div>
+      <div class="col-md-6">
+
+      <div class="box-content" ng-class="{'box-alert': !currentIndividual.user.verified}">
+        <div class="box-header">
+          <div class='title'>
+            Payment
+            <span
+              ng-hide="currentIndividual.name.length">User</span> Information
+          </div>
+        </div>
+        <div class="col-md-12" ng-show="!currentIndividual.user.verified">
+          <p class="text-danger text-center">Please click Edit and fill out the missing information</p>
+        </div>
+          <div class="col-md-6">
+            <label for="routing_number">Routing Number</label>
+          </div>
+          <div class="col-md-6">
+            {{currentIndividual.user.routing_number}}
+          </div>
+          <div class="clearfix"></div>
+          <div class="col-md-6">
+            <label for="bank_account_number">Bank Account Number</label>
+          </div>
+          <div class="col-md-6">
+            {{currentIndividual.user.bank_account_number}}
+          </div>
+          <div class="clearfix"></div>
+          <div class="col-md-6">
+            <label for="bank_account_number">Check Number</label>
+          </div>
+          <div class="col-md-6">
+            {{currentIndividual.user.check_number}}
+          </div>
+          <div class="clearfix"></div>
+          <div class="col-md-6">
+            <label for="bank_account_number">Verification Status</label>
+          </div>
+          <div class="col-md-6" ng-class="{'alert-success': currentIndividual.user.verified, 'alert-danger': currentIndividual.user.verification_status === 'not_verified', 'alert-warning': currentIndividual.user.verification_status === 'in_process' }">
+            {{currentIndividual.user.humanized_verification_status}}
+          </div>
+          <div class="clearfix"></div>
+          <div class="col-md-offset-10 col-md-2" style="margin-bottom:10px">
+            <button class="btn-theme" ng-click="editPayment()">Edit</button>
+          </div>
+          <div class="clearfix"></div>
+        </div>
+          <div class="box-content" style="margin-top:10px">
+            <div class="box-header">
+              <div class='title'>Password reset</div>
+            </div>
+                <div class="col-md-offset-7 col-md-5" style="margin-bottom:10px">
+                  <button class="btn-theme" ng-click="editPassword()">
+                  <span ng-hide="sending_request"> Create New Password </span>
+                  </button>
+                </div>
+            <div class="clearfix"></div>
+          </div>
+        </div>
+
+      </div>
+</div>
+
+
+  <div class ="box col-md-11 col-xs-11"  ng-show="businessBox">
+
+     <div class="box-header">
+      <div class='title'>
+        Business
+      </div>
+    </div>
+
+
+    <div class= "box-content">
+      <div class="text-wrapper">
+        <input class="input" type="text" name="business_name" value="currentIndividual.user.business_name" placeholder="business Name" id="business_name"
+          ng-model="currentIndividual.user.business_name"
+          ng-class="{ full: currentIndividual.user.business_name.length,
+                      'ng-invalid ng-invalid-required': ! currentIndividual.user.business_name }">
+        <label for="business_name">Business Name</label>
+      </div>
+
+      <div class="text-wrapper">
+        <input class="input" type="text" name="doing_business_as" value="currentIndividual.user.doing_business_as" placeholder="Doing Business As" id="doing_business_as"
+          ng-model="currentIndividual.user.doing_business_as"
+          ng-class="{ full: currentIndividual.user.doing_business_as.length}">
+        <label for="doing_business_as">Doing Business As</label>
+      </div>
+
+      <div class="text-wrapper">
+        <input class="input" type="text" name="billing_address1" value="currentIndividual.user.billing_address1" placeholder="Billing address 1" id="bank_account_number"
+          ng-model="currentIndividual.user.billing_address1"
+          ng-class="{ full: currentIndividual.user.billing_address1,
+                      'ng-invalid ng-invalid-required': ! currentIndividual.user.billing_address1 }">
+          <label for="billing_address1">Billing Address 1</label>
+      </div>
+
+      <div class="text-wrapper">
+        <input class="input" type="text" name="billing_address2" value="currentIndividual.user.billing_address2" placeholder="Billing address 2" id="billing_address2"
+          ng-model="currentIndividual.user.billing_address2"
+          ng-class="{full: currentIndividual.user.billing_address2}">
+          <label for="billing_address2">Billing Address 2</label>
+      </div>
+
+      <div class="text-wrapper">
+        <input class="input" type="text" name="billing_city" value="currentIndividual.user.billing_city" placeholder="Billing city" id="billing_city"
+          ng-model="currentIndividual.user.billing_city"
+          ng-class="{ full: currentIndividual.user.billing_city, 'ng-invalid ng-invalid-required': ! currentIndividual.user.billing_city }"
+          style="width:47%">
+        <label for="billing_city">Billing City</label>
+
+        <input class="input" type="text" name="billing_state" value="currentIndividual.user.billing_state" placeholder="Billing state" id="billing_state"
+          ng-model="currentIndividual.user.billing_state"
+          ng-class="{ full: currentIndividual.user.billing_state, 'ng-invalid ng-invalid-required': ! currentIndividual.user.billing_state }"
+          ng-blur="setWasFocused(forms.profileForm.billing_state)"
+          style="width:12%">
+        <label for="billing_state" style="left:48%">Billing State</label>
+
+        <input class="input" type="text" name="billing_zip" value="currentIndividual.user.billing_zip" placeholder="Billing zip" id="billing_zip"
+          ng-model="currentIndividual.user.billing_zip"
+          ng-class="{ full: currentIndividual.user.billing_zip, 'ng-invalid ng-invalid-required': ! currentIndividual.user.billing_zip }"
+          style="width:18%">
+        <label for="billing_zip" style="left:60%">Billing Zip</label>
+
+        <span ng-show="forms.profileForm.billing_state.$wasFocused && forms.profileForm.billing_state.$error.states && forms.profileForm.billing_state.$dirty && currentIndividual.user.billing_state.length > 1" class="error-input">
+          Must be a valid US state <br>
+          Must be a valid TWO letter state abberviation (e.g. NY or NC)
+        </span>
+      </div>
+
+    </div>
+
+
+  </div>
+  <div class ="box col-md-11 col-xs-11"  ng-show="paymentBox">
+
+    <div class="box-header">
+      <div class='title'>
+        Payment
+      </div>
+    </div>
+    <div class= "box-content">
+     <img src="/assets/Bank_Check.gif" class="img-responsive" style="margin-left: auto; margin-right: auto;">
+    <div class="text-wrapper">
+        <input class="input routing" type="text" name="routing_number" value="currentIndividual.user.routing_number" placeholder="Routing Number" id="routing_number"
+          ng-model="currentIndividual.user.routing_number"
+          ng-class="{ full: currentIndividual.user.routing_number, 'ng-invalid ng-invalid-required': ! currentIndividual.user.routing_number }"
+          style="width:40%; border-width:2px; border-color:#FF6400; background:rgba(255,100,0, .15);">
+        <label for="routing_number">Routing Number</label>
+
+        <input class="input accountnumber" type="text" name="bank_account_number" value="currentIndividual.user.bank_account_number" placeholder="Bank Account Number" id="bank_account_number"
+          ng-model="currentIndividual.user.bank_account_number"
+          ng-class="{ full: currentIndividual.user.bank_account_number, 'ng-invalid ng-invalid-required': ! currentIndividual.user.bank_account_number }"
+          style="width:39%; border-width:2px; border-color:#348E21; background:rgba(52,142,33, .15);">
+        <label for="bank_account_number" style="left:41%">Bank Account Number</label>
+      </div>
+      <div ng-show="showVerifyFields()">
+        <div ng-show="!(verification_success && request_verification_sent)">
+          <div class="text-wrapper">
+            <input class="input" type="text" name="verify_one" ng-model="currentIndividual.verify_one" value="currentIndividual.verify_one" placeholder="Verification One" id="verify_one" ng-class="{full: currentIndividual.verify_one.length}" style="width: 39%;" money />
+              <label for="verify_one">Verification One</label>
+            <input class="input" type="text" name="verify_two" ng-model="currentIndividual.verify_two" value="currentIndividual.verify_two" placeholder="Verification Two" id="verify_two" ng-class="{full: currentIndividual.verify_two.length}" style="width: 39%;" money/>
+            <label for="verify_two">Verification Two</label>
+          </div>
+          <br/>
+
+          <div class="alert alert-danger"
+          ng-show="verification_errors" style="width: 20%;">
+            <i class="fa fa-times"></i>Failed verification!
+          </div>
+
+          <button type="submit" class="btn-theme" ng-click="verifyBankInformation()" ng-disabled="sending_request" ng-class="{'btn-theme-disabled': sending_request}">
+            <span ng-show="sending_request">
+              ...
+            </span>
+            <span ng-hide="sending_request">
+              Verify
+            </span>
+          </button>
+          <br />
+          <small>
+            We will make two small deposits in your account tomorrow morning (usually appear in 1-2 working days).  Please type them into the boxes below (e.g. 0.23) and click verify. If you have issues click the button in the lower right and let us know!.
+            This deposit should appear in your account on or around {{currentIndividual.user.ach_date | date: "fullDate"}}
+          </small>
+        </div>
+      </div>
+
+      <div class="alert alert-success"
+      ng-if="verification_success || (currentIndividual.user.verification_status === 'verified' && currentIndividual.user.bank_information_filled)" style="width: 20%;">
+        <i class="fa fa-check"></i>Verified!
+      </div>
+
+      <div class="text-wrapper">
+        <input class="input" type="text" name="check_number" ng-model="currentIndividual.user.check_number" value="currentIndividual.user.check_number" placeholder="Check number" id="check_number" ng-class="{full: currentIndividual.user.check_number}">
+        <label for="check_number">Check Number</label>
+      </div>
+
+      <span class="text-muted">Signature</span>
+      <div class="row">
+        <div class="col-md-12">
+          <small ng-if="!currentIndividual.user.signature" style="color: red;">(Signature required to complete bank information)</small>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-12">
+          <canvas width="600" height="200" style="border:#999 solid 1px"></canvas>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <button class="btn-theme" ng-click="clearSignature()">Clear signature</button>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-12">
+          <small ng-if="!currentIndividual.user.signature" style="color: red;">(Signature required to complete bank information</small>
+        </div>
+      </div>
+      <div class="row">
+
+        <div class="text-wrapper" style="width: 40%; margin-left: 10px;">
+          <input class="input" type="number" name="default_due_date" ng-model="currentIndividual.user.default_due_date" value="currentIndividual.user.default_due_date" placeholder="Default due Day" id="default_due_date" ng-class="{full: currentIndividual.user.default_due_date.length}" max="31" min="1" required/>
+          <label for="default_due_date">Default due day</label> <br>
+          <small><span>*if a vendor doesn't have payment terms setup default the due day to a standard you set.  We recommend 14 days, meaning your vendors will get paid 14 days after they bill you. </span></small>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class ="box col-md-11 col-xs-11"  ng-show="userBox">
+    <div class="box-header">
+      <div class='title'>
+        User
+        <span
+          ng-hide="currentIndividual.name.length">User</span> Information
+      </div>
+    </div>
+    <div class= "box-content">
+      <div class="text-wrapper">
+        <input class="input" type="text" name="name" value="currentIndividual.name" placeholder="Full Name" id="name" required
+          ng-model="currentIndividual.name"
+          ng-class="{full: currentIndividual.name}">
+          <label for="account_number">Name</label>
+      </div>
+      <div class="text-wrapper">
+        <input class="input" type="text" name= "mobilePhone"  ng-model="currentIndividual.user.mobile_phone" value="currentIndividual.user.mobile_phone" ui-mask="{{masks.mobile_phone}}" placeholder="Cell Phone" ng-focus="refreshMask('mobile_phone', '999-999-9999')" ng-blur="clearMask('mobile_phone')" ng-class="{full: currentIndividual.user.mobile_phone.length}"/>
+        <label for="businessNumber">Cell Phone</label>
+      </div>
+      <div class="text-wrapper">
+        <input class="input" name="email" type="email" value="currentIndividual.email" placeholder="E-Mail" required
+          ng-model="currentIndividual.email"
+          ng-class="{full: currentIndividual.email.$viewValue.length}">
+        <label for="email">E-Mail</label>
+      </div>
+      <div class="text-wrapper">
+        <a href="" ng-click="confirmEmail()" ng-if="!currentIndividual.user.confirmed_email">Confirm Email</a>
+      </div>
+
+    </div>
+  </div>
+
+  <div class ="box col-md-11 col-xs-11"  ng-show="passwordBox">
+    <div class="box-header">
+      <div class='title'>{{currentIndividual.name}}<span ng-hide="currentIndividual.name.length">User</span>Password</div>
+    </div>
+    <div class= "box-content">
+      <div class="text-wrapper">
+        <input class="input" type="password" name="current_password" ng-model="currentIndividual.current_password" value="currentIndividual.current_password" placeholder="Current Password" id="current_password" ng-class="{full: currentIndividual.current_password.length}"/>
+          <label for="current_password">Current Password</label>
+
+          <div class="errors" ng-show="errors.current_password">
+            <ul>
+              <li ng-repeat="error in errors.current_password">{{error}}</li>
+            </ul>
+          </div>
+      </div>
+      <div class="text-wrapper">
+        <input class="input" type="password" name="password" ng-model="currentIndividual.password" value="currentIndividual.password" placeholder="New Password" id="password" ng-class="{full: currentIndividual.password.length}"/>
+          <label for="password">New Password</label>
+          <div class="errors" ng-show="errors.password">
+            <ul>
+              <li ng-repeat="error in errors.password">{{error}}</li>
+            </ul>
+          </div>
+      </div>
+      <div class="text-wrapper">
+        <input class="input" type="password" name="password_confirmation" ng-model="currentIndividual.password_confirmation" value="currentIndividual.password_confirmation" placeholder="Re-Type New Password" id="password_confirmation" ng-class="{full: currentIndividual.password_confirmation.length}"/>
+          <label for="password_confirmation">Retype New Password</label>
+          <div class="errors" ng-show="errors.password_confirmation">
+            <ul>
+              <li ng-repeat="error in errors.password_confirmation">{{error}}</li>
+            </ul>
+          </div>
+      </div>
+      <button type="submit" class="btn-theme" ng-click="savePassword()" ng-disabled="sending_request" ng-class="{'btn-theme-disabled': sending_request}">
+        <span ng-show="sending_request">
+          ...
+        </span>
+        <span ng-hide="sending_request">
+          Create New Password
+        </span>
+      </button>
+    </div>
+
+  </div>
+
+
+  <br>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <!--div class ="box col-md-10 col-xs-12">
+    <div class="alert alert-danger"
+      ng-show="mainErrors">
+        Oops! Please check the errors and try again.
+        <ul>
+          <li
+            ng-repeat="(error, field) in mainErrors">
+            {{ error.split('_').join(' ') }}: {{ field.join(', ') }}
+          </li>
+        </ul>
+      </div>
+
+    <div class="box-header">
+      <div class='title'>
+        {{currentIndividual.user.business_name}}
+        <span
+          ng-hide="currentIndividual.user.business_name.length">Company</span>'s Information
+      </div>
+    </div>
+
+
+    <div class= "box-content">
+      <div class="text-wrapper">
+        <input class="input" type="text" name="business_name" value="currentIndividual.user.business_name" placeholder="business Name" id="business_name"
+          ng-model="currentIndividual.user.business_name"
+          ng-class="{ full: currentIndividual.user.business_name.length,
+                      'ng-invalid ng-invalid-required': ! currentIndividual.user.business_name }">
+        <label for="business_name">Business Name</label>
+      </div>
+
+      <div class="text-wrapper">
+        <input class="input" type="text" name="doing_business_as" value="currentIndividual.user.doing_business_as" placeholder="Doing Business As" id="doing_business_as"
+          ng-model="currentIndividual.user.doing_business_as"
+          ng-class="{ full: currentIndividual.user.doing_business_as.length}">
+        <label for="doing_business_as">Doing Business As</label>
+      </div>
+
+      <div class="text-wrapper">
+        <input class="input" type="text" name="routing_number" value="currentIndividual.user.routing_number" placeholder="Routing Number" id="routing_number"
+          ng-model="currentIndividual.user.routing_number"
+          ng-class="{ full: currentIndividual.user.routing_number, 'ng-invalid ng-invalid-required': ! currentIndividual.user.routing_number }"
+          style="width:40%">
+        <label for="routing_number">Routing Number</label>
+
+        <input class="input" type="text" name="bank_account_number" value="currentIndividual.user.bank_account_number" placeholder="Bank Account Number" id="bank_account_number"
+          ng-model="currentIndividual.user.bank_account_number"
+          ng-class="{ full: currentIndividual.user.bank_account_number, 'ng-invalid ng-invalid-required': ! currentIndividual.user.bank_account_number }"
+          style="width:39%">
+        <label for="bank_account_number" style="left:41%">Bank Account Number</label>
+      </div>
+
+      <div ng-if="currentIndividual.user.verification_status === 'in_process' && currentIndividual.user.bank_information_filled">
+        <div class="text-wrapper">
+          <input class="input" type="text" name="verify_one" ng-model="currentIndividual.verify_one" value="currentIndividual.verify_one" placeholder="Verification One" id="verify_one" ng-class="{full: currentIndividual.verify_one.length}" style="width: 39%;" money />
+            <label for="verify_one">Verification One</label>
+          <input class="input" type="text" name="verify_two" ng-model="currentIndividual.verify_two" value="currentIndividual.verify_two" placeholder="Verification Two" id="verify_two" ng-class="{full: currentIndividual.verify_two.length}" style="width: 39%;" money/>
+          <label for="verify_two">Verification Two</label>
+        </div>
+        <br/>
+
+        <button type="submit" class="btn-theme" ng-click="verifyBankInformation()" ng-disabled="sending_request" ng-class="{'btn-theme-disabled': sending_request}">
+          <span ng-show="sending_request">
+            ...
+          </span>
+          <span ng-hide="sending_request">
+            Verify
+          </span>
+        </button>
+        <br />
+        <small>
+          We will make two small deposits in your account tomorrow morning (usually appear in 1-2 working days).  Please type them into the boxes below (e.g. 0.23) and click verify. If you have issues click the button in the lower right and let us know!
+        </small>
+
+        <div class="alert alert-danger"
+        ng-show="verification_errors">
+          Something was wrong. Please check the errors and try again.
+          <ul>
+            <li
+              ng-repeat="(error, field) in verification_errors">
+              {{ error.split('_').join(' ') }}: {{ field.join(', ') }}
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="text-wrapper">
+        <input class="input" type="text" name="billing_address1" value="currentIndividual.user.billing_address1" placeholder="Billing address 1" id="bank_account_number"
+          ng-model="currentIndividual.user.billing_address1"
+          ng-class="{ full: currentIndividual.user.billing_address1,
+                      'ng-invalid ng-invalid-required': ! currentIndividual.user.billing_address1 }">
+          <label for="billing_address1">Billing Address 1</label>
+      </div>
+
+      <div class="text-wrapper">
+        <input class="input" type="text" name="billing_address2" value="currentIndividual.user.billing_address2" placeholder="Billing address 2" id="billing_address2"
+          ng-model="currentIndividual.user.billing_address2"
+          ng-class="{full: currentIndividual.user.billing_address2}">
+          <label for="billing_address2">Billing Address 2</label>
+      </div>
+
+      <div class="text-wrapper">
+        <input class="input" type="text" name="billing_city" value="currentIndividual.user.billing_city" placeholder="Billing city" id="billing_city"
+          ng-model="currentIndividual.user.billing_city"
+          ng-class="{ full: currentIndividual.user.billing_city, 'ng-invalid ng-invalid-required': ! currentIndividual.user.billing_city }"
+          style="width:47%">
+        <label for="billing_city">Billing City</label>
+
+        <input class="input" type="text" name="billing_state" value="currentIndividual.user.billing_state" placeholder="Billing state" id="billing_state"
+          ng-model="currentIndividual.user.billing_state"
+          ng-class="{ full: currentIndividual.user.billing_state, 'ng-invalid ng-invalid-required': ! currentIndividual.user.billing_state }"
+          ng-blur="setWasFocused(forms.profileForm.billing_state)"
+          style="width:12%">
+        <label for="billing_state" style="left:48%">Billing State</label>
+
+        <input class="input" type="text" name="billing_zip" value="currentIndividual.user.billing_zip" placeholder="Billing zip" id="billing_zip"
+          ng-model="currentIndividual.user.billing_zip"
+          ng-class="{ full: currentIndividual.user.billing_zip, 'ng-invalid ng-invalid-required': ! currentIndividual.user.billing_zip }"
+          style="width:18%">
+        <label for="billing_zip" style="left:60%">Billing Zip</label>
+
+        <span ng-show="forms.profileForm.billing_state.$wasFocused && forms.profileForm.billing_state.$error.states && forms.profileForm.billing_state.$dirty && currentIndividual.user.billing_state.length > 1" class="error-input">
+          Must be a valid US state <br>
+          Must be a valid TWO letter state abberviation (e.g. NY or NC)
+        </span>
+      </div>
+
+      <div class="text-wrapper">
+        <input class="input" type="text" name="check_number" ng-model="currentIndividual.user.check_number" value="currentIndividual.user.check_number" placeholder="Check number" id="check_number" ng-class="{full: currentIndividual.user.check_number}">
+        <label for="check_number">Check Number</label>
+      </div>
+
+      <div>
+        <span class="text-muted">Signature</span>
+        <br>
+        <small ng-if="!individual.user.signature" style="color: red;">(Signature required to complete bank information)</small>
+        <canvas width="600" height="200" style="border:#999 solid 1px"></canvas>
+        <br>
+        <small ng-if="!individual.user.signature" style="color: red;">(Signature required to complete bank information</small>
+        <br>
+        <button class="btn btn-link" ng-click="clearSignature()">Clear signature</button>
+      </div>
+
+
+    </div>
+  </div>
+
+  <div class ="box col-md-10 col-xs-12">
+    <div class="box-header">
+      <div class='title'>
+        {{currentIndividual.name}}
+        <span
+          ng-hide="currentIndividual.name.length">User</span>'s Information
+      </div>
+    </div>
+    <div class= "box-content">
+      <div class="text-wrapper">
+        <input class="input" type="text" name="name" value="currentIndividual.name" placeholder="Full Name" id="name" required
+          ng-model="currentIndividual.name"
+          ng-class="{full: currentIndividual.name}">
+          <label for="account_number">Name</label>
+      </div>
+      <div class="text-wrapper">
+        <input class="input" type="text" name= "mobilePhone"  ng-model="currentIndividual.user.mobile_phone" value="currentIndividual.user.mobile_phone" ui-mask="{{masks.mobile_phone}}" placeholder="Cell Phone" ng-focus="refreshMask('mobile_phone', '999-999-9999')" ng-blur="clearMask('mobile_phone')" ng-class="{full: currentIndividual.user.mobile_phone.length}"/>
+        <label for="businessNumber">Cell Phone</label>
+      </div>
+      <div class="text-wrapper">
+        <input class="input" name="email" type="email" value="currentIndividual.email" placeholder="E-Mail" required
+          ng-model="currentIndividual.email"
+          ng-class="{full: currentIndividual.email.$viewValue.length}">
+        <label for="email">E-Mail</label>
+        <a href="" ng-click="confirmEmail()" ng-if="!currentIndividual.user.confirmed_email">Confirm Email</a>
+      </div>
+    </div>
+  </div>
+
+</form>
+
+
+<div class ="box col-md-10 col-xs-12">
+  <div class="box-header">
+    <div class='title'>General Settings</div>
+  </div>
+
+  <div class= "box-content">
+    <div class="text-wrapper">
+      <input class="input" type="number" name="default_due_date" ng-model="currentIndividual.user.default_due_date" value="currentIndividual.user.default_due_date" placeholder="Default due Day" id="default_due_date" ng-class="{full: currentIndividual.user.default_due_date.length}" max="31" min="1" required/>
+      <label for="default_due_date">Default due day</label> <br>
+      <small><span>*if a vendor doesn't have payment terms setup default the due day to a standard you set.  We recommend 14 days, meaning your vendors will get paid 14 days after they bill you. <span></small>
+    </div>
+  </div>
+</div>
+
+<div class ="box col-md-10 col-xs-12">
+  <div class="box-header">
+    <div class='title'>{{currentIndividual.name}}<span ng-hide="currentIndividual.name.length">User</span>'s Password</div>
+  </div>
+  <div class= "box-content">
+    <div class="text-wrapper">
+      <input class="input" type="password" name="current_password" ng-model="currentIndividual.current_password" value="currentIndividual.current_password" placeholder="Current Password" id="current_password" ng-class="{full: currentIndividual.current_password.length}"/>
+        <label for="current_password">Current Password</label>
+
+        <div class="errors" ng-show="errors.current_password">
+          <ul>
+            <li ng-repeat="error in errors.current_password">{{error}}</li>
+          </ul>
+        </div>
+    </div>
+    <div class="text-wrapper">
+      <input class="input" type="password" name="password" ng-model="currentIndividual.password" value="currentIndividual.password" placeholder="New Password" id="password" ng-class="{full: currentIndividual.password.length}"/>
+        <label for="password">New Password</label>
+        <div class="errors" ng-show="errors.password">
+          <ul>
+            <li ng-repeat="error in errors.password">{{error}}</li>
+          </ul>
+        </div>
+    </div>
+    <div class="text-wrapper">
+      <input class="input" type="password" name="password_confirmation" ng-model="currentIndividual.password_confirmation" value="currentIndividual.password_confirmation" placeholder="Re-Type New Password" id="password_confirmation" ng-class="{full: currentIndividual.password_confirmation.length}"/>
+        <label for="password_confirmation">Retype New Password</label>
+        <div class="errors" ng-show="errors.password_confirmation">
+          <ul>
+            <li ng-repeat="error in errors.password_confirmation">{{error}}</li>
+          </ul>
+        </div>
+    </div>
+    <button type="submit" class="btn-theme" ng-click="savePassword()" ng-disabled="sending_request" ng-class="{'btn-theme-disabled': sending_request}">
+      <span ng-show="sending_request">
+        ...
+      </span>
+      <span ng-hide="sending_request">
+        Create New Password
+      </span>
+    </button>
+  </div-->
+
+  <br>
+
+  <div class="alert alert-danger"
+    ng-show="mainErrors">
+      Something was wrong. Please check the errors and try again.
+      <ul>
+        <li
+          ng-repeat="(error, field) in mainErrors">
+          {{ error.split('_').join(' ') }}: {{ field.join(', ') }}
+        </li>
+      </ul>
+    </div>
+</div>

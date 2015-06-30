@@ -1,0 +1,27 @@
+<h1>Stats for Billsync</h1>
+
+<table>
+  <caption>Stats</caption>
+  <thead>
+    <tr>
+      <th>Date</th>
+      <th>Processed by MTurk</th>
+      <th>Invoices in state 3</th>
+      <th>To third worker</th>
+      <th>% state 3</th>
+      <th>% third worker</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @stats.each do |stat| %>
+      <tr>
+        <td><%= stat[:date] %></td>
+        <td><%= stat[:processed_by_turk] %></td>
+        <td><%= stat[:need_information] %></td>
+        <td><%= stat[:to_third_worker] %></td>
+        <td><%= stat[:need_information_stats] %></td>
+        <td><%= stat[:to_third_worker_stats] %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

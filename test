@@ -1,0 +1,119 @@
+--- !ruby/hash:OmniAuth::AuthHash
+provider: intuit
+uid: https://openid.intuit.com/Identity-55993c09-e37a-426c-9657-e30049733092
+info: !ruby/hash:OmniAuth::AuthHash::InfoHash
+  email: projectscottyalto@gmail.com
+  name: Vijay Brihmadesam
+  first_name: Vijay
+  last_name: Brihmadesam
+credentials: !ruby/hash:OmniAuth::AuthHash {}
+extra: !ruby/hash:OmniAuth::AuthHash
+  response: !ruby/object:OpenID::Consumer::SuccessResponse
+    endpoint: !ruby/object:OpenID::OpenIDServiceEndpoint
+      claimed_id: https://openid.intuit.com/Identity-55993c09-e37a-426c-9657-e30049733092
+      server_url: https://openid.intuit.com/OpenId/Provider
+      type_uris:
+      - http://specs.openid.net/auth/2.0/signon
+      - http://openid.net/extensions/sreg/1.1
+      - http://axschema.org/contact/email
+      local_id: 
+      canonical_id: 
+      used_yadis: true
+      display_identifier: 
+    identity_url: https://openid.intuit.com/Identity-55993c09-e37a-426c-9657-e30049733092
+    message: !ruby/object:OpenID::Message
+      args:
+        ? - :bare_namespace
+          - _method
+        : post
+        ? - http://specs.openid.net/auth/2.0
+          - claimed_id
+        : https://openid.intuit.com/Identity-55993c09-e37a-426c-9657-e30049733092
+        ? - http://specs.openid.net/auth/2.0
+          - identity
+        : https://openid.intuit.com/Identity-55993c09-e37a-426c-9657-e30049733092
+        ? - http://specs.openid.net/auth/2.0
+          - sig
+        : JlLtG/KrqBcBG3RLF0yj3vs/dnmxVp7jywD3eOYN7H8=
+        ? - http://specs.openid.net/auth/2.0
+          - signed
+        : claimed_id,identity,assoc_handle,op_endpoint,return_to,response_nonce,ns.sreg,sreg.email,sreg.fullname,ns.alias3,alias3.mode,alias3.type.alias1,alias3.value.alias1,alias3.type.alias2,alias3.value.alias2,alias3.type.alias3,alias3.value.alias3,alias3.type.alias4,alias3.value.alias4
+        ? - http://specs.openid.net/auth/2.0
+          - assoc_handle
+        : "--4Q!IAAAAJAPEivj5EYEbV6F8vE5UJ4qlMQSagxdAYuvlS-JHS6rQQAAAAHLXLue1cr_38fhNns-HOXqcJftUci29PhEIbWiI8TQSkF0W-uxVaiQVyGRJTldmBe2oYsQ9I9RAnmq-uVScHx_"
+        ? - http://specs.openid.net/auth/2.0
+          - op_endpoint
+        : https://openid.intuit.com/OpenId/Provider
+        ? - http://specs.openid.net/auth/2.0
+          - return_to
+        : http://localhost:3000/auth/auth/intuit/callback?_method=post
+        ? - http://specs.openid.net/auth/2.0
+          - response_nonce
+        : 2015-05-05T00:39:24Zr7dmN09V
+        ? - http://specs.openid.net/auth/2.0
+          - mode
+        : id_res
+        ? - http://openid.net/extensions/sreg/1.1
+          - email
+        : projectscottyalto@gmail.com
+        ? - http://openid.net/extensions/sreg/1.1
+          - fullname
+        : Vijay Brihmadesam
+        ? - http://openid.net/srv/ax/1.0
+          - mode
+        : fetch_response
+        ? - http://openid.net/srv/ax/1.0
+          - type.alias1
+        : http://axschema.org/namePerson
+        ? - http://openid.net/srv/ax/1.0
+          - value.alias1
+        : Vijay Brihmadesam
+        ? - http://openid.net/srv/ax/1.0
+          - type.alias2
+        : http://axschema.org/namePerson/first
+        ? - http://openid.net/srv/ax/1.0
+          - value.alias2
+        : Vijay
+        ? - http://openid.net/srv/ax/1.0
+          - type.alias3
+        : http://axschema.org/namePerson/last
+        ? - http://openid.net/srv/ax/1.0
+          - value.alias3
+        : Brihmadesam
+        ? - http://openid.net/srv/ax/1.0
+          - type.alias4
+        : http://axschema.org/contact/email
+        ? - http://openid.net/srv/ax/1.0
+          - value.alias4
+        : projectscottyalto@gmail.com
+      namespaces: !ruby/object:OpenID::NamespaceMap
+        alias_to_namespace:
+          :null_namespace: http://specs.openid.net/auth/2.0
+          sreg: http://openid.net/extensions/sreg/1.1
+          alias3: http://openid.net/srv/ax/1.0
+        namespace_to_alias:
+          http://specs.openid.net/auth/2.0: :null_namespace
+          http://openid.net/extensions/sreg/1.1: sreg
+          http://openid.net/srv/ax/1.0: alias3
+        implicit_namespaces: []
+      openid_ns_uri: http://specs.openid.net/auth/2.0
+    signed_fields:
+    - openid.claimed_id
+    - openid.identity
+    - openid.assoc_handle
+    - openid.op_endpoint
+    - openid.return_to
+    - openid.response_nonce
+    - openid.ns.sreg
+    - openid.sreg.email
+    - openid.sreg.fullname
+    - openid.ns.alias3
+    - openid.alias3.mode
+    - openid.alias3.type.alias1
+    - openid.alias3.value.alias1
+    - openid.alias3.type.alias2
+    - openid.alias3.value.alias2
+    - openid.alias3.type.alias3
+    - openid.alias3.value.alias3
+    - openid.alias3.type.alias4
+    - openid.alias3.value.alias4

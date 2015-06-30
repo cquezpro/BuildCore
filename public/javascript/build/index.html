@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html ng-app="billsync" ng-controller="AppCtrl">
+  <head>
+    <title ng-bind="pageTitle"></title>
+    <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
+    <meta content='text/html;charset=utf-8' http-equiv='content-type'>
+    <meta content='Painless bill payments.' name='description'>
+    <!-- / START - page related stylesheets [optional] -->
+    <!-- compiled CSS -->
+    <link rel="stylesheet" type="text/css" href="assets/billsync-0.3.1.css" />
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script type="text/javascript" src="assets/jquery.min.js"></script>
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+
+    <!-- compiled JavaScript -->
+    <script type="text/javascript" src="vendor/angular/angular.js"></script>
+    <script type="text/javascript" src="vendor/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
+    <script type="text/javascript" src="vendor/placeholders/angular-placeholders-0.0.1-SNAPSHOT.min.js"></script>
+    <script type="text/javascript" src="vendor/angular-ui-router/release/angular-ui-router.js"></script>
+    <script type="text/javascript" src="vendor/angular-ui-utils/modules/route/route.js"></script>
+    <script type="text/javascript" src="vendor/angular-ui-utils/modules/modules/mask/mask.js"></script>
+    <script type="text/javascript" src="vendor/angular-resource/angular-resource.js"></script>
+    <script type="text/javascript" src="vendor/angular-devise/lib/devise-min.js"></script>
+    <script type="text/javascript" src="src/app/about/about.js"></script>
+    <script type="text/javascript" src="src/app/app.js"></script>
+    <script type="text/javascript" src="src/app/home/home.js"></script>
+    <script type="text/javascript" src="src/app/login/login.js"></script>
+    <script type="text/javascript" src="src/app/vendor/vendor.js"></script>
+    <script type="text/javascript" src="src/common/plusOne/plusOne.js"></script>
+    <script type="text/javascript" src="templates-common.js"></script>
+    <script type="text/javascript" src="templates-app.js"></script>
+    <script type="text/javascript" src="assets/jquery.min.js"></script>
+    <script type="text/javascript" src="assets/theme.js"></script>
+    <script src="//angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.11.0.js"></script>
+
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,700' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Lato:400,700' rel='stylesheet' type='text/css'>
+    <link href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href='http://fonts.googleapis.com/css?family=Baumans' rel='stylesheet' type='text/css'>
+    <!-- / END - page related stylesheets [optional] -->
+    <!--[if lt IE 9]>
+      <script src="assets/javascripts/ie/html5shiv.js" type="text/javascript"></script>
+      <script src="assets/javascripts/ie/respond.min.js" type="text/javascript"></script>
+    <![endif]-->
+  </head>
+  <body class='contrast-blue'>
+    <div id ="totalwrapper">
+    <header>
+      <nav class='navbar navbar-default'>
+        <a class='toggle-nav btn-thememenu pull-left' href='#'>
+          <i class='icon-reorder'> menu</i>
+        </a>
+        <a ui-route="/home" class="navbar-brand">
+          billSync
+        </a>
+        <ul class='nav'>
+          <li class='dropdown dark user-menu'>
+            <a class='dropdown-toggle' data-toggle='dropdown' href='#'>
+              <span class='user-name'>User Name</span>
+              <b class='caret'></b>
+            </a>
+            <ul class='dropdown-menu'>
+              <li>
+                <a href='#'>
+                  <i class='icon-user'></i>
+                  Profile
+                </a>
+              </li>
+              <li>
+                <a href='#'>
+                  <i class='icon-cog'></i>
+                  Settings
+                </a>
+              </li>
+              <li class='divider'></li>
+              <li>
+                <a href='#'>
+                  <i class='icon-signout'></i>
+                  Sign out
+                </a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+
+      </nav>
+    </header>
+    <div id='wrapper'>
+      <div id='main-nav-bg'></div>
+      <nav id='main-nav'>
+        <div class='navigation'>
+
+          <div class = "sectionheader">SECTIONS</div>
+          <ul class='nav nav-stacked'>
+            <li ui-route="#/home" ng-class="{active:$uiRoute}">
+              <a href='#/home'>
+                <i class='icon-inbox'></i>
+                <span>Dashboard</span>
+              </a>
+            </li>
+            <li ui-route="#/calendar" ng-class="{active:$uiRoute}">
+              <a class="dropdown-collapse" href="#/calandar"><i class='icon-calendar'></i>
+                <span>Calendar</span>
+              </a>
+            </li>
+            <li ui-route="#/vendor" ng-class="{active:$uiRoute}">
+             <a href="#/vendor">
+              <i class='icon-group'></i>
+                <span>Vendors</span>
+              </a>
+            </li>
+            <li ui-route="#/reports" ng-class="{active:$uiRoute}">
+              <a class="dropdown-collapse" href="#/reports"><i class='icon-dashboard'></i>
+                <span>Reports</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </nav>
+    </div>
+  <section id='content'>
+
+    <div class="container" ui-view="main" id ="ngcontent"></div>
+
+    <footer id='footer'>
+      <div class='footer-wrapper'>
+        <div class='row'>
+            <span class='buttons'>
+              <i class="icon-facebook-sign" href="#"></i>
+              <i class="icon-twitter-sign" href="#"></i> <br />
+              <span class="text">© 2014 BillSync</span>
+            </span>
+        </div>
+      </div>
+    </footer>
+  </section>
+</div>
+  </body>
+</html>

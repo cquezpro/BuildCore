@@ -1,0 +1,70 @@
+<div class="pagetitle">
+  <h1>
+     Question on Invoice [#] from [date]
+  </h1>
+</div>
+
+<div class="row">
+	<div class="col-md-4">
+		<table class="table responsive-table bstable table-responsive table-hover">
+
+			<tr>
+				<textarea class="form-control" rows="3"></textarea>
+				<label for="includeinvoice">
+	        <input type="checkbox" ng-model="includeinvoice" name="includeinvoice" id="includeinvoice" />
+	        <span> include a copy of your invoice with the message</span>
+	      </label>
+					<button class="btn-theme pull-right dispute-send-message-btn">Send Message</button>
+				<br>
+			</tr>
+
+			<tr>
+				<th>Vendor Name:<span class="pull-right">8 AM</span></th>
+			</tr>
+			<tr>
+				<td>Some message here about the invoice and the issue</td>
+			</tr>
+
+			<tr>
+				<th>Me:<span class="pull-right">Jul 23</span></th>
+			</tr>
+			<tr>
+				<td>Some message here about the invoice and the issue</td>
+			</tr>
+
+		</table>
+	</div>
+
+	<div class="col-md-8">
+
+		<div class="row">
+			<div class="col-md-12">
+				<div class="text-wrapper">
+		      <input class="input" type="text" name="name" ng-model="vendor.name" placeholder="Vendor Name" id="vendorName" ng-class="{full: invoice.amount_due}"/>
+		      <label for="vendorName">Vendor</label>
+		    </div>
+
+				<div class="row">
+
+					<div class="text-wrapper col-md-4">
+			      <input class="input" type="number" name="name" ng-model="invoice.amount_due" placeholder="Amount Due" id="vendorName" ng-class="{full: vendor.name}"/>
+			      <label for="vendorName">Amount Due</label>
+			    </div>
+
+			    <div class="text-wrapper col-md-4">
+			      <input class="input" type="date" name="name" ng-model="invoice.due_date" placeholder="Due Date" id="invoiceDueDate" ng-class="{full: invoice.due_date}"/>
+			      <label for="invoiceDueDate">Due Date</label>
+			    </div>
+				</div>
+
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-md-12">
+				Display the invoice
+			</div>
+		</div>
+
+	</div>
+</div>

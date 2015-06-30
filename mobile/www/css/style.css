@@ -1,0 +1,209 @@
+/* Empty. Add your own CSS if you like */
+#actionPopup {
+    top: 15% !important;
+    bottom: 50px !important;
+    width: 80% !important;
+    left: 10% !important;
+    height: 70% !important;
+    margin-left: 0px;
+}
+
+#actionPopup .scroll {
+  margin-top: 15px !important;
+}
+#actionPopup .popover-arrow {
+    display: none !important;
+}
+
+#actionPopup .row, #actionPopup .col{
+    padding: 2px !important;
+}
+#forgotPassword h4{
+  font-family: "OpenSans",sans-serif;
+  font-weight: 400;
+  color: #369;
+  text-align: center;
+}
+.alert-success {
+  color: #3c763d;
+  background-color: #dff0d8;
+  border-color: #d6e9c6;
+}
+
+.cancelClose {
+  position: absolute !important;
+  top: -19px !important;
+  right: -30px !important;
+  font-size: 13px !important;
+  font-weight: bold;
+}
+
+.card {
+    border: 1px solid #dce1e5;
+}
+.card label {
+    border: none;
+}
+
+.text-danger {
+  color: #a94442;
+}
+
+
+#cancelpayment .icon:before{
+  font-size: 17px;
+}
+
+#intercom-modal .scroll {
+  height: 100%;
+}
+
+#intercom-modal .list {
+  position: fixed;
+  width: 100%;
+  top: 150px;
+}
+
+#intercom-modal .list .row{
+  padding: 0px !important;
+  width: 80% !important;
+  margin: 0 auto !important;
+}
+#intercom-modal .notice {
+  width: 90%;
+  margin: 0 auto;
+  color: #336699;
+  padding-top: 40px;
+}
+
+#alerts .item {
+    white-space: inherit !important;
+}
+
+.yellowAlert {
+  background: yellow;
+}
+
+#sengMsgData {
+    -webkit-box-shadow: none !important;
+    -moz-box-shadow: none !important;
+    box-shadow: none !important;
+    border: 1px solid rgb(224, 224, 224) !important;
+    -webkit-appearance: none !important;
+    margin: 0px;
+    height: 150px;
+}
+
+@font-face {
+    font-family: 'Baumans';
+    src: url('../fonts/Baumans-Regular.ttf') format('truetype');
+    font-weight: 300;
+}
+
+@font-face {
+    font-family: 'OpenSans';
+    src: url('../fonts/OpenSans-Regular.ttf') format('truetype');
+    font-weight: 300;
+}
+
+
+#logostyle {
+  font-family: 'Baumans';
+  color: #336699;
+  font-size: 30px;
+  font-weight: 700;
+  padding-top: 10px;
+  padding-left: 10px;
+}
+
+.bsgenfont {
+  font-family: 'OpenSans';
+  color: #333333;
+}
+
+
+  .checklist-box {
+    background-color: #fff;
+
+    /*position: fixed;*/
+    z-index: 99000;
+    left: 10px;
+    bottom: 0;
+    /*border: solid 1px #aaa;*/
+    border-style: none;
+  }  
+
+    .logo {
+      font-family: 'Baumans',sans-serif;
+      color: #336699;
+      font-size: 25px;
+      margin-top: 5px;
+    }
+
+    .header {
+      background-color: #c0c0c0;
+      color: #fff;
+      padding: 0px 10px 0px 10px;
+      border-top-right-radius: 5px;
+      border-top-left-radius: 5px;
+      height: 29px;
+    }
+
+    .checklist-progress {
+      margin-left: 15px;
+      margin-top: -3px;
+      font-size:18px;
+      vertical-align: top;
+      display: inline-block;
+      font-size: 17px !important;
+    }
+
+    .checklist {
+      padding: 0px 0px 0px 30px;
+      margin: 0;
+      list-style: none;
+      font-size: 18px;
+    }
+
+    .toggle-button {
+      color: #fff;
+      margin-top: 7px;
+    }
+
+    .text-green {
+      color: #008000;
+    }
+
+    .message-done {
+      color: #008000;
+      text-decoration: none !important;
+    }
+
+    #filterField {
+      position: absolute; 
+      top: 45px;
+    }
+
+    #statLine {
+      position: absolute; 
+      width: 100%;
+      top: 90px;
+      text-align: center;
+      border-bottom: solid 1px #ddd;
+    }
+
+    #home_content {
+      top: 139px;
+    }
+
+    .platform-ios #filterField {
+      top: 60px;
+    }
+
+    .platform-ios #statLine {
+      top: 105px;
+    }
+
+    .platform-ios #home_content {
+      top: 153px;
+    }

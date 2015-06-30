@@ -1,0 +1,26 @@
+<ion-modal-view>
+  <ion-header-bar>
+    <h1 class="title">Line Item {{currentLI.idx + 1}}</h1>
+  </ion-header-bar>
+  <ion-content>
+    <div class="row">
+      <div class="col">
+        <strong>{{currentLI.description}}</strong>
+        <br>
+        Last price - ${{currentLI.last_price | number: 2}}
+        <br>
+        Average price - ${{currentLI.average_12_week ? currentLI.average_12_week : 0 | number: 2}}
+        <br>
+        Difference - %{{currentLI.percent_difference ? currentLI.percent_difference : 0 | number: 2}}
+      </div>
+    </div>
+    <!-- <br> -->
+    <div class="row">
+      <div class="col">
+        <button class="button button-outline button-positive" ng-click="lineItemModal.hide()">Close</button>  
+      </div>
+      
+    </div>
+    
+  </ion-content>
+</ion-modal-view>

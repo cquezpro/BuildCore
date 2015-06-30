@@ -1,0 +1,16 @@
+<nav class="pdf-nav" ng-class="getNavStyle(scroll)">
+  <h2><div class="humanized_status">{{invoice.comparation_humanized_status}}</div></h2>
+  <span>Page: </span>
+  <input type="pagenumber" min=1 ng-model="pageNum">
+  <span> / {{pageCount}}</span> <br>
+
+    <a ng-click="goPrevious()" class="btn-theme"><i class='fa fa-arrow-left'> previous</i></span></a>
+  <a ng-click="goNext()" class="btn-theme"> next<i class='fa fa-arrow-right'></i></span></a>
+  <a ng-click="zoomIn()" class="btn-theme"><i class='fa fa-plus'> zoom</i></span></a>
+  <a ng-click="zoomOut()" class="btn-theme"><i class='fa fa-minus'> zoom</i></span></a>
+
+</nav> <br> <br>
+<div ng-class="{'scrollArea': !openInModal}">
+  <canvas id="duplicate-canvas" class="rotate0"></canvas>
+  <br/>
+</div>

@@ -1,0 +1,12 @@
+<p>
+  Your bill has been processed here are the details.  To take action on the bill please login at <%= "#{app_url}#/login" %>
+  </p>
+
+Invoice Number: <%= @invoice.number %>
+<br>
+Vendor Name: <%= @invoice.vendor.try(:name) || 'Not completed' %>
+<br>
+Amount due: <%= @invoice.amount_due || 'Not completed' %>
+<br>
+
+-The billSync Team, hello@bill-sync.com

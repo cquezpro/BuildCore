@@ -1,0 +1,17 @@
+
+<table class="table responsive-table bstable table-responsive table-hover" ng-show="vendor.line_items.length > 0">
+  <thead>
+    <th>Description</th>
+    <th>Last Price</th>
+    <th>12 week Avg.</th>
+    <th>% difference</th>
+  </thead>
+  <tbody>
+    <tr ng-repeat="line_item in vendor.line_items" ng-if="displayItem(line_item.description)">
+      <td>{{line_item.description}}</td>
+      <td><span ng-if="line_item.last_price">$</span> {{line_item.last_price | number: 2}}</td>
+      <td><span ng-if="line_item.average_12_week">$</span> {{line_item.average_12_week | number: 1}}</td>
+      <td>{{line_item.percent_difference | number: 1}}<span ng-if="line_item.percent_difference">%</span></td>
+    </tr>
+  </tbody>
+</table>

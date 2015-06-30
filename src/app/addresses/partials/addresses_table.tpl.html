@@ -1,0 +1,29 @@
+<table width="80%" class='table responsive-table bstable table-hover'>
+  <thead>
+    <th>Location</th>
+    <th>Actions</th>
+    <th></th>
+    <th>Class</th>
+  </thead>
+  <tr ng-repeat="address in addresses" ng-hide="address.id === currentAddress.id">
+    <td width="30%">
+      <address-formated address="address"></address-formated>
+    <td>
+    <td width="40%" class="showover center">
+      <button class="btn-theme" ng-click="editAddress(address)"><i class="fa fa-pencil action-edit"></i> Edit</button>
+      <span ng-hide="address.parent_id">
+        <button class="btn-theme" ng-click="start_merging(address)"><i class="fa fa-code-fork"></i> Merge</button>
+      </span>
+      <span ng-show="address.parent_id">
+        <button class="btn-theme" ng-click="unmerge(address)"><i class="fa fa-code-fork"></i> Un-Merge</button>
+      </span>
+    </td>
+    <td>
+      <select ng-options="klass.id as klass.name for klass in qbclasses" ng-model="address.qb_class_id" ng-change="updateClass(address)">
+      </select>
+    </td>
+    <td width="30%" ng-show="merging && selected_to_merge.id === address.id">
+      <select ng-options="address.name for address in address_list" ng-model="selected_to_merge_two" ng-change="merge(selected_to_merge_two)"></select>
+    </td>
+  </tr>
+</table>

@@ -1,0 +1,296 @@
+<ion-view id="profile" title="Profile">
+  <ion-nav-buttons>
+    <button class="button button-clear" ui-sref="app.tabs.home">Close</button>
+  </ion-nav-buttons>
+  <ion-nav-buttons side="right">
+   <button class="right-buttons button button-icon icon ion-help" style="z-index:99;" ng-click="openIntercom();">
+    </button>    
+  </ion-nav-buttons>
+  <ion-content class="has-header">
+      <ion-list>
+        <div class="row" ng-if="showBoxes">
+          <!-- Business Company Information Start -->
+          <div class="col">
+            <div class="card">
+              <ion-item class="item-divider">
+                  Business
+                  <!--<span ng-hide="currentIndividual.user.business_name.length">Company</span>--> Information
+              </ion-item>
+              <label ng-if="!currentIndividual.user.business_name || !currentIndividual.user.billing_address1 || !currentIndividual.user.billing_city || !currentIndividual.user.billing_state || !currentIndividual.user.billing_zip">
+                <p style="margin-top:12px;" class="text-danger text-center">Please click Edit and fill out the missing information</p>
+              </label>
+              <label class="item item-input">
+                <span class="input-label">Business Name</span>
+                <span>{{currentIndividual.user.business_name}}</span>
+              </label>
+              <label class="item item-input">
+                <span class="input-label">Doing Business As</span>
+                <span>{{currentIndividual.user.doing_business_as}}</span>
+              </label>
+              <label class="item item-input">
+                <span class="input-label">Default Due Day</span>
+                <span>{{currentIndividual.user.default_due_date}}</span>
+              </label>
+               <label class="item item-input">
+                <span class="input-label">Billing Address 1</span>
+                <span>{{currentIndividual.user.billing_address1}}</span>
+              </label>
+              <label class="item item-input">
+                <span class="input-label">Billing Address 2</span>
+                <span>{{currentIndividual.user.billing_address2}}</span>
+              </label>
+              <label class="item item-input">
+                <span class="input-label">Billing City</span>
+                <span>{{currentIndividual.user.billing_city}}</span>
+              </label>
+              <label class="item item-input">
+                <span class="input-label">Billing State</span>
+                <span>{{currentIndividual.user.billing_state}}</span>
+              </label>
+              <label class="item item-input">
+                <span class="input-label">Billing Zip</span>
+                <span>{{currentIndividual.user.billing_zip}}</span>
+              </label>
+              <label class="item">
+                <div style="text-align: right;">
+				  <button class="button  button-light" ng-click="editBusiness()"><font style="color:#336699;">Edit</font></button>
+				</div>
+              </label>
+          </div> 
+
+          <!-- Business Company Information End -->
+
+          <!-- User Start -->
+          <div class="card">
+            <ion-item class="item-divider">
+              User's Information
+            </ion-item>
+            <label class="item item-input">
+              <span class="input-label">Name</span>
+              <span>{{currentIndividual.name}}</span>
+            </label>
+            <label class="item item-input">
+              <span class="input-label">Cell Phone</span>
+              <span>{{currentIndividual.user.mobile_phone}}</span>
+            </label>
+            <label class="item item-input">
+              <span class="input-label">E-Mail</span>
+              <span>{{currentIndividual.email}}</span>
+            </label>
+            <label class="item">
+                <div style="text-align: right;">
+                      <button class="button  button-light" ng-click="editUser()"><font style="color:#336699;">Edit</font></button>
+                </div>
+            </label>
+          </div>
+          <!-- User End -->
+          </div>
+
+        <div class="col">
+        <!-- Payment Information Start -->
+         <div class="card">
+            <ion-item class="item-divider">
+              Payment Information
+            </ion-item>
+            <div ng-if="!currentIndividual.user.verified">
+              <p style="margin-top:12px;" class="text-danger text-center">Please click Edit and fill out the missing information</p>
+            </div>
+            <label class="item item-input">
+              <span class="input-label">Routing Number</span>
+              <span>{{currentIndividual.user.routing_number}}</span>
+            </label>
+            <label class="item item-input">
+              <span class="input-label">Bank Account Number</span>
+              <span>{{currentIndividual.user.bank_account_number}}</span>
+            </label>
+           
+            <label class="item item-input">
+              <span class="input-label">Check Number</span>
+              <span>{{currentIndividual.user.check_number}}</span>
+            </label>
+
+            <label class="item item-input">
+              <span class="input-label">Verification Status</span>
+               <div class="col-md-6" ng-class="{'alert-success': currentIndividual.user.verified, 'alert-danger': currentIndividual.user.verification_status === 'not_verified', 'alert-warning': currentIndividual.user.verification_status === 'in_process' }">
+              {{currentIndividual.user.humanized_verification_status}}
+               </div>
+            </label>
+
+            <!--<label class="item">
+              <div class="row">
+                <div class="col">
+                  <img ng-src='{{currentIndividual.user.signature}}' width="180" height="80" />
+                </div>          
+              </div>
+              <div class="row">
+                <div class="col">
+                  <button class="button button-outline button-positive" ng-click="openSignature()">Signature</button>
+                </div>          
+              </div>
+            </label>-->
+
+            <label class="item">
+              <div style="text-align: right;">
+                    <button class="button  button-light" ng-click="editPayment()"><font style="color:#336699;">Edit</font></button>
+              </div>
+            </label>
+         </div>
+        <!-- Payment Information End-->
+
+          
+         <div class="card"> 
+          <ion-item class="item-divider">
+            Password Reset
+          </ion-item>
+          <label class="item">
+              <div style="text-align: right;">
+                    <button class="button  button-light" ng-click="editPassword()"><font style="color:#336699;"><span ng-hide="sending_request"> Create New Password </span></font></button>
+              </div>
+            </label>
+          </div>
+         </div>
+        </div>
+
+        <div ng-if="businessBox">
+           <ion-item class="item-divider">
+                Business
+            </ion-item>
+            <label class="item item-input item-floating-label">
+              <span class="input-label">Business Name</span>
+              <input type="text" placeholder="Business Name" ng-model="currentIndividual.user.business_name">
+            </label>
+            <label class="item item-input item-floating-label">
+              <span class="input-label">Doing Business As</span>
+              <input type="text" placeholder="Doing Business As" ng-model="currentIndividual.user.doing_business_as">
+            </label>
+            <label class="item item-input item-floating-label">
+              <span class="input-label">Billing Address 1</span>
+              <input type="text" placeholder="Billing Address 1" ng-model="currentIndividual.user.billing_address1">
+            </label>
+            <label class="item item-input item-floating-label">
+              <span class="input-label">Billing Address 2</span>
+              <input type="text" placeholder="Billing Address 2" ng-model="currentIndividual.user.billing_address2">
+            </label>
+            <label class="item item-input item-floating-label">
+              <span class="input-label">Billing City</span>
+              <input type="text" placeholder="Billing City" ng-model="currentIndividual.user.billing_city">
+            </label>
+            <label class="item item-input item-floating-label">
+              <span class="input-label">Billing State</span>
+              <input type="text" placeholder="Billing State" ng-model="currentIndividual.user.billing_state">
+            </label>
+            <label class="item item-input item-floating-label">
+              <span class="input-label">Billing Zip</span>
+              <input type="text" placeholder="Billing Zip" ng-model="currentIndividual.user.billing_zip">
+            </label>
+         </div>
+
+         <div ng-if="userBox">
+            <ion-item class="item-divider">
+              User's Information
+            </ion-item>
+            <label class="item item-input item-floating-label">
+              <span class="input-label">Name</span>
+              <input type="text" placeholder="Name" ng-model="currentIndividual.name">
+            </label>
+            <label class="item item-input item-floating-label">
+              <span class="input-label">Cell Phone</span>
+              <input type="text" placeholder="Cell Phone" ng-model="currentIndividual.user.mobile_phone">
+            </label>
+            <label class="item item-input item-floating-label">
+              <span class="input-label">E-Mail</span>
+              <input type="text" placeholder="E-Mail" ng-model="currentIndividual.email">
+            </label>
+         </div>
+
+         <div ng-if="paymentBox">
+            <ion-item class="item-divider">
+              Payment
+            </ion-item>
+            <img src="img/Bank_Check.gif" class="img-responsive" style="margin-left: auto; margin-right: auto;">
+            <label class="item item-input item-floating-label">
+              <span class="input-label">Routing Number</span>
+              <input type="text" placeholder="Routing Number" ng-model="currentIndividual.user.routing_number" style="width:40%; border-width:2px; border-color:#FF6400; background:rgba(255,100,0, .15);">
+            </label>
+            <label class="item item-input item-floating-label">
+              <span class="input-label">Bank Account Number</span>
+              <input type="text" placeholder="Bank Account Number" ng-model="currentIndividual.user.bank_account_number" style="width:39%; border-width:2px; border-color:#348E21; background:rgba(52,142,33, .15);">
+            </label>
+
+            <div ng-if="(currentIndividual.user.verification_status === 'in_process' && currentIndividual.user.bank_information_filled)">
+                <div ng-if="!(verification_success && request_verification_sent)">
+                    <div class="text-wrapper">
+                        <input class="input" type="text" name="verify_one" ng-model="currentIndividual.verify_one" value="currentIndividual.verify_one" placeholder="Verification One" id="verify_one" ng-class="{full: currentIndividual.verify_one.length}" style="width: 39%;" money />
+                        <label for="verify_one">Verification One</label>
+                        <input class="input" type="text" name="verify_two" ng-model="currentIndividual.verify_two" value="currentIndividual.verify_two" placeholder="Verification Two" id="verify_two" ng-class="{full: currentIndividual.verify_two.length}" style="width: 39%;" money/>
+                        <label for="verify_two">Verification Two</label>
+                    </div>
+                    <br/>
+
+                    <div class="alert alert-danger" ng-show="verification_errors" style="width: 20%;">
+                        <i class="fa fa-times"></i>Failed verification!
+                    </div>
+
+                    <button type="submit" class="btn-theme" ng-click="verifyBankInformation()" ng-disabled="sending_request" ng-class="{'btn-theme-disabled': sending_request}">
+                        <span ng-show="sending_request">
+                         ...
+                        </span>
+                        <span ng-hide="sending_request">
+                          Verify
+                         </span>
+                    </button>
+                    <br />
+                   <small>
+                    We will make two small deposits in your account tomorrow morning (usually appear in 1-2 working days).  Please type them into the boxes below (e.g. 0.23) and click verify. If you have issues click the button in the lower right and let us know!.
+                    This deposit should appear in your account on or around {{currentIndividual.user.ach_date | date: "fullDate"}}
+                  </small>
+                </div>
+            </div>
+           
+            <label class="item item-input item-floating-label">
+              <span class="input-label">Check Number</span>
+              <input type="text" placeholder="Check Number" ng-model="currentIndividual.user.check_number">
+            </label>
+
+            <label class="item">
+              <div class="row">
+                <div class="col">
+                  <img ng-src='{{currentIndividual.user.signature}}' width="180" height="80" />
+                </div>          
+              </div>
+              <div class="row">
+                <div class="col">
+                  <button class="button button-outline button-positive" ng-click="openSignature()">Signature</button>
+                </div>          
+              </div>
+            </label>
+         </div>
+
+         <div ng-if="passwordBox">
+            <ion-item class="item-divider">
+              User Password
+            </ion-item>
+            <label class="item item-input item-floating-label">
+              <span class="input-label">Current Password</span>
+              <input type="password" placeholder="Current Password" ng-model="currentIndividual.current_password">
+            </label>
+            <label class="item item-input item-floating-label">
+              <span class="input-label">New Password</span>
+              <input type="password" placeholder="New Password" ng-model="currentIndividual.password">
+            </label>
+            <label class="item item-input item-floating-label">
+              <span class="input-label">Retype New Password</span>
+              <input type="password" placeholder="Retype New Password" ng-model="currentIndividual.password_confirm">
+            </label>
+             <label class="item item-input item-floating-label">
+              <button class="button button-outline button-positive" ng-click="savePassword()">Create New Password</button>
+            </label>
+         </div>
+
+          <ion-item>
+            <button class="button button-outline button-positive" ng-click="save()">Save</button>
+            <button class="button button-outline button-positive" ng-click="cancel()">Cancel</button>
+          </ion-item>
+        </ion-list>
+  </ion-content>
+</ion-view>

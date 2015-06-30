@@ -1,0 +1,36 @@
+<div>
+  <div class="col-md-12">
+  	<h4 class="title">
+        {{currentInvoice.vendor.name | maxLength:39 || '?'}} -
+        ${{currentInvoice.amount_due | number:2}} <br>
+        <small
+          ng-show="currentInvoice.vendor.address1 &&
+                   currentInvoice.vendor.city     &&
+                   currentInvoice.vendor.state    &&
+                   currentInvoice.vendor.zip">
+          {{currentInvoice.vendor.address1}}, {{currentInvoice.vendor.city}},
+          {{currentInvoice.vendor.state}}, {{currentInvoice.vendor.zip}}</small>
+          </h4>
+     <tabset>
+      <tab ng-repeat="tab in tabs" heading="{{tab.heading}}" active="tab.active" ng-if="authorizeView(tab.partial) && tab.show" select="prepareTab(tab.name)">
+
+	  	<form name="invoiceForm" ng-class="{submitted: submitted}" novalidate>
+	        <div ng-include src="tab.partial"></div>
+	        <div>
+	        <hr>
+	        <button type="submit" class="btn-theme" ng-click="save()" ng-if="authorizeAction('update-edit-bill')">Save</button>
+	        <button ng-click="cancel()" class="btn-theme">Cancel</button>
+	        <br>
+	        <br>
+	        <br>
+	        <br>
+	      	</div>
+		</form>
+
+      </tab>
+    </tabset>
+  </div>
+</div>
+
+
+<!--ng-class="{full: invoice.amount_due}"-->

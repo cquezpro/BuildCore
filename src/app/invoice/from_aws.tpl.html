@@ -1,0 +1,231 @@
+<script type="text/ng-template" id="customTemplate.html">
+   <a>{{ match.model.name }}<br><small>{{match.model.address1}}, {{match.model.city}} {{match.model.state}}</small></a>
+</script>
+
+<instruction-modal default-form="true"></instruction-modal>
+<help-modal default-form="true"></help-modal>
+<feedback-modal></feedback-modal>
+<do-sum-info-faster-modal></do-sum-info-faster-modal>
+<workers-table-modal></workers-table-modal>
+
+<div class="pagetitle container">
+  <h3 class="worker" ng-if="invoice_type === 'default' || invoice_type === 'for_second_review'">Complete blank fields, verify fields with a value</h3>
+  <h3 class="worker" ng-if="invoice_type === 'for_marked_through' || invoice_type === 'for_amount_due'">Please calculate the amount due based on the markings/adjustments, e.g if a line item is marked through do not include it in the amount due. If a quantity is marked though and noting is written next to it assume the value is is 0.</h3>
+  <hr>
+</div>
+
+<div class="alert alert-hit" role="alert" ng-show="displayErrors()">
+  <button type="button" class="close" ng-click="form_error = {}"><span aria-hidden="true">&times;</span></button>
+  <ul>
+    <li ng-repeat="(key,value) in form_error">{{value}}</li>
+  </ul>
+</div>
+
+<div class="alert alert-hit" role="alert" ng-if="!can_submit">
+  You need to accept this hit before submit
+</div>
+
+<div class="container">
+  <form class="form_from_aws" name="from_aws" onsubmit="return false;">
+    <div class="col-xs-12 col-sm-8 col-md-8" style="height:80vh;overflow:scroll">
+      <div id="bill-affix">
+        <div class="fixedPdf">
+          <mozilla-pdf-viewer data-file="pdf_url" ng-if="showPdf"></mozilla-pdf-viewer>
+        </div>
+      </div>
+    </div>
+
+    <div class="animate-if col-xs-12 col-sm-4 col-md-4" style="height:80vh;overflow:scroll">
+      <!-- -->
+      <div ng-if="invoice_type === 'for_marked_through'">
+        <div>
+          <strong>Amount Due/Total (for the current bill/invoice not including pervious charges)</strong>
+          <i class="fa fa-question-circle" data-toggle="tooltip" data-container="body" title="This is the TOTAL inclusive of all fees and taxes due for each invoice"></i>
+          <label class="alert-danger" ng-if="invoice.original_invoice.pdf_total_pages > 1">NOTE THIS BILL IS {{invoice.original_invoice.pdf_total_pages}} PAGES</label>
+          <div class="input-group" style="margin-bottom:10px">
+            <div class="input-group-addon">$</div>
+            <input class="form-control" name="amount_due" id="amount_due" type="text" ng-model="invoice.amount_due" money required style="width:80%">
+          </div>
+        </div>
+      </div>
+
+      <!-- -->
+      <div ng-if="invoice_type === 'for_second_review' && !invoice.original_values.amount_due && !invoice.original_invoice.is_marked_through">
+        <div>
+          <strong>Amount Due/Total (for the current bill/invoice not including pervious charges)</strong>
+          <label class="alert-danger" ng-if="invoice.original_invoice.pdf_total_pages > 1">NOTE THIS BILL IS {{invoice.original_invoice.pdf_total_pages}} PAGES</label>
+          <div class="input-group" style="margin-bottom:10px">
+            <div class="input-group-addon">$</div>
+            <input class="form-control" name="amount_due" type="text" ng-model="invoice.amount_due" placeholder="Amount due" money required style="width:80%">
+          </div>
+
+        </div>
+      </div>
+       <!-- -->
+      <div ng-if="invoice_type === 'for_second_review'" >
+         <!-- -->
+        <div ng-if="!invoice.original_values.name || !invoice.original_values.vendor_id">
+          <strong>Vendor - HINT: IS NOT <span ng-repeat="company in company_info" ng-if="company.user_mark">{{company.name}}. </span></strong>
+          <input type="text" name="vendor_id" class="form-control" ng-model="invoice.name" placeholder="Vendor Name" typeahead="vendor as vendor.name for vendors in getVendors($viewValue, invoice.invoice_id) | filter:{name:$viewValue}" typeahead-template-url="customTemplate.html" typeahead-on-select="setVendor($item, $model, $label, invoice)" autocomplete="off" required style="width:80%">
+        </div>
+        <div class= "box-content">
+           <!-- -->
+          <div ng-if="!invoice.original_values.address1">
+            <strong>Vendor Address Line 1</strong>
+            <br>
+            <small>(e.g 123 Main St)</small>
+            <input class="form-control" ng-model="invoice.address1" name="add1" type= "text" placeholder="Address Line 1" style="width:80%">
+          </div>
+           <!-- -->
+          <div ng-if="!invoice.original_values.address2">
+            <strong>Vendor Address Line 2</strong>
+            <br>
+            <small>(e.g Suite 5, Care of Jane Doe)</small>
+            <input class="form-control" ng-model="invoice.address2" name="add2"  type="text" placeholder="Address Line 2" style="width:80%">
+          </div>
+           <!-- -->
+          <div>
+            <strong ng-if="!invoice.original_values.city">
+              City
+            </strong>
+            <strong style="margin-left:110px" ng-if="!invoice.original_values.state">
+              State
+            </strong>
+            <strong style="margin-left:30px" ng-if="!invoice.original_values.zip">
+              Zip
+            </strong>
+            <input class="form-control" ng-model="invoice.city" name= "city"  type="text" placeholder="City" style="width:40%;display:inline-block" ng-hide="invoice.city && from_aws.city" ng-if="!invoice.original_values.city">
+            <ui-select ng-model="$parent.invoice.state" style="width:17%;top:-2px" class="state-select" ng-if="!invoice.original_values.state">
+              <ui-select-match placeholder="St">
+                {{$select.selected.id}}
+              </ui-select-match>
+              <ui-select-choices repeat="s.id as s in states | filter: $select.search">
+                <div ng-bind-html="s.name | highlight: $select.search"></div>
+              </ui-select-choices>
+            </ui-select>
+            <input class="form-control" ng-model="invoice.zip" name="zipCode" type= "text" placeholder="Zip" style="width:20%;display:inline-block" ng-hide="invoice.zip && from_aws.zipCode.$pristine">
+          </div>
+
+          <div>
+            <strong>
+              Email
+            </strong>
+            <br>
+            <small>(e.g scottyalto@gmail.com)</small>
+            <input class="form-control" ng-model="invoice.email" name="add1" type="email" placeholder="Email" style="width:80%">
+          </div>
+        </div>
+      </div>
+      <!-- -->
+      <div ng-if="invoice_type === 'default'">
+        <!-- -->
+        <div ng-if="invoice.original_invoice.vendor_present">
+          <strong> Vendor - HINT: IS NOT <span ng-repeat="company in company_info" ng-if="company.user_mark">{{company.name}}. </span></strong>
+          <br>
+          <small>(e.g Chong's Produce)</small>
+          <input type="text" id="name" name="name" class="form-control" ng-model="invoice.name" placeholder="" typeahead="vendor as vendor.name for vendors in getVendors($viewValue, invoice.invoice_id) | filter:{name:$viewValue}" typeahead-template-url="customTemplate.html" typeahead-on-select="setVendor($item, $model, $label, invoice)" autocomplete="off" required style="width:80%">
+        </div>
+
+        <!-- -->
+        <div class= "box-content" ng-if="invoice.original_invoice.address_present">
+          <div>
+            <strong>Vendor Address Line 1</strong>
+            <br>
+            <small>(e.g 123 Main St)</small>
+            <input class="form-control" ng-model="invoice.address1" name="add1" id="add1" type= "text" required style="width:80%">
+          </div>
+
+          <div>
+            <strong>Vendor Address Line 2</strong>
+            <br>
+            <small>(e.g Suite 5, Care of Jane Doe)</small>
+            <input class="form-control" ng-model="invoice.address2" name="add2" id="add2" type="text" style="width:80%">
+          </div>
+
+          <div>
+            <strong>
+              City
+            </strong>
+            <strong style="margin-left:110px">
+              State
+            </strong>
+            <strong style="margin-left:30px">
+              Zip
+            </strong>
+            <input class="form-control" ng-model="invoice.city" name= "city"  type="text" placeholder="City" style="width:40%;display:inline-block">
+            <ui-select ng-model="$parent.invoice.state" style="width:17%;top:-2px" class="state-select">
+              <ui-select-match placeholder="St">
+                {{$select.selected.id}}
+              </ui-select-match>
+              <ui-select-choices repeat="s.id as s in states | filter: $select.search">
+                <div ng-bind-html="s.name | highlight: $select.search"></div>
+              </ui-select-choices>
+            </ui-select>
+            <input class="form-control" ng-model="invoice.zip" name="zipCode" type= "text" placeholder="Zip" style="width:20%;display:inline-block">
+          </div>
+        </div>
+        <div ng-if="invoice && invoice !== null">
+          <strong>Invoice Date/Delivery Date. Format MM/DD/YY</strong>
+          <i class="fa fa-question-circle" data-toggle="tooltip" title="Date the invoice was issued NOT the day it is due for payment" data-container="body"></i>
+          <input class="form-control" type="text" datepicker-popup="MM/dd/yy" ng-model="invoice.date" is-open="$parent.inv_date" datepicker-options="dateOptions" close-text="Close" show-weeks="false" id="date" name="date" style="width:80%;display:inline-block">
+          <button type="button" class="btn btn-default" ng-click="openDatePicker($event, 'inv_date')"><i class="glyphicon glyphicon-calendar"></i></button>
+        </div>
+
+        <div ng-if="invoice">
+          <strong>Due Date. Format: MM/DD/YY</strong>
+          <i class="fa fa-question-circle" data-toggle="tooltip" title="Day the invoice is due for payment, not all invoices will have a due date, leave blank if you can't find it." data-container="body"></i>
+          <input class="form-control" type="text" datepicker-popup="MM/dd/yy" ng-model="invoice.due_date" is-open="$parent.inv_due_date" datepicker-options="dateOptions" close-text="Close" show-weeks="false" id="due_date" name="due_date" style="width:80%;display:inline-block">
+          <button type="button" class="btn btn-default" ng-click="openDatePicker($event, 'inv_due_date')"><i class="glyphicon glyphicon-calendar"></i></button>
+        </div>
+
+        <div ng-if="invoice">
+          <strong>Invoice Number</strong>
+          <i class="fa fa-question-circle" data-toggle="tooltip" title="There should be a field that says Invoice #, Invoice Number, Purchase Order #, or Purchase Order Number, if it does not exist please leave blank" data-container="body"></i>
+          <input class="form-control" type="text" name="number" id="number" ng-model="invoice.number" style="width:80%">
+        </div>
+
+        <div ng-if="invoice.original_invoice.amount_due_present">
+          <strong>Amount Due</strong>
+          <i class="fa fa-question-circle" data-toggle="tooltip" title="This is the TOTAL inclusive of all fees and taxes due for each invoice" data-container="body"></i>
+          <label class="alert-danger" ng-if="invoice.original_invoice.pdf_total_pages > 1">NOTE THIS BILL IS {{invoice.original_invoice.pdf_total_pages}} PAGES</label>
+          <div class="input-group" style="margin-bottom:10px">
+            <div class="input-group-addon">$</div>
+            <input class="form-control" name="amount_due" id="amount_due" type="text" ng-model="invoice.amount_due" money required style="width:80%">
+          </div>
+        </div>
+
+        <div ng-if="invoice">
+          <strong>Tax</strong>
+          <i class="fa fa-question-circle" data-toggle="tooltip" title="If there are multiple tax fields sum them and put the total in this field" data-container="body"></i>
+          <div class="input-group" style="margin-bottom:10px">
+            <div class="input-group-addon">$</div>
+            <input class="form-control" type="text" name="tax" id="tax" ng-model="invoice.tax" money  style="width:80%">
+          </div>
+        </div>
+
+      </div>
+
+      <div ng-if="can_submit">
+        <a class="btn-theme-worker" ng-disable="submiting" ng-click="saveInvoiceModeration()">
+          Submit
+          <span ng-show="submiting">Submiting...</span>
+        </a>
+        <br><br>
+      </div>
+
+    </div>
+
+
+    <br>
+    <br>
+
+  </form>
+</div>
+
+
+<form action="https://www.mturk.com/mturk/externalSubmit" method="post" name="submitForm">
+<!-- <form action="https://workersandbox.mturk.com/mturk/externalSubmit" method="post" name="submitForm"> -->
+  <input class="input hide" type="date"  name="date">
+  <input class="input hide" type="text"  name="aws_form" value="aws_form_test">
+  <input type="hidden" name="assignmentId" value="{{assignmentId}}">
+</form>

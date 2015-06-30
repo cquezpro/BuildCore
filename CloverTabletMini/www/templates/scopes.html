@@ -1,0 +1,20 @@
+<ion-modal-view>
+      <ion-header-bar>
+        <button ng-click="close()" class="button button-outline button-positive ion-close-round text-left"></button>
+        <button ng-click="selectScopes()" class="button button-outline button-positive ion-checkmark text-right"></button>
+      </ion-header-bar>
+    <ion-content>
+      <ion-list ng-repeat="sc in scopesSelected">
+
+
+              <li class="item item-checkbox">
+                 <label class="checkbox">
+                   <input type="checkbox" ng-model="sc.selectedScope" ng-checked="sc.selectedScope">
+                 </label>
+                 {{sc.name}}
+              </li>
+
+
+      </ion-list>
+    </ion-content>
+</ion-modal-view>         

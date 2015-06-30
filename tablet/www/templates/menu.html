@@ -1,0 +1,130 @@
+<ion-side-menus>
+  <ion-side-menu-content>
+    <ion-nav-bar class="bar-light">
+      <ion-nav-back-button class="button-clear"><i class="icon ion-ios7-arrow-left"></i></ion-nav-back-button>
+    </ion-nav-bar>
+    <ion-nav-view></ion-nav-view>
+  </ion-side-menu-content>
+  <ion-side-menu side="left" width="140">
+    <!--ion-header-bar>
+      <!--h1 class="title small-logo">billSync</h1-->
+      
+      <!--div class="row" style="margin-top:2%;">
+        <div class="col text-center">
+          <img src="img/billsync.png" style="width:35px;height:35px;">
+        </div>
+      </div-->
+
+      
+
+
+    <!--/ion-header-bar-->
+    <ion-content>
+      <!--ion-list class="billsync-menu"-->
+      <ion-list >
+
+        <div class="text-center">
+
+          <div class="row">
+            <div class="col" style="margin-left:-10px;">
+                <img src="img/billsync.png" class="small-logo" style="width:65px;height:65px;">
+            </div>
+          </div>
+          
+        </div>
+
+        <div style="color:#336699;width:140px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;padding:0 5px" class="text-center">
+          <small>{{currentIndividual.email}}</small>
+        </div>
+
+        <div ui-sref="app.tabs.profile" class="text-center" menu-close ng-if="authorizeAction('update-edit-profile-business-information')">
+          
+          <div class="row">
+            <div class="col" style="margin-left:-10px;">
+              <i class="icon ion-person" style="font-size:35px;"></i>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col" style="margin-left:-8px;" >
+              Profile
+            </div>
+          </div>
+
+          
+        </div>
+        <div ui-sref="app.settings" class="text-center" menu-close>
+
+          <div class="row">
+            <div class="col" style="margin-left:-10px;margin-top:15px;">
+              <i class="icon ion-gear-a" style="font-size:35px;"></i>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col" style="margin-left:-7px;">
+              Settings
+            </div>
+          </div>
+
+          
+        </div>
+        <div ui-sref="app.users" class="text-center" menu-close ng-if="authorizeAction('edit-user')">
+          <div class="row">
+            <div class="col" style="margin-left:-10px;margin-top:15px;">
+              <i class="icon  ion-person-stalker" style="font-size:35px;"></i>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col" style="margin-left:-8px;">
+              Users
+            </div>
+          </div>
+          
+        </div>
+        
+        <div ui-sref="app.accounting" class="text-center" menu-close ng-if="authorizeAction('edit-user')">
+          <div class="row">
+            <div class="col" style="margin-left:-10px;margin-top:15px;">
+              <i class="icon  ion-briefcase" style="font-size:35px;"></i>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col" style="margin-left:-3px;">
+              Accounting
+            </div>
+          </div>
+          
+        </div>
+
+        <div class="text-center" ng-click="logout()">
+
+          <div class="row">
+            <div class="col" style="margin-left:-10px;margin-top:15px;">
+              <i class="icon ion-log-out" style="font-size:35px;"></i>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col" style="margin-left:-10px;">
+              Logout
+            </div>
+          </div>
+          
+        </div>
+
+        <div class="text-center" menu-close>
+
+          <div class="row">
+            <div class="col" style="margin-left:-10px;margin-top:15px;">
+              <i class="icon ion-close-round" style="font-size:35px;"></i>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col" style="margin-left:-10px;">
+              close menu
+            </div>
+          </div>
+          
+        </div>
+      </ion-list>
+    </ion-content>
+  </ion-side-menu>
+</ion-side-menus>

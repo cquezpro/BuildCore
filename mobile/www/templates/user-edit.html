@@ -1,0 +1,74 @@
+<ion-view title="User">
+  <ion-nav-buttons>
+    <button class="button" ui-sref="app.tabs.users">Close</button>
+  </ion-nav-buttons>
+  <ion-nav-buttons side="right">
+   <button class="right-buttons button button-icon icon ion-help" style="z-index:99;" ng-click="openIntercom();">
+    </button>
+  </ion-nav-buttons>
+  <ion-content class="has-header">
+
+          <form name="form.invoiceForm">
+            <label class="item item-input">
+              <span class="input-label text-right">User Name</span>
+              <input type="text"placeholder="..." ng-model="ind.name" name="name">
+            </label>
+            <label class="item item-input">
+              <span class="input-label text-right">Email</span>
+              <input type="text" placeholder="..." ng-model="ind.email" name="email">
+            </label>
+            <label class="item item-input">
+              <span class="input-label text-right">Phone</span>
+              <input type="text" ui-mask="(999) (999)-(9999)" ng-model="ind.mobile_phone" name="mobile_phone">
+            </label>
+            <label class="item item-input">
+              <div class="input-label text-right">
+                Role
+              </div>
+              <select style="width:60%;" ng-model="ind.role_id" ng-options="role.id as role.name for role in roles" >
+              </select>
+            </label>
+
+            <label class="item item-input item-icon-right">
+              <div class="input-label text-right">
+                Scope
+              </div>
+              <!-- <select style="width:60%;" ng-model="scopesText" ng-options="sc.name for sc in availableScopes" >
+              </select> -->
+              <span class="item-note">
+                0 selected
+              </span>
+              <i class="icon ion-chevron-right item-note"></i>
+            </label>
+
+            <!--label class="item item-input">
+              <button class="button button-outline button-positive" ng-click="showScopes()">show scopes</button>
+            </label-->
+
+            <!--<div class="row">
+              <div class="col">
+                <button class="button button-outline button-positive" ng-click="showScopes()">show scopes</button>
+              </div>
+            </div>-->
+
+            <label class="item item-input">
+              <span class="input-label text-right">Min $ Limits</span>
+              <input type="text" placeholder="..." ng-model="ind.limit_min" name="limit_min">
+            </label>
+            <label class="item item-input">
+              <span class="input-label text-right">Max $ Limits</span>
+              <input type="text" placeholder="..." ng-model="ind.limit_max" name="limit_max">
+            </label>          
+            <ion-item>
+              <div class="row">
+                <div class="col">
+                  <button class="button button-outline button-positive" ng-click="saveUser()">Save</button>
+                </div>
+              </div>    
+            </ion-item>
+
+          </form>
+
+
+  </ion-content>
+</ion-view>

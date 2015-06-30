@@ -1,0 +1,9 @@
+# This settings may be overriden in particular Procfiles
+
+production:
+  :concurrency: 10
+staging:
+  :concurrency: 10
+
+development:
+  :concurrency: 10

@@ -1,0 +1,48 @@
+<div>
+	<h1>Edit Vendor: {{ vendor.name }}</h1>
+</div>
+<div class="body">
+<tabset>
+
+    <tab heading="Contact">
+	    <input ng-model="$parent.vendor.name" value = "$parent.vendor.name" placeholder="Vendor Name">
+	    <input ng-model="$parent.vendor.address1" value = "$parent.vendor.address1" placeholder = "Address Line 1">
+	    <input ng-model="$parent.vendor.address2" value = "$parent.vendor.address2" placeholder = "Address Line 2">
+	    <input ng-model="$parent.vendor.address3" value = "$parent.vendor.address3" placeholder = "Address Line 3">
+	    <input ng-model="$parent.vendor.city"  value = "$parent.vendor.city" placeholder = "City">
+	    <input ng-model="$parent.vendor.state"  value = "$parent.vendor.state" placeholder = "State">
+	    <input ng-model="$parent.vendor.zip"  value = "$parent.vendor.zip" placeholder = "Zipcode">
+	    <input ng-model="$parent.vendor.fax_number"  value = "$parent.vendor.fax_number" placeholder = "Fax Number">
+	    <input ng-model="$parent.vendor.cell_number"  value = "$parent.vendor.zip" placeholder = "Zipcode">
+	    <input ng-model="$parent.vendor.email"  value = "$parent.vendor.email" placeholder = "E-Mail">
+	</tab>
+
+    <tab heading="Payment">
+	    <input ng-model="$parent.vendor.routing_number"  value = "$parent.vendor.routing_number" placeholder = "Bank Routing Number">
+	    <input ng-model="$parent.vendor.bank_account_number"  value = "$parent.vendor.bank_account_number" placeholder = "Bank Account Number">
+	    <input ng-model="$parent.vendor.tax_id_number"  value = "$parent.vendor.tax_id_number" placeholder = "Tax ID Number">
+	    <input ng-model="$parent.vendor.payment_term"  value = "$parent.vendor.payment_term" placeholder = "Payment Term">
+	    <input ng-model="$parent.vendor.after_bill_date"  value = "$parent.vendor.after_bill_date" placeholder = "After Bill Date">
+	    <input ng-model="$parent.vendor.before_due_date"  value = "$parent.vendor.before_due_date" placeholder = "Before Due Date">
+	    <input ng-model="$parent.vendor.after_due_date"  value = "$parent.vendor.after_due_date" placeholder = "After Due Date">
+	    <input ng-model="$parent.vendor.day_of_the_month"  value = "$parent.vendor.day_of_the_month" placeholder = "Day of the Month">
+	    <input ng-model="$parent.vendor.after_recieved"  value = "$parent.vendor.after_recieved" placeholder = "Days After Recieved">
+	    <input ng-model="$parent.vendor.end_after_payments"  value = "$parent.vendor.end_autopay_over_amount" placeholder = "End Auto Pay If Over Amount">
+	    <input ng-model="$parent.vendor.auto_amount"  value = "$parent.vendor.auto_amount" placeholder = "Automatic Payment Amount">
+    </tab>
+
+    <tab heading="Alerts">
+    	<input ng-model="$parent.vendor.alert_over"  value = "$parent.vendor.alert_over" placeholder = "Alert over this amount">
+    </tab>
+
+    <tab heading="Line Items">
+      Line Items Coming Soon!
+    </tab>
+
+    <tab heading="Invoices">
+      Invoices Comming Soon!
+    </tab>
+  </tabset>
+</div>
+<hr>
+<button ng-click="vendorupdate()" class="btn-theme">Save</button> <button ng-click="vendorcancel()" class="btn-theme" ng-click="vendorcancel()">Cancel</button>

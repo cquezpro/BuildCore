@@ -1,0 +1,57 @@
+
+<div class ="box col-md-10 col-xs-12">
+
+  <div class="box-header">
+    <div class='title'>
+      Users
+    </div>
+    <button class="btn-theme" ng-click = "newUser()" ng-if="authorizeAction('add-delete-user')" style="margin-left:5px"><i class="fa fa-plus"></i> add user</button>
+  </div>
+  <span class="text-wrapper">Bills below <input type="text" style="width:50px" placeholder="0"> do not need an approval to be paid</span>
+  <div class= "box-content">
+    <table class="table table-response bstable" id="usersTable">
+
+      <thead>
+        <th>User Name</th>
+        <th class="center">Role</th>
+        <th class="center">Scope</th>
+        <th class="center">Limits</th>
+      </thead>
+
+      <tbody>
+        <tr ng-repeat="u in users">
+          <td>
+            <div ng-hide="u.edit_mode">
+              {{u.name}}
+              <br>
+              <span class="small">{{u.email}} / {{u.mobile_phone}}</span>
+              <a href="" ng-click="u.edit_mode = true"><i class="fa fa-pencil action-edit"></i></a>  
+            </div>
+            <div ng-show="u.edit_mode" class="text-wrapper">
+              <input type="text" class="input" placeholder="User Name" ng-model="u.name" style="width:100%" ng-change="u.changed = true">
+              <br>
+              <input type="text" class="input" placeholder="E-mail" ng-model="u.email" style="width:40%" ng-change="u.changed = true">
+              <input type="text" class="input" placeholder="Phone" ng-model="u.mobile_phone" style="width:40%" ng-change="u.changed = true">
+              <a href="" ng-click="u.edit_mode = false" style="margin-left:5px"><i class="fa fa-check"></i></a>
+            </div>
+            <p class="text-danger">{{u.error}}</p>
+          </td>
+          <td class="center" style="width:20%">
+            <select class="input" style="width:100%" ng-model="u.role_id" ng-change="u.changed = true" ng-options="role.id as role.name for role in roles">
+            </select>
+          </td>
+          <td class="center" style="width:20%">
+            <select class="selectpicker" multiple data-width="100%" data-container="body">
+            </select>
+          </td>
+          <td class="center text-wrapper" style="width:20%">
+            <input type="text" class="input" placeholder="Min" style="width:40%" ng-model="u.limit_min" ng-change="u.changed = true">
+            <input type="text" class="input" placeholder="Max" style="width:40%" ng-model="u.limit_max" ng-change="u.changed = true">
+          </td>
+        </tr>
+        
+      </tbody>
+    </table>
+    <p ng-class="{ 'text-danger': !saveResult.saved, 'text-success': saveResult.saved, 'text-warning': saveResult.saving }">{{saveResult.text}}</p>
+  </div>
+</div>

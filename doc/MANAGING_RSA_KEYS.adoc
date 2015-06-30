@@ -1,0 +1,48 @@
+# Managing RSA keys
+
+## In production
+
+Save the content of +.pem+ file containing your public key in +RSA_KEYPAIR+
+environment varialbe via +heroku config+.
+
+## In development
+
+Keys for development and test environments are tracked by Git under names
++config/development_pub.pem+ and +config/development.pem+.  The public key
+is loaded automatically, however +RSA_KEYPAIR+ ENV variable always takes
+precedence.  The private key is not loaded automatically to match production
+behavior but it is checked into repository if you need it.
+
+## Creating key pairs
+
+1.  Create the key pair:
++
+[source,bash]
+-------------
+openssl genrsa -out bill_sync.pem 4096
+openssl rsa -in bill_sync.pem -pubout > bill_sync_pub.pem
+-------------
+
+2.  Create a test file of any content and name it `test.txt`, example given:
++
+.test.txt
+-------------
+    Once upon a midnight dreary, while I pondered, weak and weary,
+    Over many a quaint and curious volume of forgotten lore—
+        While I nodded, nearly napping, suddenly there came a tapping,
+    As of some one gently rapping, rapping at my chamber door.
+    “’Tis some visiter,” I muttered, “tapping at my chamber door—
+                Only this and nothing more.”
+-------------
+
+3.  Test the keys.  Encrypt using public key then decrypt using private one:
++
+[source,bash]
+-------------
+openssl rsautl -encrypt -inkey bill_sync_pub.pem -pubin -in test.txt -out test.crypt
+openssl rsautl -decrypt -inkey bill_sync.pem -in test.crypt
+-------------
+
+## Resources
+
+* http://www.devco.net/archives/2006/02/13/public_-_private_key_encryption_using_openssl.php[Great tutorial]

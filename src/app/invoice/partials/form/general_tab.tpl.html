@@ -1,0 +1,158 @@
+<!-- TODO_FIELDS  fields name for invoices: payment_send_date, payment_date -->
+
+<script type="text/ng-template" id="customTemplate.html">
+   <a>{{ match.model.name }}<br><small>{{match.model.address1}}, {{match.model.city}} {{match.model.state}}</small></a>
+</script>
+
+<div class="pagetitle">
+  <div>
+    <h1>Bill Details</h1>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-12"
+    ng-if="invoice.total_alerts && invoice.total_alerts.length > 0">
+      <display-alerts invoice="invoice" show-ul="true"></display-alerts>
+  </div>
+    <div class="col-md-8 pdf-wrap">
+      <div id="dropBox" class="dropzone" ng-show="showUpload">
+        <i class="fa fa-cloud-upload" ng-show="!showProcessing"> Drop an Invoice Here</i><br><br>
+        <div class="fileupload" ng-show="!showProcessing">
+          <input id="fileUploadButton" type="file" class="btn-theme" multiple/>
+          <button class="btn-theme">Select files</button>
+        </div>
+        <div class="processing" ng-show="showProcessing">
+          <i class="fa fa-circle-o-notch fa-spin"></i> Processing files...
+        </div>
+      </div>
+      <div ng-show="!showUpload">
+        <div class="fixedPdf">
+          <button class="btn-theme" ng-click="dropzonebutton = !dropzonebutton"><span ng-show="dropzonebutton">Hide Upload Area</span><span ng-hide="dropzonebutton">Add Pages</span></button>
+          <br><br>
+          <div id="appendDropBox" class="dropzone2" ng-show="dropzonebutton">
+            <i class="fa fa-cloud-upload" ng-show="!showProcessing"> Have more pages? Drop them here!</i><br><br>
+            <div class="fileupload" ng-show="!showProcessing">
+              <input id="appendFileUploadButton" type="file" class="btn-theme" multiple/>
+              <button class="btn-theme">Select files</button>
+            </div>
+            <div class="processing" ng-show="showProcessing">
+              <i class="fa fa-circle-o-notch fa-spin"></i> Processing files...
+            </div>
+          </div>
+          <mozilla-pdf-viewer data-file="pdf_url" ng-if="showPdf"></mozilla-pdf-viewer>
+          <!--pdf-fileclient pdf-url="pdf_url" ng-if="showPdf"></pdf-fileclient-->
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <h4>Vendor Information</h4>
+
+      <div class="text-wrapper">
+        <input class="input" type="text" name="typeahead" placeholder="Vendor Name"
+          autocomplete="off"
+          ng-model="invoice.vendor.name"
+          typeahead="vendor.name for vendor in getVendors($viewValue)"
+          typeahead-on-select="setVendor($item)"
+          ng-class="{full: invoice.vendor.name.length}">
+        <label for="typeahead">Vendor Name</label>
+        <div ng-show="submitted && vendorErrors.groupFields">
+          <span ng-repeat="error in vendorErrors.name" class="error-input">{{error}}</span>
+        </div>
+      </div>
+
+      <div ng-show="submitted && vendorErrors.groupFields">
+        <span ng-repeat="error in vendorErrors.groupFields" class="error-input">{{error}}</span>
+      </div>
+
+      <div class="text-wrapper">
+        <input class="input" name="add1"  type="text" placeholder="Address Line 1"
+          ng-model="invoice.vendor.address1"
+          ng-class="{ full: invoice.vendor.address1.length,
+                      'ng-invalid ng-invalid-required': ! invoice.vendor.routing_number && ! invoice.vendor.bank_account_number && ! invoice.vendor.address1
+                    }"
+          ng-change="checkVendorGroups()">
+        <label for="add1">Address Line 1</label>
+      </div>
+
+      <div class="text-wrapper">
+        <input class="input" ng-model="invoice.vendor.address2" name= "add2"  type= "text" placeholder = "Address Line 2" ng-class="{full: invoice.vendor.address2.length}" ng-change="checkVendorGroups()">
+        <label for="add2">Address Line 2</label>
+      </div>
+
+      <div class="text-wrapper">
+        <input class="input" name="city" type="text" placeholder="City"
+          ng-model="invoice.vendor.city"
+          ng-class="{ full: invoice.vendor.city.length,
+                      'ng-invalid ng-invalid-required': ! invoice.vendor.routing_number && ! invoice.vendor.bank_account_number && !invoice.vendor.city
+                    }"
+          ng-change="checkVendorGroups()"
+          style="width:47%">
+        <label for="city">City</label>
+
+        <input class="input" name="state" type="text" placeholder="St"
+          ng-model="invoice.vendor.state"
+          ng-class="{ full: invoiceForm.state.$viewValue.length,
+                      'ng-invalid ng-invalid-required': ! invoice.vendor.routing_number && ! invoice.vendor.bank_account_number && ! invoice.vendor.state}"
+          ng-change="checkVendorGroups()"
+          ng-blur="setWasFocused(invoiceForm.state)"
+          style="width:12%">
+        <label for="state" style="left:48%"><span ng-show="invoiceForm.state.$error.states && invoiceForm.state.$dirty && invoice.vendor.state.length > 1">-</span> State</label>
+
+        <input class="input" name="zipCode" type="text" placeholder="Zip"
+          ng-model="invoice.vendor.zip"
+          ng-class="{ full: invoice.vendor.zip.length,
+                      'ng-invalid ng-invalid-required': ! invoice.vendor.routing_number && ! invoice.vendor.bank_account_number && ! invoice.vendor.zip }"
+          ng-change="checkVendorGroups()"
+          style="width:18%">
+        <label for="city" style="left:62%">Zip</label>
+        <span ng-show="invoiceForm.state.$wasFocused && invoiceForm.state.$error.states && invoiceForm.state.$dirty && invoice.vendor.state.length > 1" class="error-input">
+          Must be a valid US state
+        </span>
+      </div>
+
+      <div class="text-wrapper">
+        <input class="input" name= "routing" type="text" placeholder="Routing Number"
+          ng-model="invoice.vendor.routing_number"
+            ng-pattern="/^[0-9#]{9}$/"
+          ng-class="{ full: invoiceForm.routing.$viewValue.length,
+                      'ng-invalid': (! invoice.vendor.routing_number &&
+                                     ! invoice.vendor.bank_account_number &&
+                                     ! ( invoice.vendor.address1 &&
+                                        invoice.vendor.city     &&
+                                        invoice.vendor.state    &&
+                                        invoice.vendor.zip ) ) }"
+          ng-change="checkVendorGroups()"
+          ng-blur="setWasFocused(invoiceForm.routing)">
+        <label for="routing"><span ng-show="invoiceForm.routing.$error.pattern">-</span> Routing Number</label>
+        <span ng-show="invoiceForm.routing.$dirty && invoiceForm.routing.$wasFocused && invoiceForm.routing.$error.pattern" class="error-input">
+          The value must be 9 digits.
+        </span>
+      </div>
+
+      <div class="text-wrapper">
+        <input class="input" name="account" type="text" placeholder="Account Number"
+          ng-model="invoice.vendor.bank_account_number"
+            ng-pattern="/^[0-9#]+$/"
+          ng-class="{ full: invoiceForm.account.$viewValue.length,
+                      'ng-invalid': ( ! invoice.vendor.bank_account_number &&
+                                    ! invoice.vendor.routing_number &&
+                                    ! ( invoice.vendor.address1 &&
+                                        invoice.vendor.city     &&
+                                        invoice.vendor.state    &&
+                                        invoice.vendor.zip ) ) }"
+          ng-change="checkVendorGroups()"
+          ng-blur="setWasFocused(invoiceForm.account)">
+        <label for="account"><span ng-show="invoiceForm.account.$error.pattern">-</span> Account Number</label>
+        <span ng-show="invoiceForm.account.$dirty && invoiceForm.account.$wasFocused && invoiceForm.account.$error.pattern" class="error-input">
+          Only numbers allowed
+        </span>
+      </div>
+
+
+
+      <div ng-include src="'invoice/partials/form/invoice_fields.tpl.html'"></div>
+      <br>
+      <!--button class="btn-theme" ng-click="openModal()" ng-if="invoice.vendor.name || invoice.vendor_id">Add Line Items</button-->
+    </div>
+</div>

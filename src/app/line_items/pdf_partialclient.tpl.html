@@ -1,0 +1,18 @@
+<nav ng-class="getNavStyle(0)">
+
+  <span>Page: </span>
+  <input type="text" min=1 ng-model="pageNum">
+  <span> / {{pageCount}}</span> <br>
+
+  <a ng-click="goPrevious()" class="btn-theme"><i class='fa fa-arrow-left'> previous page</i></span></a>
+  <a ng-click="goNext()" class="btn-theme"> next page <i class='fa fa-arrow-right'></i></span></a>
+
+  <a ng-click="zoomIn()" class="btn-theme"><i class='fa fa-plus'> zoom in</i></span></a>
+  <a ng-click="zoomOut()" class="btn-theme"><i class='fa fa-minus'> zoom out</i></span></a>
+
+  <a ng-click="rotate()" class="btn-theme"><i class='fa fa-rotate-right'> rotate</i></span></a>
+</nav>
+<div class="modalScrollArea">
+  <canvas id="modal-pdf-canvas" class="rotate0"></canvas>
+  <br/>
+</div>

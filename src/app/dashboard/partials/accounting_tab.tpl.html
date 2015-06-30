@@ -1,0 +1,49 @@
+<div ng-if="currentIndividual.user.synced_qb && currentIndividual.user.qb_classes && currentIndividual.user.qb_classes.length > 0" style="overflow:visible">
+  <label for="qb_class_id">Location/Default Class</label>
+  <ui-select ng-model="$parent.currentInvoice.address_id" on-select="updateInvoiceAddress($item.address_id)">
+    <ui-select-match placeholder="Choose...">
+      {{$select.selected.name}}
+    </ui-select-match>
+    <ui-select-choices repeat="qb_class.id as qb_class in qb_classes | filter: $select.search">
+      <div ng-bind-html="qb_class.name | highlight: $select.search"></div>
+    </ui-select-choices>
+  </ui-select>
+</div>
+
+<table class="table responsive-table bstable table-responsive">
+  <thead>
+    <th>item</th>
+    <th>total</th>
+    <th ng-if="currentIndividual.user.synced_qb">expense account</th>
+    <th ng-if="currentIndividual.user.synced_qb && currentIndividual.user.qb_classes && currentIndividual.user.qb_classes.length > 0">location/default class</th>
+  </thead>
+  <tbody>
+    <tr
+      ng-repeat="transaction in currentInvoice.invoice_transactions">
+      <td title="{{transaction.description}}">{{ transaction.description }}</td>
+      <td>${{ transaction.total | number:0 }}</td>
+
+      <td ng-if="currentIndividual.user.synced_qb" style="overflow:visible">
+        <ui-select ng-model="$parent.transaction.expense_account_id" on-select="updateItem($parent.transaction.description, $item.id, 'expense_account_id', 'update_all')">
+          <ui-select-match placeholder="Choose...">
+            {{$select.selected.name}}
+          </ui-select-match>
+          <ui-select-choices repeat="account.id as account in currentIndividual.user.expense_accounts | filter: $select.search">
+            <div ng-bind-html="account.name | highlight: $select.search"></div>
+          </ui-select-choices>
+        </ui-select>
+      </td>
+
+      <td ng-if="currentIndividual.user.synced_qb && currentIndividual.user.qb_classes && currentIndividual.user.qb_classes.length > 0" style="overflow:visible">
+        <ui-select ng-model="$parent.transaction.qb_class_id" on-select="updateItem($parent.transaction.description, $item.id, 'qb_class_id', 'update_all')">
+          <ui-select-match placeholder="Choose...">
+            {{$select.selected.name}}
+          </ui-select-match>
+          <ui-select-choices repeat="qb_class.id as qb_class in currentIndividual.user.qb_classes | filter: $select.search">
+            <div ng-bind-html="qb_class.name | highlight: $select.search"></div>
+          </ui-select-choices>
+        </ui-select>
+      </td>
+    </tr>
+  </tbody>
+</table>
